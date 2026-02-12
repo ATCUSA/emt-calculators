@@ -1,18 +1,11 @@
+"$schema" = "./node_modules/wrangler/config-schema.json"
 name = "emt-calculator-tools"
-compatibility_date = "2026-02-11"
 pages_build_output_dir = "dist"
+compatibility_date = "2026-02-11"
 
+# Environment-specific configuration
 [env.production]
 compatibility_date = "2026-02-11"
 
 [env.preview]
 compatibility_date = "2026-02-11"
-
-# Build configuration for Cloudflare Pages
-[build]
-command = "pnpm build"
-publish = "dist"
-
-# Environment variables (add these in Cloudflare dashboard)
-[vars]
-NODE_VERSION = "20"
