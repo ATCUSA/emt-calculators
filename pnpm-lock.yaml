@@ -18,8 +18,8 @@ importers:
         specifier: ^5.17.1
         version: 5.17.1(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(typescript@5.9.3)(yaml@2.8.2)
       lucide-svelte:
-        specifier: ^0.468.0
-        version: 0.468.0(svelte@5.50.1)
+        specifier: ^0.563.0
+        version: 0.563.0(svelte@5.50.1)
       svelte:
         specifier: ^5.0.0
         version: 5.50.1
@@ -1144,8 +1144,8 @@ packages:
     resolution: {integrity: sha512-ESL2CrkS/2wTPfuend7Zhkzo2u0daGJ/A2VucJOgQ/C48S/zB8MMeMHSGKYpXhIjbPxfuezITkaBH1wqv00DDQ==}
     engines: {node: 20 || >=22}
 
-  lucide-svelte@0.468.0:
-    resolution: {integrity: sha512-n0ecAFtCY5LEeL+PJ1Xj4n3c2gzj8tMpak0KMGnvoSJEjCsCnRB0mekBtJZAo7beyynW9Qj5Um1KfMBAeTNplw==}
+  lucide-svelte@0.563.0:
+    resolution: {integrity: sha512-pjZKw7TpQcamfQrx7YdbOHgmrcNeKiGGMD0tKZQaVktwSsbqw28CsKc2Q97ttwjytiCWkJyOa8ij2Q+Og0nPfQ==}
     peerDependencies:
       svelte: ^3 || ^4 || ^5.0.0-next.42
 
@@ -2836,7 +2836,7 @@ snapshots:
 
   lru-cache@11.2.6: {}
 
-  lucide-svelte@0.468.0(svelte@5.50.1):
+  lucide-svelte@0.563.0(svelte@5.50.1):
     dependencies:
       svelte: 5.50.1
 
