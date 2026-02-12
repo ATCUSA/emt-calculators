@@ -26,6 +26,6 @@
   },
   "devDependencies": {
     "typescript": "^5.7.2",
-    "@types/serviceworker": "^0.0.95"
+    "@types/serviceworker": "^0.0.187"
   }
 }
