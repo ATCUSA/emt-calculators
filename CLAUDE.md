@@ -203,21 +203,163 @@ git commit -m "docs(readme): update installation instructions"
 - **PATCH** (1.0.0 → 1.0.1): Bug fixes, UI improvements, documentation updates
 
 **Version Management:**
-```bash
-# Update version in multiple files
-# 1. package.json - NPM version
-# 2. src/config/version.ts - App version and changelog
-# 3. public/manifest.json - PWA version
-# 4. public/sw.ts - Service worker cache version
 
-# Example version bump workflow
+**CRITICAL: All PWA version references must be updated together for proper update notifications!**
+
+**Required Files for Version Updates:**
+1. `package.json` - NPM version for dependency management
+2. `src/config/version.ts` - App version, changelog, and feature list
+3. `public/manifest.json` - PWA version for app store behavior
+4. `public/sw.ts` - Service worker cache version (triggers cache invalidation)
+
+**Version Update Workflow:**
+```bash
+# 1. Determine version type (patch/minor/major)
+# 2. Update ALL version files consistently
+# 3. Commit and tag release
+
 git checkout main
 git pull origin main
-# Update version files
+
+# Update versions (example for 1.1.0)
+# package.json: "version": "1.1.0"
+# src/config/version.ts: version: '1.1.0'
+# public/manifest.json: "version": "1.1.0"
+# public/sw.ts: APP_VERSION: string = '1.1.0'
+
 git add package.json src/config/version.ts public/manifest.json public/sw.ts
 git commit -m "chore: bump version to 1.1.0"
 git tag v1.1.0
 git push origin main --tags
+```
+
+**PWA Update Mechanism Requirements:**
+
+**Service Worker Version Management:**
+- `public/sw.ts` APP_VERSION must match other files exactly
+- Cache names include version: `emt-calc-v${APP_VERSION}`
+- Version change triggers automatic cache invalidation
+- Old caches are automatically deleted on activation
+
+**Update Notification System:**
+- `src/components/UpdateNotification.svelte` detects SW updates
+- Compares `src/config/version.ts` version with SW version
+- Shows update prompt when versions mismatch
+- User can refresh to get new version immediately
+
+**Version Consistency Validation:**
+```typescript
+// Add this check to prevent version mismatches
+export function validateVersionConsistency(): boolean {
+  const appVersion = APP_CONFIG.version;
+  const swVersion = navigator.serviceWorker?.controller?.scriptURL.includes(appVersion);
+  const manifestVersion = /* check manifest version */;
+
+  if (!swVersion || !manifestVersion) {
+    console.warn('Version mismatch detected - update required');
+    return false;
+  }
+  return true;
+}
+```
+
+**Critical Version Update Checklist:**
+- [ ] `package.json` version updated
+- [ ] `src/config/version.ts` version and changelog updated
+- [ ] `public/manifest.json` version updated
+- [ ] `public/sw.ts` APP_VERSION updated
+- [ ] Cache name patterns include new version
+- [ ] Test update notification appears correctly
+- [ ] Verify old caches are cleared
+- [ ] Confirm offline functionality works with new version
+
+**Automated Version Consistency Checking:**
+
+Create a script to validate version consistency across all files:
+```typescript
+// scripts/check-versions.ts
+import { readFileSync } from 'fs';
+import { APP_CONFIG } from '../src/config/version.js';
+
+function checkVersionConsistency(): void {
+  const packageJson = JSON.parse(readFileSync('package.json', 'utf8'));
+  const manifestJson = JSON.parse(readFileSync('public/manifest.json', 'utf8'));
+  const swContent = readFileSync('public/sw.ts', 'utf8');
+
+  const appVersion = APP_CONFIG.version;
+  const packageVersion = packageJson.version;
+  const manifestVersion = manifestJson.version;
+  const swVersionMatch = swContent.match(/APP_VERSION:\s*string\s*=\s*['"`]([^'"`]+)['"`]/);
+  const swVersion = swVersionMatch?.[1];
+
+  console.log('🔍 Version Consistency Check:');
+  console.log(`📦 package.json: ${packageVersion}`);
+  console.log(`⚙️  src/config/version.ts: ${appVersion}`);
+  console.log(`📱 public/manifest.json: ${manifestVersion}`);
+  console.log(`🔧 public/sw.ts: ${swVersion}`);
+
+  const allVersionsMatch = appVersion === packageVersion &&
+                          packageVersion === manifestVersion &&
+                          manifestVersion === swVersion;
+
+  if (allVersionsMatch) {
+    console.log('✅ All versions are consistent');
+    process.exit(0);
+  } else {
+    console.error('❌ Version mismatch detected!');
+    console.error('All version files must be updated together for PWA updates to work correctly');
+    process.exit(1);
+  }
+}
+
+checkVersionConsistency();
+```
+
+Add to `package.json` scripts:
+```json
+{
+  "scripts": {
+    "check-versions": "tsx scripts/check-versions.ts",
+    "version-check": "npm run check-versions"
+  }
+}
+```
+
+**Pre-deployment Version Validation:**
+Add to GitHub Actions CI pipeline to prevent deployment with version mismatches:
+```yaml
+- name: Validate version consistency
+  run: pnpm run check-versions
+```
+
+**Version Update Automation Script:**
+```bash
+#!/bin/bash
+# scripts/update-version.sh
+NEW_VERSION=$1
+
+if [ -z "$NEW_VERSION" ]; then
+  echo "Usage: ./scripts/update-version.sh 1.2.0"
+  exit 1
+fi
+
+echo "🔄 Updating version to $NEW_VERSION..."
+
+# Update package.json
+npm version $NEW_VERSION --no-git-tag-version
+
+# Update src/config/version.ts
+sed -i "s/version: '[^']*'/version: '$NEW_VERSION'/g" src/config/version.ts
+
+# Update public/manifest.json
+sed -i "s/\"version\": \"[^\"]*\"/\"version\": \"$NEW_VERSION\"/g" public/manifest.json
+
+# Update public/sw.ts
+sed -i "s/APP_VERSION: string = '[^']*'/APP_VERSION: string = '$NEW_VERSION'/g" public/sw.ts
+
+echo "✅ All version files updated to $NEW_VERSION"
+echo "📝 Don't forget to update the changelog in src/config/version.ts"
+echo "🏷️  Ready to commit and tag: git add . && git commit -m \"chore: bump version to $NEW_VERSION\""
 ```
 
 ### Release Process

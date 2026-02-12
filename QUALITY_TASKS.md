@@ -186,6 +186,53 @@ export function validateMedicalNumber(
   - Location: `public/sw.ts` cache strategies
   - Add: Stale-while-revalidate for non-critical content
 
+## 🔄 **Version Management and PWA Updates**
+
+### **PWA Version Consistency (Critical for Update Notifications)**
+- [ ] **Implement Version Consistency Validation Script**
+  - Current: No automated checking of version sync across PWA files
+  - Create: `scripts/check-versions.ts` to validate all version files match
+  - Risk: Version mismatches break PWA update notifications and cache invalidation
+
+- [ ] **Add Automated Version Update Script**
+  - Create: `scripts/update-version.sh` for consistent version bumping
+  - Location: Update all 4 required files: `package.json`, `src/config/version.ts`, `public/manifest.json`, `public/sw.ts`
+  - Benefit: Prevents human error in version management
+
+- [ ] **Integrate Version Check into CI Pipeline**
+  - Add: Version consistency validation to GitHub Actions
+  - Location: Add to `quality-checks` job in `.github/workflows/ci.yml`
+  - Prevent: Deployment with mismatched versions
+
+```yaml
+# Add to ci.yml quality-checks job
+- name: Validate version consistency
+  run: pnpm run check-versions
+```
+
+- [ ] **Add npm Scripts for Version Management**
+  - Add to `package.json` scripts section:
+  ```json
+  {
+    "scripts": {
+      "check-versions": "tsx scripts/check-versions.ts",
+      "version-check": "npm run check-versions",
+      "update-version": "./scripts/update-version.sh"
+    }
+  }
+  ```
+
+### **PWA Update Notification Testing**
+- [ ] **Verify Update Notification Component Works**
+  - Current: `src/components/UpdateNotification.svelte` exists but needs testing
+  - Test: Version change triggers update prompt correctly
+  - Validate: User can refresh to get new version immediately
+
+- [ ] **Service Worker Cache Invalidation Testing**
+  - Test: Version change clears old caches properly
+  - Validate: New version loads fresh content, not cached
+  - Check: `emt-calc-v${APP_VERSION}` cache naming works correctly
+
 ## 📋 **Testing and Quality Assurance**
 
 ### **Automated Testing Setup**
@@ -243,8 +290,9 @@ describe('O2 Tank Calculator', () => {
 1. [ ] Fix APGAR state management bug
 2. [ ] Add physiological input validation
 3. [ ] Implement critical value confirmations
-4. [ ] Standardize Svelte 5 event handlers
-5. [ ] Add error boundaries to all calculators
+4. [ ] **Setup PWA version consistency system**
+5. [ ] Standardize Svelte 5 event handlers
+6. [ ] Add error boundaries to all calculators
 
 ### **Week 2 Priorities**
 1. [ ] Enhanced CSP and security headers
