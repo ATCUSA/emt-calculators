@@ -1,0 +1,85 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ToolSearch from '../components/ToolSearch.svelte';
+import SupportPrompt from '../components/SupportPrompt.svelte';
+import { BookOpen } from 'lucide-svelte';
+---
+
+<Layout
+    title="Quick Reference - EMT Calculator Tools"
+    description="Quick reference materials and guides for EMTs, AEMTs, and Paramedics including vital signs, protocols, and medication references."
+    showBackButton={true}
+>
+    <div class="max-w-6xl mx-auto">
+        <!-- Page Header -->
+        <div class="text-center mb-8">
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <BookOpen class="w-10 h-10 theme-accent-primary" />
+                <h1 class="text-4xl font-bold theme-accent-primary">Quick Reference</h1>
+            </div>
+            <p class="text-xl theme-text-secondary max-w-3xl mx-auto">
+                Essential reference materials and protocols for field use. Quickly find the information you need.
+            </p>
+        </div>
+
+        <!-- Support Prompt -->
+        <SupportPrompt variant="prominent" client:load />
+
+        <!-- Search and Results -->
+        <ToolSearch
+            category="reference"
+            placeholder="Search references (e.g., vital signs, medications, protocols)..."
+            client:load
+        />
+
+        <!-- Quick Categories -->
+        <div class="mt-12 p-6 theme-bg-secondary rounded-lg border theme-border-primary">
+            <h2 class="text-lg font-semibold theme-text-primary mb-4">Browse by Category</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="text-center p-3 theme-bg-tertiary rounded border">
+                    <div class="text-2xl mb-2">📊</div>
+                    <div class="text-sm font-medium theme-text-primary">Assessment</div>
+                    <div class="text-xs theme-text-muted">Vital signs & scales</div>
+                </div>
+                <div class="text-center p-3 theme-bg-tertiary rounded border">
+                    <div class="text-2xl mb-2">💊</div>
+                    <div class="text-sm font-medium theme-text-primary">Medications</div>
+                    <div class="text-xs theme-text-muted">Drug references</div>
+                </div>
+                <div class="text-center p-3 theme-bg-tertiary rounded border">
+                    <div class="text-2xl mb-2">📋</div>
+                    <div class="text-sm font-medium theme-text-primary">Protocols</div>
+                    <div class="text-xs theme-text-muted">Step-by-step guides</div>
+                </div>
+                <div class="text-center p-3 theme-bg-tertiary rounded border">
+                    <div class="text-2xl mb-2">🚨</div>
+                    <div class="text-sm font-medium theme-text-primary">Trauma</div>
+                    <div class="text-xs theme-text-muted">Emergency procedures</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Field Use Tips -->
+        <div class="mt-8 p-4 bg-green-50 dark:bg-green-900/20 border-l-4 border-green-400 rounded">
+            <h3 class="font-medium text-green-800 dark:text-green-200 mb-2">Field Use Tips</h3>
+            <div class="text-sm text-green-700 dark:text-green-300 space-y-1">
+                <div>• All references work offline once cached</div>
+                <div>• Use search to quickly find specific protocols</div>
+                <div>• Bookmark frequently used references on your device</div>
+                <div>• Always follow your local protocols and scope of practice</div>
+            </div>
+        </div>
+
+        <!-- Coming Soon Notice -->
+        <div class="mt-8 p-6 theme-bg-secondary rounded-lg border theme-border-primary text-center">
+            <h3 class="text-lg font-semibold theme-text-primary mb-3">Reference Materials Coming Soon</h3>
+            <p class="theme-text-secondary mb-4">
+                Quick reference materials are being developed based on Idaho EMT protocols and national standards.
+                These will include vital sign ranges, medication references, assessment protocols, and trauma guides.
+            </p>
+            <div class="text-sm theme-text-muted">
+                Check back soon or visit the <a href="/about" class="text-blue-600 dark:text-blue-400 hover:underline">About page</a> for project updates.
+            </div>
+        </div>
+    </div>
+</Layout>

@@ -1,0 +1,12 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GCSCalculator from '../components/GCSCalculator.svelte';
+---
+
+<Layout
+    title="Glasgow Coma Scale Calculator - EMT Calculator Tools"
+    description="Calculate Glasgow Coma Scale scores with automatic interpretation. Includes both adult and pediatric scales for comprehensive neurological assessment."
+    showBackButton={true}
+>
+    <GCSCalculator client:load />
+</Layout>

@@ -1,0 +1,123 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { APP_CONFIG } from '../config/version.ts';
+import BuyMeACoffee from '../components/BuyMeACoffee.svelte';
+---
+
+<Layout
+    title="About - EMT Calculator Tools"
+    description="Learn about EMT Calculator Tools, a hobby project by Austin Cole to help Idaho EMTs and students."
+    showBackButton={true}
+>
+    <div class="max-w-4xl mx-auto space-y-8">
+        <!-- Project Header -->
+        <div class="text-center">
+            <h1 class="text-4xl font-bold mb-4 theme-accent-primary">About EMT Calculator Tools</h1>
+            <p class="text-xl theme-text-secondary">
+                A hobby project to help Emergency Medical Technicians and students
+            </p>
+        </div>
+
+        <!-- Project Info -->
+        <div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+            <h2 class="text-2xl font-semibold mb-4 theme-text-primary">Project Background</h2>
+            <div class="space-y-4 theme-text-secondary">
+                <p>
+                    EMT Calculator Tools is a personal hobby project created by Austin Cole, an EMT student in Idaho.
+                    This collection of calculators and reference tools was born from a simple need: having easy access
+                    to essential medical calculations during EMT OM (Optional Modules) class and in the field.
+                </p>
+                <p>
+                    The project started as a way to digitize calculations that EMTs, AEMTs, and Paramedics use regularly,
+                    making them easily accessible on any device, even offline. Each tool is designed with real-world
+                    EMS scenarios in mind, following manufacturer guidelines and established medical formulas.
+                </p>
+            </div>
+        </div>
+
+        <!-- Current Tools -->
+        <div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+            <h2 class="text-2xl font-semibold mb-4 theme-text-primary">Available Tools</h2>
+            <ul class="space-y-3 theme-text-secondary">
+                {APP_CONFIG.features.map(feature => (
+                    <li class="flex items-start gap-3">
+                        <span class="w-2 h-2 rounded-full theme-bg-accent mt-2 flex-shrink-0"></span>
+                        <span>{feature}</span>
+                    </li>
+                ))}
+            </ul>
+        </div>
+
+        <!-- Version & License -->
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+                <h3 class="text-lg font-semibold mb-3 theme-text-primary">Version Information</h3>
+                <div class="space-y-2 text-sm theme-text-secondary">
+                    <div><strong>Current Version:</strong> {APP_CONFIG.version}</div>
+                    <div><strong>Last Updated:</strong> February 11, 2026</div>
+                    <div><strong>Platform:</strong> Progressive Web App</div>
+                </div>
+            </div>
+
+            <div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+                <h3 class="text-lg font-semibold mb-3 theme-text-primary">License & Usage</h3>
+                <div class="space-y-2 text-sm theme-text-secondary">
+                    <div><strong>License:</strong> Non-Commercial Use Only</div>
+                    <div><strong>Copyright:</strong> © 2026 Austin Cole</div>
+                    <div><strong>GitHub:</strong> <a href="https://github.com/ATCUSA/emt-calculators" class="text-blue-600 dark:text-blue-400 hover:underline" target="_blank" rel="noopener">ATCUSA/emt-calculators</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Medical Disclaimer -->
+        <div class="theme-bg-secondary p-6 rounded-lg border-l-4 border-red-400">
+            <h3 class="text-lg font-semibold mb-3 text-red-800 dark:text-red-200">Important Medical Disclaimer</h3>
+            <div class="space-y-3 text-sm text-red-700 dark:text-red-300">
+                <p>
+                    <strong>This software is provided for educational purposes only</strong> and is NOT intended as a
+                    substitute for professional medical judgment, training, or clinical protocols.
+                </p>
+                <p>
+                    Users must always:
+                </p>
+                <ul class="list-disc list-inside space-y-1 ml-4">
+                    <li>Follow their local protocols and scope of practice</li>
+                    <li>Receive proper training before using any medical calculations</li>
+                    <li>Exercise clinical judgment in all situations</li>
+                    <li>Verify calculations and have alternative methods available</li>
+                </ul>
+                <p>
+                    The author assumes no responsibility for medical decisions made using this software.
+                </p>
+            </div>
+        </div>
+
+        <!-- Support the Project -->
+        <div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+            <h3 class="text-lg font-semibold mb-4 theme-text-primary">Support Development</h3>
+            <div class="space-y-4">
+                <p class="theme-text-secondary text-sm">
+                    <strong>Built by an EMT for EMTs.</strong> If these tools help you care for patients, your support helps keep them updated and free for everyone.
+                    All support goes directly toward development, hosting, and supporting my family and community — not corporate profit.
+                </p>
+
+                <BuyMeACoffee variant="button" client:load />
+
+                <p class="theme-text-secondary text-xs text-center">
+                    Every contribution helps keep these tools free and continuously improved for the EMS community.
+                </p>
+            </div>
+        </div>
+
+        <!-- Future Development -->
+        <div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+            <h3 class="text-lg font-semibold mb-3 theme-text-primary">Future Plans</h3>
+            <p class="theme-text-secondary text-sm">
+                This is an ongoing project with plans to add more useful calculations and reference tools
+                based on real-world EMS needs. The project may become open source in the future, while
+                maintaining non-commercial use restrictions. Feedback and suggestions from EMS professionals
+                are always welcome through the GitHub repository.
+            </p>
+        </div>
+    </div>
+</Layout>

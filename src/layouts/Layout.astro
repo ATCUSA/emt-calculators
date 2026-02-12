@@ -1,0 +1,187 @@
+---
+import '../styles/global.css';
+import ThemeToggle from '../components/ThemeToggle.svelte';
+import Disclaimer from '../components/Disclaimer.svelte';
+import UpdateNotification from '../components/UpdateNotification.svelte';
+import BuyMeACoffee from '../components/BuyMeACoffee.svelte';
+import MobileNav from '../components/MobileNav.svelte';
+
+export interface Props {
+  title: string;
+  description?: string;
+  showBackButton?: boolean;
+  backLink?: string;
+}
+
+const {
+  title,
+  description = "EMT Calculator Tools - Essential calculators for EMTs, AEMTs, and Paramedics",
+  showBackButton = false,
+  backLink = "/"
+} = Astro.props;
+---
+
+<html lang="en" data-theme="dark">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<title>{title}</title>
+
+		<!-- PWA Meta Tags -->
+		<link rel="manifest" href="/manifest.json" />
+		<meta name="theme-color" content="#1f2937" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="apple-mobile-web-app-title" content="EMT Calculators" />
+
+		<!-- Apple Touch Icons -->
+		<link rel="apple-touch-icon" href="/icon-192.png" />
+		<link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
+		<link rel="apple-touch-icon" sizes="512x512" href="/icon-512.png" />
+
+		<!-- Microsoft Tile -->
+		<meta name="msapplication-TileImage" content="/icon-512.png" />
+		<meta name="msapplication-TileColor" content="#1f2937" />
+		<meta name="msapplication-navbutton-color" content="#1f2937" />
+	</head>
+	<body class="theme-bg-primary theme-text-primary min-h-screen">
+		<header class="theme-bg-secondary border-b theme-border-primary">
+			<div class="container mx-auto px-4 py-4 flex items-center justify-between">
+				<div class="flex items-center gap-4">
+					{showBackButton && (
+						<a href={backLink} class="theme-accent-primary hover:opacity-80 transition-opacity">
+							← Back to Calculator Tools
+						</a>
+					)}
+					{!showBackButton && (
+						<a href="/" class="text-xl font-bold theme-accent-primary">
+							EMT Calculator Tools
+						</a>
+					)}
+				</div>
+				<div class="flex items-center gap-4">
+					<nav class="hidden sm:flex items-center gap-6">
+						<a href="/calculators" class="text-sm theme-text-secondary hover:theme-accent-primary transition-colors">
+							Calculators
+						</a>
+						<a href="/references" class="text-sm theme-text-secondary hover:theme-accent-primary transition-colors">
+							References
+						</a>
+						<a href="/about" class="text-sm theme-text-secondary hover:theme-accent-primary transition-colors">
+							About
+						</a>
+					</nav>
+					<ThemeToggle client:load />
+					<MobileNav client:load />
+				</div>
+			</div>
+		</header>
+
+		<main class="container mx-auto px-4 py-8">
+			<slot />
+		</main>
+
+		<!-- Update Notifications -->
+		<UpdateNotification client:load />
+
+		<!-- Medical Disclaimer -->
+		<Disclaimer client:load />
+
+		<!-- Buy Me a Coffee Widget -->
+		<BuyMeACoffee variant="widget" client:load />
+
+		<script is:inline>
+			// Initialize theme on page load
+			(function() {
+				const savedTheme = localStorage.getItem('theme') || 'auto';
+				document.documentElement.setAttribute('data-theme', savedTheme);
+			})();
+
+			// Enhanced service worker registration for PWA
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', async () => {
+					try {
+						const registration = await navigator.serviceWorker.register('/sw.js', {
+							scope: '/'
+						});
+						console.log('[PWA] Service worker registered:', registration.scope);
+
+						// Handle service worker updates with better UX
+						registration.addEventListener('updatefound', () => {
+							const newWorker = registration.installing;
+							if (newWorker) {
+								console.log('[PWA] New service worker installing');
+								newWorker.addEventListener('statechange', () => {
+									if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+										// Notify the update component
+										if (window.showUpdateNotification) {
+											window.showUpdateNotification(newWorker);
+										} else {
+											// Fallback if component isn't loaded yet
+											setTimeout(() => {
+												if (window.showUpdateNotification) {
+													window.showUpdateNotification(newWorker);
+												} else {
+													// Final fallback
+													if (confirm('[PWA] New version available! Refresh to update?')) {
+														newWorker.postMessage({ type: 'SKIP_WAITING' });
+														window.location.reload();
+													}
+												}
+											}, 1000);
+										}
+									}
+								});
+							}
+						});
+
+						// Check for updates periodically
+						registration.update();
+						setInterval(() => registration.update(), 60000);
+
+					} catch (error) {
+						console.error('[PWA] Service worker registration failed:', error);
+					}
+
+				});
+
+				// Enhanced PWA install experience
+				let deferredPrompt;
+				window.addEventListener('beforeinstallprompt', (e) => {
+					e.preventDefault();
+					deferredPrompt = e;
+
+					// Show install button or banner (you can customize this)
+					const installBanner = document.createElement('div');
+					installBanner.innerHTML = `
+						<div style="position: fixed; bottom: 20px; left: 20px; right: 20px; background: #1f2937; color: white; padding: 16px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 1000; display: flex; justify-content: space-between; align-items: center;">
+							<span>Install EMT Calculator Tools for offline use!</span>
+							<button id="install-btn" style="background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">Install</button>
+							<button id="dismiss-btn" style="background: transparent; color: white; border: 1px solid #374151; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-left: 8px;">Later</button>
+						</div>
+					`;
+					document.body.appendChild(installBanner);
+
+					document.getElementById('install-btn').addEventListener('click', async () => {
+						if (deferredPrompt) {
+							deferredPrompt.prompt();
+							const { outcome } = await deferredPrompt.userChoice;
+							console.log(`User response to install prompt: ${outcome}`);
+							deferredPrompt = null;
+							document.body.removeChild(installBanner);
+						}
+					});
+
+					document.getElementById('dismiss-btn').addEventListener('click', () => {
+						document.body.removeChild(installBanner);
+					});
+				});
+			}
+		</script>
+	</body>
+</html>

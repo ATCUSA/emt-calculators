@@ -1,0 +1,70 @@
+{
+  "name": "EMT Calculator Tools",
+  "short_name": "EMT Calc",
+  "version": "1.0.0",
+  "description": "Essential calculators and reference tools for Emergency Medical Technicians, Advanced EMTs, and Paramedics",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1f2937",
+  "theme_color": "#1f2937",
+  "orientation": "portrait",
+  "categories": ["medical", "utilities", "productivity"],
+  "lang": "en",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "O2 Tank Calculator",
+      "short_name": "O2 Calc",
+      "description": "Calculate oxygen tank duration",
+      "url": "/o2-calculator",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "scope": "/",
+  "id": "emt-calculator-tools",
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
+}

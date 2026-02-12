@@ -1,5 +1,27 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"]
+  "include": [
+    ".astro/types.d.ts",
+    "src/**/*",
+    "public/sw.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    ".astro",
+    "public/sw.js"
+  ],
+  "compilerOptions": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    "noImplicitOverride": true,
+    "verbatimModuleSyntax": true,
+    "lib": ["DOM", "DOM.Iterable", "ES2023", "WebWorker"]
+  }
 }

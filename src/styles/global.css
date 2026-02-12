@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+/* Theme system */
+:root {
+  color-scheme: dark light;
+}
+
+/* Custom properties for theme colors */
+:root {
+  /* Dark theme (default) */
+  --bg-primary: theme('colors.gray.900');
+  --bg-secondary: theme('colors.gray.800');
+  --bg-tertiary: theme('colors.gray.700');
+  --text-primary: theme('colors.gray.100');
+  --text-secondary: theme('colors.gray.300');
+  --text-muted: theme('colors.gray.400');
+  --accent-primary: theme('colors.blue.400');
+  --accent-secondary: theme('colors.blue.500');
+  --border-primary: theme('colors.gray.700');
+  --border-secondary: theme('colors.gray.600');
+}
+
+/* Light theme overrides */
+[data-theme="light"] {
+  --bg-primary: theme('colors.gray.50');
+  --bg-secondary: theme('colors.white');
+  --bg-tertiary: theme('colors.gray.100');
+  --text-primary: theme('colors.gray.900');
+  --text-secondary: theme('colors.gray.700');
+  --text-muted: theme('colors.gray.600');
+  --accent-primary: theme('colors.blue.600');
+  --accent-secondary: theme('colors.blue.700');
+  --border-primary: theme('colors.gray.300');
+  --border-secondary: theme('colors.gray.400');
+}
+
+/* Auto theme based on system preference */
+@media (prefers-color-scheme: light) {
+  [data-theme="auto"] {
+    --bg-primary: theme('colors.gray.50');
+    --bg-secondary: theme('colors.white');
+    --bg-tertiary: theme('colors.gray.100');
+    --text-primary: theme('colors.gray.900');
+    --text-secondary: theme('colors.gray.700');
+    --text-muted: theme('colors.gray.600');
+    --accent-primary: theme('colors.blue.600');
+    --accent-secondary: theme('colors.blue.700');
+    --border-primary: theme('colors.gray.300');
+    --border-secondary: theme('colors.gray.400');
+  }
+}
+
+/* Theme utility classes */
+.theme-bg-primary { background-color: var(--bg-primary); }
+.theme-bg-secondary { background-color: var(--bg-secondary); }
+.theme-bg-tertiary { background-color: var(--bg-tertiary); }
+.theme-text-primary { color: var(--text-primary); }
+.theme-text-secondary { color: var(--text-secondary); }
+.theme-text-muted { color: var(--text-muted); }
+.theme-accent-primary { color: var(--accent-primary); }
+.theme-border-primary { border-color: var(--border-primary); }
+.theme-border-secondary { border-color: var(--border-secondary); }

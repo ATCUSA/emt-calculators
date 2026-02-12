@@ -1,0 +1,271 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Development Commands
+
+```bash
+# Development
+pnpm dev             # Start local development server at localhost:4321
+pnpm build           # Build production site to ./dist/
+pnpm preview         # Preview production build locally
+
+# Astro CLI
+pnpm astro           # Run Astro CLI commands
+```
+
+## Architecture Overview
+
+This is an **EMT Calculator Tools** Progressive Web App built with **Astro 5** and **Svelte 5**, designed for Emergency Medical Technicians. The application provides medical calculators and reference materials optimized for field use.
+
+### Tech Stack
+- **Astro 5**: Static site generator with TypeScript support
+- **Svelte 5**: UI components using the new runes syntax (`$state`, `$derived`, `$effect`)
+- **Tailwind CSS 4**: Styling with Vite plugin integration
+- **TypeScript**: Strict mode with comprehensive medical type definitions
+- **PWA**: Service worker with offline caching strategies
+
+### Data Architecture
+
+**Centralized Tool Registry (`src/data/tools.ts`):**
+- `CALCULATORS` and `REFERENCES` arrays define all available tools
+- Each tool has `featured`, `status`, and `level` flags for filtering
+- Home page dynamically shows `featured: true` tools
+- Search functionality uses this single source of truth
+
+**Medical Types (`src/types/medical.ts`):**
+- Comprehensive TypeScript interfaces for all medical calculations
+- EMT certification levels: `EMT-B`, `EMT-A`, `AEMT`, `Paramedic`, `All`
+- Tool statuses: `active`, `coming-soon`, `planned`
+- Specific calculator types: O2, APGAR, GCS, Vital Signs, i-gel
+
+**Domain-Specific Data Files:**
+- `src/data/vitalSigns.ts`: Age-based vital sign ranges from WikEM/clinical guidelines
+- `src/data/apgar.ts`: APGAR scoring criteria and clinical interpretation logic
+
+### Component Architecture
+
+**Medical Calculator Pattern:**
+Each calculator follows a consistent pattern:
+1. **Svelte 5 Component**: Uses `$state` for inputs, `$derived` for calculations
+2. **Data Module**: Contains clinical logic and reference data
+3. **Type Definitions**: Medical interfaces in `types/medical.ts`
+4. **Astro Page**: Wraps component with Layout and educational content
+
+**Key Svelte 5 Patterns:**
+- Use `$state<Type>()` for reactive variables
+- Use `$derived.by(() => {...})` for complex derived calculations
+- Use `onclick={function}` event syntax (NOT `on:click`)
+- Components are client-loaded: `<Component client:load />`
+- **MCP Integration**: Use `mcp__svelte-docs__svelte-autofixer` tool to validate Svelte components
+- **MCP Integration**: Use `mcp__astro-docs__search_astro_docs` tool for Astro framework guidance
+
+### PWA Features
+
+**Service Worker (`public/sw.ts`):**
+- TypeScript service worker with proper type definitions
+- Caches essential files and calculator pages for offline use
+- Runtime caching for dynamic content
+- Version-based cache invalidation
+
+**Offline Strategy:**
+- Essential calculators work completely offline
+- Medical reference data cached locally
+- Update notifications for new versions
+
+### Medical Safety Considerations
+
+**Clinical Accuracy:**
+- All calculations based on established medical guidelines
+- Include manufacturer specifications (i-gel sizing, tank factors)
+- Proper medical citations and references included
+- Warning systems for concerning values
+
+**User Experience:**
+- Clear visual feedback for normal/abnormal ranges
+- Age-appropriate calculations (pediatric vs adult)
+- Safety reserves for critical calculations (O2 duration)
+- Professional medical disclaimer
+
+### File Organization
+
+```
+src/
+├── components/          # Svelte 5 components
+├── data/               # Medical data and tool registry
+├── layouts/            # Astro layout components
+├── pages/              # Astro pages (file-based routing)
+├── types/              # TypeScript definitions
+└── styles/             # Global CSS
+```
+
+### Adding New Tools
+
+1. **Define in Registry**: Add to `CALCULATORS` or `REFERENCES` in `src/data/tools.ts`
+2. **Create Types**: Add interfaces to `src/types/medical.ts`
+3. **Build Component**: Create Svelte 5 component following medical calculator pattern
+4. **Add Page**: Create Astro page that wraps component
+5. **Set Featured**: Tools marked `featured: true` appear on home page automatically
+
+### TypeScript Configuration
+
+Strict TypeScript configuration enabled:
+- `exactOptionalPropertyTypes`: Prevents `| undefined` confusion in medical calculations
+- `noUncheckedIndexedAccess`: Ensures safe array access for medical data
+- Medical type safety is critical for patient care applications
+
+## Git Workflow and Version Management
+
+### Repository Setup
+```bash
+# Initialize repository (if needed)
+git init
+git remote add origin https://github.com/ATCUSA/emt-calculators.git
+
+# Create GitHub repository
+gh repo create ATCUSA/emt-calculators --public --description "Essential calculators and reference tools for Emergency Medical Technicians, Advanced EMTs, and Paramedics"
+```
+
+### Branching Strategy
+
+**Main Branch Protection:**
+- `main` branch contains production-ready code
+- All changes must go through feature branches and pull requests
+- Never commit directly to `main` in production
+
+**Feature Branch Workflow:**
+```bash
+# Create feature branch from main
+git checkout main
+git pull origin main
+git checkout -b feature/calculator-name
+
+# Work on feature with descriptive commits
+git add .
+git commit -m "feat: add APGAR score calculator with clinical guidance"
+
+# Push feature branch
+git push -u origin feature/calculator-name
+
+# Create pull request
+gh pr create --title "Add APGAR Score Calculator" --body "Implements APGAR scoring with 0-2 scale and clinical interpretation"
+```
+
+### Commit Message Conventions
+
+Follow conventional commits for automated versioning:
+
+**Format:** `type(scope): description`
+
+**Types:**
+- `feat`: New medical calculator or reference tool
+- `fix`: Bug fix in calculation logic or UI
+- `docs`: Documentation updates (medical citations, user guides)
+- `style`: Code style changes (no logic changes)
+- `refactor`: Code refactoring without feature changes
+- `test`: Adding or updating tests
+- `chore`: Build process, dependency updates
+
+**Examples:**
+```bash
+# New features
+git commit -m "feat(calculator): add Glasgow Coma Scale with pediatric scoring"
+git commit -m "feat(reference): add pediatric vital signs ranges"
+
+# Bug fixes
+git commit -m "fix(o2-calc): correct tank factor calculation for E cylinders"
+git commit -m "fix(mobile): resolve hamburger menu click handler"
+
+# Documentation
+git commit -m "docs(medical): add UF citation for O2 tank calculations"
+git commit -m "docs(readme): update installation instructions"
+```
+
+### Semantic Versioning
+
+**Version Format:** `MAJOR.MINOR.PATCH`
+
+**Version Bump Rules:**
+- **MAJOR** (1.0.0 → 2.0.0): Breaking changes to calculator logic or API
+- **MINOR** (1.0.0 → 1.1.0): New calculators, reference tools, or significant features
+- **PATCH** (1.0.0 → 1.0.1): Bug fixes, UI improvements, documentation updates
+
+**Version Management:**
+```bash
+# Update version in multiple files
+# 1. package.json - NPM version
+# 2. src/config/version.ts - App version and changelog
+# 3. public/manifest.json - PWA version
+# 4. public/sw.ts - Service worker cache version
+
+# Example version bump workflow
+git checkout main
+git pull origin main
+# Update version files
+git add package.json src/config/version.ts public/manifest.json public/sw.ts
+git commit -m "chore: bump version to 1.1.0"
+git tag v1.1.0
+git push origin main --tags
+```
+
+### Release Process
+
+**For Medical Safety:**
+1. **Test Calculations**: Verify all medical calculations with known test cases
+2. **Review Citations**: Ensure all medical sources are properly cited
+3. **Offline Testing**: Test PWA functionality without network connection
+4. **Mobile Testing**: Verify responsive design on various devices
+5. **Accessibility**: Check keyboard navigation and screen reader compatibility
+
+**Release Steps:**
+```bash
+# 1. Create release branch
+git checkout -b release/v1.1.0
+
+# 2. Update changelog in src/config/version.ts
+# 3. Run build and test
+pnpm build
+pnpm preview
+
+# 4. Create release commit
+git add .
+git commit -m "chore: prepare release v1.1.0"
+
+# 5. Merge to main and tag
+git checkout main
+git merge release/v1.1.0
+git tag v1.1.0
+git push origin main --tags
+
+# 6. Deploy to production
+# (Cloudflare Pages will auto-deploy from main branch)
+```
+
+### Development Best Practices
+
+**Before Committing:**
+1. Run type check: `pnpm astro check`
+2. Test calculations manually with known medical scenarios
+3. Verify PWA functionality works offline
+4. Check mobile responsiveness
+
+**Medical Code Review Checklist:**
+- [ ] Calculations match established medical guidelines
+- [ ] Proper medical citations included
+- [ ] Warning systems for concerning values
+- [ ] Age-appropriate calculations (pediatric vs adult)
+- [ ] Safety reserves for critical calculations
+- [ ] Clear visual feedback for normal/abnormal ranges
+
+**Emergency Hotfixes:**
+```bash
+# For critical medical calculation errors
+git checkout main
+git checkout -b hotfix/critical-calculation-fix
+# Fix the issue
+git commit -m "fix(critical): correct O2 tank duration formula"
+git checkout main
+git merge hotfix/critical-calculation-fix
+git tag v1.0.1
+git push origin main --tags
+```

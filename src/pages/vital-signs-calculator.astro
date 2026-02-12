@@ -1,0 +1,98 @@
+---
+import Layout from '../layouts/Layout.astro';
+import VitalSignsCalculator from '../components/VitalSignsCalculator.svelte';
+---
+
+<Layout
+	title="Vital Signs Assessment | EMT Calculator Tools"
+	description="Vital Signs Assessment Tool - Evaluate heart rate, blood pressure, and respiratory rate against age-appropriate normal ranges"
+	showBackButton={true}
+>
+	<div class="text-center mb-8">
+		<h1 class="text-3xl font-bold mb-4 theme-accent-primary">Vital Signs Assessment</h1>
+		<p class="theme-text-secondary max-w-2xl mx-auto">
+			Assess and interpret vital signs against age-appropriate normal ranges. Includes pediatric through elderly references with clinical alerts for abnormal values.
+		</p>
+	</div>
+
+	<VitalSignsCalculator client:load />
+
+	<div class="mt-12 max-w-4xl mx-auto">
+		<div class="grid md:grid-cols-2 gap-8">
+			<div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+				<h3 class="text-lg font-semibold mb-4 theme-accent-primary">Assessment Guidelines</h3>
+				<div class="space-y-3 text-sm">
+					<div>
+						<span class="theme-text-primary font-medium">Trending is Key:</span>
+						<p class="theme-text-secondary">Single measurements should be interpreted in context. Look for trends over time.</p>
+					</div>
+					<div>
+						<span class="theme-text-primary font-medium">Environmental Factors:</span>
+						<p class="theme-text-secondary">Consider temperature, stress, pain, and medications that may affect vital signs.</p>
+					</div>
+					<div>
+						<span class="theme-text-primary font-medium">Clinical Context:</span>
+						<p class="theme-text-secondary">Always assess vital signs alongside patient presentation and chief complaint.</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+				<h3 class="text-lg font-semibold mb-4 theme-accent-primary">Technique Tips</h3>
+				<div class="space-y-3 text-sm">
+					<div>
+						<span class="theme-text-primary font-medium">Blood Pressure:</span>
+						<p class="theme-text-secondary">Use appropriate cuff size - cuff should cover 80% of arm circumference.</p>
+					</div>
+					<div>
+						<span class="theme-text-primary font-medium">Respiratory Rate:</span>
+						<p class="theme-text-secondary">Count when patient is unaware for most accurate reading.</p>
+					</div>
+					<div>
+						<span class="theme-text-primary font-medium">Heart Rate:</span>
+						<p class="theme-text-secondary">Palpate for 30-60 seconds, assess quality and regularity.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="grid md:grid-cols-3 gap-6 mt-8">
+			<div class="bg-red-900/20 border border-red-700/50 rounded-lg p-4">
+				<h4 class="text-red-400 font-medium mb-2">Critical Signs</h4>
+				<ul class="text-red-200 text-xs space-y-1">
+					<li>• SBP <70 mmHg (shock)</li>
+					<li>• HR >150 or <50 bpm</li>
+					<li>• RR >30 or <10 bpm</li>
+					<li>• Altered mental status</li>
+				</ul>
+			</div>
+
+			<div class="bg-yellow-900/20 border border-yellow-700/50 rounded-lg p-4">
+				<h4 class="text-yellow-400 font-medium mb-2">Pediatric Considerations</h4>
+				<ul class="text-yellow-200 text-xs space-y-1">
+					<li>• Higher normal HR and RR</li>
+					<li>• Age-specific BP thresholds</li>
+					<li>• Consider developmental stage</li>
+					<li>• Crying affects all vitals</li>
+				</ul>
+			</div>
+
+			<div class="bg-green-900/20 border border-green-700/50 rounded-lg p-4">
+				<h4 class="text-green-400 font-medium mb-2">Documentation</h4>
+				<ul class="text-green-200 text-xs space-y-1">
+					<li>• Record time of measurement</li>
+					<li>• Note patient position</li>
+					<li>• Include cuff size for BP</li>
+					<li>• Document trends over time</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="bg-blue-900/20 border border-blue-700/50 rounded-lg p-6 mt-8">
+			<h3 class="text-lg font-semibold mb-3 text-blue-400">Clinical Note</h3>
+			<p class="text-blue-100 text-sm">
+				This tool provides reference ranges based on established pediatric and adult guidelines. Always consider individual patient factors, medical history, and current medications. When in doubt, consult with medical control or receiving facility for guidance on concerning vital sign findings.
+			</p>
+		</div>
+	</div>
+</Layout>

@@ -1,7 +1,15 @@
 {
   "name": "emt-calculators",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "description": "Essential calculators and reference tools for Emergency Medical Technicians, Advanced EMTs, and Paramedics",
+  "author": "Austin Cole",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "homepage": "https://emt-calc.pages.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ATCUSA/emt-calculators.git"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -9,6 +17,15 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.17.1"
+    "astro": "^5.17.1",
+    "@astrojs/svelte": "^7.2.5",
+    "@tailwindcss/vite": "^4.1.18",
+    "svelte": "^5.0.0",
+    "tailwindcss": "^4.1.18",
+    "lucide-svelte": "^0.468.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "@types/serviceworker": "^0.0.95"
   }
 }

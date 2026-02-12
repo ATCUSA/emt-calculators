@@ -1,0 +1,73 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ToolSearch from '../components/ToolSearch.svelte';
+import SupportPrompt from '../components/SupportPrompt.svelte';
+import { Calculator } from 'lucide-svelte';
+---
+
+<Layout
+    title="All Calculators - EMT Calculator Tools"
+    description="Browse and search through all available medical calculators for EMTs, AEMTs, and Paramedics."
+    showBackButton={true}
+>
+    <div class="max-w-6xl mx-auto">
+        <!-- Page Header -->
+        <div class="text-center mb-8">
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <Calculator class="w-10 h-10 theme-accent-primary" />
+                <h1 class="text-4xl font-bold theme-accent-primary">All Calculators</h1>
+            </div>
+            <p class="text-xl theme-text-secondary max-w-3xl mx-auto">
+                Find the right medical calculator for your needs. Search by name, category, or keywords.
+            </p>
+        </div>
+
+        <!-- Support Prompt -->
+        <SupportPrompt variant="prominent" client:load />
+
+        <!-- Search and Results -->
+        <ToolSearch
+            category="calculator"
+            placeholder="Search calculators (e.g., oxygen, airway, medication)..."
+            client:load
+        />
+
+        <!-- Quick Categories -->
+        <div class="mt-12 p-6 theme-bg-secondary rounded-lg border theme-border-primary">
+            <h2 class="text-lg font-semibold theme-text-primary mb-4">Browse by Category</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="text-center p-3 theme-bg-tertiary rounded border">
+                    <div class="text-2xl mb-2">🫁</div>
+                    <div class="text-sm font-medium theme-text-primary">Respiratory</div>
+                    <div class="text-xs theme-text-muted">O2 calculations</div>
+                </div>
+                <div class="text-center p-3 theme-bg-tertiary rounded border">
+                    <div class="text-2xl mb-2">🔧</div>
+                    <div class="text-sm font-medium theme-text-primary">Airway</div>
+                    <div class="text-xs theme-text-muted">Sizing & management</div>
+                </div>
+                <div class="text-center p-3 theme-bg-tertiary rounded border">
+                    <div class="text-2xl mb-2">💊</div>
+                    <div class="text-sm font-medium theme-text-primary">Medications</div>
+                    <div class="text-xs theme-text-muted">Dosage calculations</div>
+                </div>
+                <div class="text-center p-3 theme-bg-tertiary rounded border">
+                    <div class="text-2xl mb-2">📋</div>
+                    <div class="text-sm font-medium theme-text-primary">Assessment</div>
+                    <div class="text-xs theme-text-muted">Scores & scales</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tips -->
+        <div class="mt-8 p-4 bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-400 rounded">
+            <h3 class="font-medium text-blue-800 dark:text-blue-200 mb-2">Search Tips</h3>
+            <div class="text-sm text-blue-700 dark:text-blue-300 space-y-1">
+                <div>• Use specific terms like "oxygen", "airway", or "medication"</div>
+                <div>• Search by EMT level: "EMT-B", "AEMT", or "Paramedic"</div>
+                <div>• Try medical abbreviations like "IV", "GCS", or "BMI"</div>
+                <div>• Multiple words work too: "drip rate calculator"</div>
+            </div>
+        </div>
+    </div>
+</Layout>

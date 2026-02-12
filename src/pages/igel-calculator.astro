@@ -1,0 +1,12 @@
+---
+import Layout from '../layouts/Layout.astro';
+import IgelCalculator from '../components/IgelCalculator.svelte';
+---
+
+<Layout
+	title="i-gel Size Calculator - EMT Calculator Tools"
+	description="Calculate appropriate i-gel size based on patient height and estimated ideal body weight. Includes manufacturer guidelines and medical citations."
+	showBackButton={true}
+>
+	<IgelCalculator client:load />
+</Layout>

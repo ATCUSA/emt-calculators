@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+import OxygenCalculator from '../components/OxygenCalculator.svelte';
+---
+
+<Layout
+	title="O2 Tank Calculator | EMT Calculator Tools"
+	description="O2 Tank Duration Calculator - Calculate oxygen tank duration for EMT use"
+	showBackButton={true}
+>
+	<div class="text-center mb-8">
+		<h1 class="text-3xl font-bold mb-4 theme-accent-primary">O₂ Tank Duration Calculator</h1>
+		<p class="theme-text-secondary max-w-2xl mx-auto">
+			Calculate how long an oxygen tank will last based on tank size, current pressure, and flow rate.
+			Essential for pre-hospital care planning and emergency response.
+		</p>
+	</div>
+
+	<OxygenCalculator client:load />
+
+	<div class="mt-12 max-w-4xl mx-auto">
+		<div class="grid md:grid-cols-2 gap-8">
+			<div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+				<h3 class="text-lg font-semibold mb-4 theme-accent-primary">Tank Size Reference</h3>
+				<div class="space-y-2 text-sm">
+					<div class="flex justify-between">
+						<span class="theme-text-secondary">D Tank:</span>
+						<span class="theme-text-primary">0.16 L/PSI (Small portable)</span>
+					</div>
+					<div class="flex justify-between">
+						<span class="theme-text-secondary">E Tank:</span>
+						<span class="theme-text-primary">0.28 L/PSI (Standard portable)</span>
+					</div>
+					<div class="flex justify-between">
+						<span class="theme-text-secondary">M Tank:</span>
+						<span class="theme-text-primary">1.56 L/PSI (Large portable)</span>
+					</div>
+					<div class="flex justify-between">
+						<span class="theme-text-secondary">H Tank:</span>
+						<span class="theme-text-primary">3.14 L/PSI (Stationary)</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+				<h3 class="text-lg font-semibold mb-4 theme-accent-primary">Common Flow Rates</h3>
+				<div class="space-y-2 text-sm">
+					<div class="flex justify-between">
+						<span class="theme-text-secondary">Nasal Cannula:</span>
+						<span class="theme-text-primary">1-6 L/min</span>
+					</div>
+					<div class="flex justify-between">
+						<span class="theme-text-secondary">Simple Face Mask:</span>
+						<span class="theme-text-primary">5-10 L/min</span>
+					</div>
+					<div class="flex justify-between">
+						<span class="theme-text-secondary">Non-Rebreather:</span>
+						<span class="theme-text-primary">10-15 L/min</span>
+					</div>
+					<div class="flex justify-between">
+						<span class="theme-text-secondary">BVM Ventilation:</span>
+						<span class="theme-text-primary">10-25 L/min</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="bg-yellow-900/20 border border-yellow-700/50 rounded-lg p-6 mt-8">
+			<h3 class="text-lg font-semibold mb-3 text-yellow-400">Safety Note</h3>
+			<p class="text-yellow-100 text-sm">
+				Always account for safety reserves when planning oxygen usage. Consider factors such as
+				transport time, potential delays, and the need for higher flow rates during patient deterioration.
+				This calculator provides estimates based on ideal conditions.
+			</p>
+		</div>
+	</div>
+</Layout>

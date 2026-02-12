@@ -1,0 +1,14 @@
+# Cloudflare Pages redirects
+# Handle service worker
+/sw.js /sw.js 200
+/manifest.json /manifest.json 200
+
+# Handle PWA app icons
+/icon-*.png /icon-*.png 200
+
+# Handle static assets
+/favicon.svg /favicon.svg 200
+/favicon.ico /favicon.ico 200
+
+# Handle all other routes (SPA fallback not needed for static site)
+# All routes should be handled by Astro's static generation
