@@ -3,166 +3,217 @@
 ## 🚧 Current Status
 This application is a **work-in-progress** educational tool. It is **NOT** intended for production medical use.
 
-## 🧮 Planned Calculator Tools
+---
 
-### Basic EMT Level
-- **IV Drip Rate Calculator** - Calculate mL/hr and gtts/min for various tubing
-- **Pediatric Dosage Calculator** - Weight-based medication calculations
-- **Body Surface Area (BSA)** - Dubois formula for burn assessment
-- **Burn Percentage Calculator** - Rule of 9s with visual guide
-- **GCS Calculator** - Glasgow Coma Scale with detailed scoring
-- **APGAR Score** - Newborn assessment tool
-- **Pain Scale Reference** - Visual analog and numeric scales
+## 🎯 **PRIORITY FEATURES** (Critical for EMT Field Use)
 
-### Advanced EMT Level
-- **Medication Dosage Calculator** - Advanced life support medications
-- **Cardiac Output Calculator** - Stroke volume × heart rate
-- **Mean Arterial Pressure (MAP)** - (2×DBP + SBP) ÷ 3
-- **Shock Index Calculator** - Heart rate ÷ systolic BP
-- **Anion Gap Calculator** - Electrolyte balance assessment
-- **A-a Gradient Calculator** - Alveolar-arterial oxygen gradient
+### **🧠 Stroke Assessment Tools** ⭐ **TOP PRIORITY**
+- **FAST Scale Calculator** (Face, Arms, Speech, Time) - Most common stroke screening
+- **BEFAST Scale** (Balance, Eyes, Face, Arms, Speech, Time) - Enhanced stroke detection
+- **Cincinnati Prehospital Stroke Scale** - Research-validated field assessment
+- **NIHSS Calculator** (Advanced) - National Institutes of Health Stroke Scale
+- **Last Known Normal Time Calculator** - Critical for treatment windows
 
-### Paramedic Level
-- **12-Lead ECG Interpretation** - Automated analysis assistance
-- **Ventilator Settings** - PEEP, FiO2, tidal volume calculations
-- **Hemodynamic Calculator** - SVR, PVR, cardiac index
-- **Pharmacokinetics** - Drug half-life and clearance calculations
-- **Blood Gas Interpreter** - ABG analysis with compensation
-- **Fluid Resuscitation** - Parkland formula for burns
+### **💊 Critical Medical Calculators**
+- **Fluid Resuscitation Calculator** (Parkland Formula) - Essential for burn/trauma care
+- **Pediatric Weight Estimation** (Digital Broselow Tape) - Critical for medication dosing
+- **Shock Index Calculator** (HR/SBP) - Early shock detection
+- **Drug Dosage Calculator** - Weight-based medication calculations with contraindications
+- **Pain Scale Assessment** - Visual analog and numeric pain scales
 
-## 🩺 Clinical References
-
-### Assessment Tools
-- **Vital Signs Ranges** - Age-appropriate normal values
-- **Pediatric Assessment Triangle** - Appearance, breathing, circulation
-- **SAMPLE History** - Systematic patient history collection
-- **OPQRST Pain Assessment** - Comprehensive pain evaluation
-- **DCAP-BTLS** - Injury assessment mnemonic
-
-### Emergency Protocols
-- **ACLS Algorithms** - Advanced cardiac life support flowcharts
-- **PALS Algorithms** - Pediatric advanced life support
-- **Stroke Assessment** - FAST, BEFAST, Cincinnati scales
-- **Sepsis Criteria** - qSOFA and SIRS criteria
-- **Trauma Scoring** - Revised trauma score, injury severity
-
-### Drug References
-- **Common Medications** - Dosages, indications, contraindications
-- **Pediatric Formulations** - Weight-based dosing charts
-- **Antidotes Reference** - Poisoning and overdose treatments
-- **Allergy Alternatives** - Alternative medications for allergies
-
-## 🔧 Technical Enhancements
-
-### User Experience
-- **Dark/Light/Auto Theme** ✅ *Already implemented*
-- **Offline Functionality** ✅ *Already implemented*
-- **Installation Prompts** ✅ *Already implemented*
-- **Calculation History** - Save and review previous calculations
-- **Favorites System** - Quick access to frequently used tools
-- **Custom Presets** - Save common values (unit protocols, etc.)
-- **Quick Actions** - Swipe gestures for common operations
-
-### Data & Sync
-- **Cloud Backup** - Sync settings across devices
-- **Unit Protocols** - Customizable local protocol integration
-- **Offline Updates** - Background content updates
-- **Export Functionality** - Share calculations as PDF/text
-- **Print Support** - Printer-friendly calculation reports
-
-### Advanced Features
-- **Voice Input** - Hands-free data entry for emergencies
-- **Apple Watch Integration** - Quick calculations on wrist
-- **QR Code Sharing** - Share calculation setups
-- **Multi-language Support** - Spanish, French, etc.
-- **Accessibility Improvements** - Screen reader optimization
-- **Integration APIs** - Connect with EMR systems
-
-## 📊 Quality & Safety
-
-### Validation & Testing
-- **Medical Review** - Validation by practicing paramedics
-- **Formula Verification** - Cross-reference with medical literature
-- **Edge Case Testing** - Handle unusual input values
-- **Accuracy Benchmarks** - Compare against reference standards
-- **User Testing** - Real-world EMS provider feedback
-
-### Educational Features
-- **Formula Explanations** - Show calculation methodology
-- **Reference Sources** - Link to medical literature
-- **Practice Mode** - Safe environment for learning
-- **Certification Prep** - NREMT-style practice questions
-- **Video Tutorials** - How-to guides for complex calculations
-
-### Safety Features
-- **Input Validation** - Prevent dangerous calculation errors
-- **Range Warnings** - Alert for values outside normal ranges
-- **Double-check Prompts** - Confirm critical calculations
-- **Error Reporting** - Easy bug reporting for users
-- **Version Control** - Track formula updates and changes
-
-## 🚀 Performance & Reliability
-
-### Technical Improvements
-- **Faster Load Times** - Optimize bundle size and caching
-- **Better Offline Support** - Enhanced service worker caching
-- **Background Updates** - Seamless content updates
-- **Error Recovery** - Graceful handling of network issues
-- **Performance Monitoring** - Track app performance metrics
-
-### Platform Support
-- **iOS Safari** - Full PWA support and optimization
-- **Android Chrome** - Enhanced install experience
-- **Desktop Support** - Electron wrapper for desktop use
-- **Tablet Optimization** - Larger screen layouts
-- **Accessibility Compliance** - WCAG 2.1 AA standards
-
-## 🎯 Roadmap Timeline
-
-### Phase 1 (Q1 2024)
-- ✅ O2 Tank Duration Calculator
-- ✅ PWA Functionality
-- ✅ Basic UI/UX
-- 🔄 Legal Disclaimers
-- 🔄 Version Update System
-
-### Phase 2 (Q2 2024)
-- 🔲 IV Drip Rate Calculator
-- 🔲 Pediatric Dosage Calculator
-- 🔲 GCS Calculator
-- 🔲 Basic vital signs reference
-- 🔲 Calculation history
-
-### Phase 3 (Q3 2024)
-- 🔲 Advanced EMT calculators
-- 🔲 Clinical references
-- 🔲 User preferences
-- 🔲 Export functionality
-- 🔲 Medical review process
-
-### Phase 4 (Q4 2024)
-- 🔲 Paramedic-level tools
-- 🔲 Voice input
-- 🔲 Cloud sync
-- 🔲 Multi-platform support
-- 🔲 Integration capabilities
-
-## 🤝 Contributing
-
-### How to Help
-- **Medical Accuracy** - Review formulas and references
-- **Feature Requests** - Suggest useful calculator tools
-- **Bug Reports** - Report calculation errors or UI issues
-- **User Testing** - Test with real EMS scenarios
-- **Documentation** - Improve instructions and help text
-
-### Collaboration
-- **Open Source** - Consider open-sourcing for community contributions
-- **Medical Partnerships** - Collaborate with EMS training programs
-- **Certification Bodies** - Align with NREMT and other standards
-- **Equipment Manufacturers** - Integrate with medical device data
-- **EMS Agencies** - Customize for local protocols and procedures
+### **🚨 Emergency Assessment References**
+- **Sepsis Screening** (qSOFA, SIRS criteria) - Early sepsis detection
+- **Trauma Scoring** (Revised Trauma Score, Injury Severity) - Triage assistance
+- **SAMPLE History Guide** - Systematic patient history collection
+- **OPQRST Pain Assessment** - Comprehensive pain evaluation framework
 
 ---
 
-**Remember**: This tool is for educational purposes and should not replace proper medical training, protocols, or clinical judgment. Always follow your local medical director's guidelines and protocols.
+## 🛠️ **QUALITY & SAFETY IMPROVEMENTS** (Before New Features)
+
+### **Input Validation & Safety**
+- **Physiological Limits Validation** - Prevent dangerous out-of-range entries
+- **Critical Value Double-Check Prompts** - Confirmation for life-threatening readings
+- **Enhanced Error Handling** - Medical-appropriate error messages
+- **Calculation Boundaries** - Safe minimum/maximum thresholds for all calculators
+
+### **UX/UI Field Optimizations**
+- **Emergency Mode Interface** - Larger touch targets for gloved hands/stress
+- **Voice Input Support** - Hands-free operation for ambulance use
+- **Swipe Gesture Controls** - Quick reset/unit toggle for efficiency
+- **Color-Coded Urgency System** - Visual priority indicators (normal/caution/critical)
+
+### **Medical Safety Features**
+- **Calculation History** - Timestamped results for documentation
+- **Formula Explanations** - Show methodology with medical citations
+- **Range Warnings** - Alerts for values outside normal ranges
+- **State Management Fixes** - Consistent nullable/non-nullable patterns
+
+---
+
+## 📱 **ESSENTIAL CALCULATORS** (High Impact)
+
+### **Fluid & Hemodynamics**
+- **IV Drip Rate Calculator** - mL/hr and gtts/min for various tubing sets
+- **Mean Arterial Pressure (MAP)** - (2×DBP + SBP) ÷ 3 with clinical interpretation
+- **Body Surface Area (BSA)** - Dubois formula for burn percentage calculations
+- **Blood Pressure Classification** - AHA guidelines with treatment recommendations
+
+### **Respiratory & Airway**
+- **A-a Gradient Calculator** - Alveolar-arterial oxygen gradient assessment
+- **Ventilator Settings Helper** - Basic PEEP, FiO2, tidal volume guidelines
+- **End-Tidal CO2 Reference** - Normal values and clinical correlations
+
+### **Cardiac Assessment**
+- **QT Interval Calculator** - Corrected QT (QTc) with drug interaction warnings
+- **Cardiac Output Estimation** - Simplified stroke volume calculations
+- **Heart Rate Variability** - Basic autonomic function assessment
+
+### **Pediatric Specialized**
+- **Pediatric Assessment Triangle** - Appearance, breathing, circulation scoring
+- **Broselow Tape Digital** - Length-based weight estimation with equipment sizes
+- **Pediatric Vital Signs** - Age-specific normal ranges with percentiles
+
+---
+
+## 🩺 **CLINICAL REFERENCES** (Reference Tools)
+
+### **Protocol Quick References**
+- **ACLS Algorithm Cards** - Advanced cardiac life support flowcharts
+- **PALS Algorithm Cards** - Pediatric advanced life support protocols
+- **BLS Decision Trees** - Basic life support step-by-step guides
+- **Airway Management Guide** - Device selection and technique references
+
+### **Assessment Mnemonics**
+- **DCAP-BTLS** - Trauma assessment checklist
+- **AVPU Scale** - Level of consciousness assessment
+- **PEARL Assessment** - Pupil evaluation criteria
+- **TICLS** - Pediatric assessment tool
+
+### **Medication References**
+- **Emergency Drug Guide** - Dosages, indications, contraindications
+- **Antidotes Reference** - Poisoning and overdose treatments
+- **Drug Interaction Checker** - Common dangerous combinations
+- **Allergy Alternative Guide** - Alternative medications for common allergies
+
+---
+
+## ⚙️ **ADVANCED FEATURES** (Future Enhancements)
+
+### **Device Integration**
+- **Bluetooth Connectivity** - Automatic data entry from monitors
+- **Apple Watch Integration** - Quick calculations on wrist device
+- **QR Code Generation** - Share calculation setups between devices
+- **Barcode Scanner** - Medication verification and dosing
+
+### **Cloud & Sync Features**
+- **Cross-Device Sync** - Settings and history across multiple devices
+- **Unit Protocol Integration** - Local protocol customization
+- **Export Functionality** - PDF reports and data sharing
+- **Backup & Restore** - Cloud-based data protection
+
+### **Educational Tools**
+- **Practice Mode** - Safe environment for learning calculations
+- **NREMT Prep Integration** - Practice questions aligned with certification
+- **Scenario Simulations** - Interactive patient scenarios
+- **Performance Analytics** - Track accuracy and speed improvements
+
+---
+
+## 🔐 **SECURITY & COMPLIANCE**
+
+### **Data Protection**
+- **HIPAA Compliance Preparation** - If patient data features are added
+- **Local Storage Encryption** - Protect sensitive calculation history
+- **Secure Communication** - Encrypted data transmission for cloud features
+- **Privacy Controls** - User control over data collection and sharing
+
+### **Code Security**
+- **Input Sanitization** - Prevent injection attacks
+- **Content Security Policy** - Enhanced CSP headers
+- **Dependency Scanning** - Automated vulnerability detection
+- **Security Auditing** - Regular penetration testing
+
+---
+
+## 🚀 **TECHNICAL IMPROVEMENTS**
+
+### **Performance Optimization**
+- **Bundle Splitting** - Lazy load non-critical calculators
+- **Critical Path Preloading** - Faster access to essential tools
+- **Service Worker Enhancement** - Better offline caching strategies
+- **Memory Management** - Efficient state management for complex calculations
+
+### **Accessibility & Compliance**
+- **WCAG 2.1 AA Standards** - Full accessibility compliance
+- **Screen Reader Optimization** - Enhanced support for visually impaired
+- **Keyboard Navigation** - Complete keyboard-only operation
+- **High Contrast Mode** - Improved visibility in bright environments
+
+### **Multi-Platform Support**
+- **iOS Safari PWA** - Enhanced install experience
+- **Android WebAPK** - Native-like Android integration
+- **Desktop Progressive Web App** - Full desktop functionality
+- **Tablet Optimization** - Larger screen layouts and features
+
+---
+
+## 📅 **IMPLEMENTATION TIMELINE**
+
+### **Phase 1: Quality & Safety** (Month 1)
+- ✅ Current calculators working properly
+- 🔄 Input validation and safety checks
+- 🔄 Emergency mode interface
+- 🔄 Critical value confirmations
+- 🔄 Enhanced error handling
+
+### **Phase 2: Critical Features** (Month 2-3)
+- 🔲 Stroke assessment tools (FAST, BEFAST, Cincinnati)
+- 🔲 Fluid resuscitation calculator
+- 🔲 Pediatric weight estimation
+- 🔲 Shock index calculator
+- 🔲 Calculation history system
+
+### **Phase 3: Essential Calculators** (Month 4-6)
+- 🔲 Drug dosage calculator
+- 🔲 IV drip rate calculator
+- 🔲 Pain scale assessment
+- 🔲 Vital signs enhancements
+- 🔲 Voice input capability
+
+### **Phase 4: Advanced Features** (Month 7-12)
+- 🔲 Device integration
+- 🔲 Cloud sync capabilities
+- 🔲 Educational practice mode
+- 🔲 Multi-platform optimization
+- 🔲 Advanced clinical references
+
+---
+
+## 🤝 **DEVELOPMENT PRIORITIES**
+
+### **Current Focus**
+1. **Medical Safety First** - All calculations must be validated and safe
+2. **Field Usability** - Optimize for real emergency situations
+3. **Code Quality** - Maintainable, testable, secure codebase
+4. **Performance** - Fast, reliable operation in critical moments
+
+### **Success Metrics**
+- **Accuracy**: 100% calculation accuracy with medical validation
+- **Speed**: Sub-second calculation times for all tools
+- **Reliability**: 99.9% uptime and error-free operation
+- **Usability**: Effective use by EMTs in actual field conditions
+
+---
+
+## ⚠️ **IMPORTANT DISCLAIMER**
+
+**This tool is for educational purposes and should not replace proper medical training, protocols, or clinical judgment. Always follow your local medical director's guidelines and protocols. All calculations should be independently verified before clinical use.**
+
+---
+
+## 🔄 **STATUS LEGEND**
+- ✅ **Completed** - Feature implemented and tested
+- 🔄 **In Progress** - Currently being developed
+- 🔲 **Planned** - Scheduled for future development
+- ⭐ **Priority** - Critical feature for EMT field use

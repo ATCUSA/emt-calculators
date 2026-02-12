@@ -1,0 +1,89 @@
+version: 2
+updates:
+  # NPM dependencies
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/New_York"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "ATCUSA"
+    assignees:
+      - "ATCUSA"
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps-dev"
+      include: "scope"
+
+    # Group updates for better organization
+    groups:
+      # Critical medical dependencies (manual review required)
+      critical-medical:
+        patterns:
+          - "svelte"
+          - "astro"
+          - "@astrojs/*"
+          - "typescript"
+        update-types:
+          - "minor"
+          - "patch"
+
+      # Development tools (can auto-merge patches)
+      dev-tools:
+        patterns:
+          - "eslint"
+          - "prettier"
+          - "@types/*"
+          - "vitest"
+          - "playwright"
+        update-types:
+          - "patch"
+
+      # Security updates (high priority)
+      security:
+        patterns:
+          - "*"
+        dependency-type: "production"
+        update-types:
+          - "patch"
+
+    # Allow specific dependency updates
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+
+    # Ignore specific packages if needed
+    ignore:
+      # Ignore major version updates for critical packages
+      - dependency-name: "svelte"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "astro"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+
+    # Custom labels for medical project
+    labels:
+      - "dependencies"
+      - "medical-safety-review"
+
+  # GitHub Actions updates
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "10:00"
+      timezone: "America/New_York"
+    open-pull-requests-limit: 3
+    reviewers:
+      - "ATCUSA"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    labels:
+      - "github-actions"
+      - "ci-cd"

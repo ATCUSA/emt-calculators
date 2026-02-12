@@ -75,17 +75,27 @@ Each calculator follows a consistent pattern:
 
 ### Medical Safety Considerations
 
-**Clinical Accuracy:**
-- All calculations based on established medical guidelines
-- Include manufacturer specifications (i-gel sizing, tank factors)
-- Proper medical citations and references included
-- Warning systems for concerning values
+**CRITICAL SAFETY PRINCIPLES:**
+- **Safety First**: All code changes must maintain or improve medical safety
+- **Validation Required**: Every medical calculation must have input validation with physiological limits
+- **Double-Check Critical Values**: Life-threatening readings require confirmation prompts
+- **Error Handling**: Medical calculations must never crash - implement proper error boundaries
+- **Citation Accuracy**: All medical formulas must cite current, peer-reviewed sources
 
-**User Experience:**
-- Clear visual feedback for normal/abnormal ranges
-- Age-appropriate calculations (pediatric vs adult)
-- Safety reserves for critical calculations (O2 duration)
-- Professional medical disclaimer
+**Clinical Accuracy Standards:**
+- All calculations based on established medical guidelines with proper citations
+- Include manufacturer specifications (i-gel sizing, tank factors, medical device data)
+- Physiological limits validation (HR: 40-220 bpm, BP: 40-300 mmHg, O2 flow: 0-25 L/min)
+- Warning systems for concerning values with color-coded urgency (normal/caution/critical)
+- Professional medical disclaimers on all clinical tools
+
+**User Experience for Field Use:**
+- **Emergency Mode**: Larger touch targets (60px) for gloved hands and stress conditions
+- **Visual Hierarchy**: Color-coded results by medical urgency level
+- **Clear Feedback**: Immediate visual/audio feedback for normal/abnormal ranges
+- **Age-Appropriate**: Separate pediatric vs adult calculation pathways
+- **Safety Reserves**: Conservative calculations with safety margins (O2 duration, drug dosing)
+- **Quick Access**: Critical calculators accessible within 2 taps from home screen
 
 ### File Organization
 
@@ -181,6 +191,8 @@ git commit -m "docs(medical): add UF citation for O2 tank calculations"
 git commit -m "docs(readme): update installation instructions"
 ```
 
+**Important:** Never mention Claude, AI assistants, or automated tools in commit messages. Keep all commit messages professional and focused on the actual changes made.
+
 ### Semantic Versioning
 
 **Version Format:** `MAJOR.MINOR.PATCH`
@@ -269,3 +281,186 @@ git merge hotfix/critical-calculation-fix
 git tag v1.0.1
 git push origin main --tags
 ```
+
+## Code Quality Standards and Best Practices
+
+### **Development Priorities (Always Follow This Order)**
+1. **Medical Safety First** - All changes must maintain or improve medical accuracy and safety
+2. **Security** - Input validation, sanitization, and secure coding practices
+3. **Quality & Testing** - Code review, automated testing, error handling
+4. **Performance** - Fast, reliable operation for emergency situations
+5. **New Features** - Only add features after quality foundation is solid
+
+### **Code Review Requirements**
+
+**Pre-Development Checklist:**
+- [ ] Review `QUALITY_TASKS.md` for current priorities
+- [ ] Understand medical context and safety implications
+- [ ] Check `FUTURE_FEATURES.md` for planned approach
+- [ ] Ensure change aligns with EMT field use requirements
+
+**Code Quality Standards:**
+- **TypeScript Strict Mode**: All new code must use strict TypeScript with explicit types
+- **Svelte 5 Best Practices**: Use new runes syntax (`$state`, `$derived`, `$effect`)
+- **Medical Input Validation**: Every medical input must have physiological bounds checking
+- **Error Boundaries**: All calculations must be wrapped in error handling
+- **Consistent Patterns**: Follow established component patterns and naming conventions
+
+**Medical Code Review Checklist:**
+- [ ] **Calculation Accuracy**: Formula matches medical literature citations
+- [ ] **Input Validation**: Physiological limits enforced (see limits in CLAUDE.md)
+- [ ] **Critical Value Handling**: Life-threatening values trigger confirmation prompts
+- [ ] **Age Appropriateness**: Pediatric vs adult calculations properly separated
+- [ ] **Units Consistency**: Clear unit labels and proper conversion handling
+- [ ] **Error Handling**: Graceful fallbacks for invalid inputs or calculation errors
+- [ ] **Citations**: Proper medical references included for all clinical decisions
+
+### **Security and Safety Standards**
+
+**Input Validation Requirements:**
+```typescript
+// Required pattern for all medical inputs
+interface MedicalInputValidation {
+  min: number;           // Physiological minimum
+  max: number;           // Physiological maximum
+  type: 'integer' | 'decimal';
+  required: boolean;
+  fieldName: string;     // For error messages
+  clinicalContext?: string; // When validation fails
+}
+
+// Example: Heart rate validation
+const HR_VALIDATION: MedicalInputValidation = {
+  min: 40,               // Severe bradycardia threshold
+  max: 220,              // Maximum theoretical heart rate
+  type: 'integer',
+  required: true,
+  fieldName: 'Heart Rate',
+  clinicalContext: 'Values outside 40-220 bpm may indicate measurement error'
+};
+```
+
+**Critical Value Thresholds:**
+- **Heart Rate**: <40 or >150 bpm requires confirmation
+- **Blood Pressure**: Systolic <70 or >200 mmHg requires confirmation
+- **Oxygen Saturation**: <88% requires confirmation
+- **O2 Tank Duration**: <30 minutes requires confirmation
+- **Temperature**: <94°F or >106°F requires confirmation
+
+**Error Handling Pattern:**
+```typescript
+// Required pattern for all medical calculations
+const calculation = $derived.by(() => {
+  try {
+    if (!isValidInput(input)) {
+      return { error: 'Invalid input', result: null };
+    }
+    const result = performMedicalCalculation(input);
+    return { error: null, result };
+  } catch (error) {
+    console.error('Calculation error:', error);
+    return {
+      error: 'Calculation failed. Please verify inputs and try again.',
+      result: null
+    };
+  }
+});
+```
+
+### **Performance and Accessibility Standards**
+
+**Performance Requirements:**
+- **Initial Load**: Critical calculators must load within 2 seconds
+- **Calculation Speed**: All calculations must complete within 500ms
+- **Offline Support**: Essential tools must work completely offline
+- **Bundle Size**: Critical path must be <100KB compressed
+- **Memory Usage**: No memory leaks in long-running sessions
+
+**Accessibility Requirements (WCAG 2.1 AA):**
+- **Keyboard Navigation**: All functionality accessible via keyboard only
+- **Touch Targets**: Minimum 44px (60px in emergency mode)
+- **Color Contrast**: Minimum 4.5:1 ratio for normal text, 3:1 for large text
+- **Screen Readers**: Proper ARIA labels and live regions for dynamic content
+- **Focus Management**: Clear focus indicators and logical tab order
+
+### **Testing Requirements**
+
+**Required Tests Before Deployment:**
+```typescript
+// Unit tests for all medical calculations
+describe('Medical Calculator Tests', () => {
+  test('handles normal values correctly', () => { });
+  test('validates input boundaries', () => { });
+  test('handles edge cases gracefully', () => { });
+  test('returns appropriate error messages', () => { });
+  test('matches known medical reference values', () => { });
+});
+
+// Integration tests for user workflows
+describe('User Workflow Tests', () => {
+  test('complete O2 calculation workflow', () => { });
+  test('handles offline functionality', () => { });
+  test('emergency mode accessibility', () => { });
+});
+```
+
+**Medical Validation Process:**
+1. **Formula Verification**: Cross-reference with medical literature
+2. **Test Case Validation**: Verify against known clinical scenarios
+3. **Edge Case Testing**: Test boundary conditions and error states
+4. **Clinical Review**: Medical professional validation of calculations
+5. **Field Testing**: Real-world usability testing with EMT professionals
+
+### **Documentation Standards**
+
+**Code Documentation Requirements:**
+- **Medical Formulas**: Include citation and explanation for all medical calculations
+- **Component Purpose**: Clear description of medical use case
+- **Input Parameters**: Document expected ranges and units
+- **Error Conditions**: Document all possible error states and handling
+- **Accessibility**: Document keyboard shortcuts and screen reader behavior
+
+**File Header Template:**
+```typescript
+/**
+ * @fileoverview [Medical Calculator Name] - [Brief description of clinical use]
+ * @description [Detailed explanation of medical application and formulas used]
+ * @citations [Medical literature references with DOI/URL]
+ * @safety [Critical safety considerations and validation requirements]
+ * @accessibility [Keyboard shortcuts and screen reader features]
+ */
+```
+
+### **Deployment and Monitoring**
+
+**Pre-Deployment Checklist:**
+- [ ] All QUALITY_TASKS.md items for current phase completed
+- [ ] Medical calculations validated against test cases
+- [ ] Security scan passes with zero critical/high vulnerabilities
+- [ ] Performance benchmarks meet requirements
+- [ ] Accessibility testing passes WCAG 2.1 AA
+- [ ] Offline functionality tested and working
+- [ ] Mobile responsiveness verified on target devices
+
+**Post-Deployment Monitoring:**
+- Monitor Core Web Vitals for performance regressions
+- Track PWA installation rates and usage patterns
+- Monitor error rates and user-reported calculation issues
+- Review medical accuracy feedback from EMT professionals
+- Track accessibility compliance and user feedback
+
+### **Emergency Response Procedures**
+
+**Critical Bug Response (Medical Safety Issues):**
+1. **Immediate**: Take affected calculator offline if possible
+2. **Assess**: Determine scope and medical safety implications
+3. **Fix**: Create hotfix branch with minimal, targeted changes
+4. **Review**: Expedited medical and code review process
+5. **Deploy**: Emergency deployment with monitoring
+6. **Document**: Post-incident review and prevention measures
+
+**Communication Protocol:**
+- **Critical Issues**: Immediate notification to all stakeholders
+- **Security Issues**: Follow responsible disclosure and patch procedures
+- **Feature Requests**: Route through FUTURE_FEATURES.md planning process
+- **Bug Reports**: Triage based on medical safety impact level

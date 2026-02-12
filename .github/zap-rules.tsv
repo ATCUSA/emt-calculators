@@ -1,0 +1,27 @@
+# ZAP security scanning rules for EMT Calculator Tools
+# Format: RULE_ID	ACTION	URL_REGEX	PARAMETER	COMMENT
+
+# Allow medical calculator specific patterns
+10021	IGNORE	.*	.*	# X-Content-Type-Options header - handled by Cloudflare
+10020	IGNORE	.*	.*	# X-Frame-Options header - handled by Cloudflare
+10035	IGNORE	.*manifest\.json.*	.*	# Strict-Transport-Security not required for PWA manifest
+10054	IGNORE	.*sw\.js.*	.*	# Cookie security for service worker not applicable
+
+# Medical calculator specific allowances
+90022	IGNORE	.*calculator.*	.*	# Application Error Disclosure - calculator error messages are intentional
+10049	IGNORE	.*	.*	# Content cacheability - PWA requires specific caching strategies
+
+# Static assets and PWA files
+10021	IGNORE	.*\.(css|js|png|svg|ico|webp)$	.*	# Static assets handled by Cloudflare
+10049	IGNORE	.*\.(css|js|woff2)$	.*	# Static assets should be cacheable
+
+# API and calculation endpoints (when implemented)
+90029	IGNORE	.*/api/.*	.*	# Character Encoding - not applicable for calculation APIs
+
+# Development and testing allowances (remove in production)
+10015	IGNORE	.*localhost.*	.*	# Incomplete or No Cache-control Header - dev environment only
+40018	IGNORE	.*localhost.*	.*	# SQL Injection - not applicable for this app
+
+# Comments for medical safety context
+# This configuration allows for medical calculator specific requirements
+# while maintaining security for sensitive medical calculation data

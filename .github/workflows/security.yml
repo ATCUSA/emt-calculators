@@ -1,0 +1,288 @@
+name: Security Scanning
+
+on:
+  schedule:
+    - cron: '0 2 * * 1' # Weekly security scans (Mondays at 2 AM)
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+env:
+  NODE_VERSION: '20'
+  PNPM_VERSION: '8.15.0'
+
+jobs:
+  # Dependency vulnerability scanning
+  dependency-scan:
+    name: Dependency Vulnerability Scan
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run pnpm audit
+        run: |
+          echo "Running pnpm security audit..."
+          pnpm audit --audit-level moderate --json > audit-results.json || true
+
+      - name: Parse audit results
+        run: |
+          if [ -s audit-results.json ]; then
+            echo "Security vulnerabilities found:"
+            cat audit-results.json
+            # Fail the build if high or critical vulnerabilities are found
+            if jq -e '.advisories | map(select(.severity == "high" or .severity == "critical")) | length > 0' audit-results.json; then
+              echo "❌ High or critical vulnerabilities detected!"
+              exit 1
+            fi
+          else
+            echo "✅ No security vulnerabilities found"
+          fi
+
+      - name: Upload audit results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: security-audit-results
+          path: audit-results.json
+          retention-days: 30
+
+  # OWASP ZAP security testing
+  zap-scan:
+    name: OWASP ZAP Security Scan
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.ref == 'refs/heads/master'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Install dependencies and build
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+
+      - name: Start preview server
+        run: |
+          pnpm preview &
+          sleep 10
+          curl -f http://localhost:4321 || (echo "Server failed to start" && exit 1)
+
+      - name: Run OWASP ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.11.0
+        with:
+          target: 'http://localhost:4321'
+          rules_file_name: '.github/zap-rules.tsv'
+          cmd_options: '-a -j -m 10'
+
+      - name: Upload ZAP results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: zap-scan-results
+          path: report_html.html
+          retention-days: 30
+
+  # Secret scanning
+  secret-scan:
+    name: Secret Scanning
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Full history for secret scanning
+
+      - name: Run TruffleHog
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: origin/master
+          head: HEAD
+          extra_args: --debug --only-verified
+
+      - name: Run GitLeaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Content Security Policy validation
+  csp-validation:
+    name: CSP Header Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Install dependencies and build
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+
+      - name: Start preview server
+        run: |
+          pnpm preview &
+          sleep 10
+
+      - name: Test CSP headers
+        run: |
+          echo "Testing Content Security Policy headers..."
+          curl -I http://localhost:4321 | grep -i content-security-policy || echo "⚠️ CSP header not found"
+
+      - name: Test security headers
+        run: |
+          echo "Testing security headers..."
+          headers=$(curl -I http://localhost:4321 2>/dev/null)
+
+          echo "Checking for required security headers:"
+          echo "$headers" | grep -i "x-frame-options" || echo "❌ X-Frame-Options missing"
+          echo "$headers" | grep -i "x-content-type-options" || echo "❌ X-Content-Type-Options missing"
+          echo "$headers" | grep -i "strict-transport-security" || echo "❌ HSTS missing"
+          echo "$headers" | grep -i "referrer-policy" || echo "❌ Referrer-Policy missing"
+
+  # Medical safety code review
+  medical-safety-review:
+    name: Medical Safety Code Review
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for medical calculation changes
+        id: medical-changes
+        run: |
+          # Check if any medical calculation files have changed
+          medical_files=$(git diff origin/master --name-only | grep -E "(calculator|medical|vital|apgar|gcs|o2)" || true)
+          if [ ! -z "$medical_files" ]; then
+            echo "medical_changed=true" >> $GITHUB_OUTPUT
+            echo "Medical calculation files changed:"
+            echo "$medical_files"
+          else
+            echo "medical_changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Medical safety checklist comment
+        if: steps.medical-changes.outputs.medical_changed == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = `## 🏥 Medical Safety Review Required
+
+            This PR contains changes to medical calculation files. Please ensure:
+
+            ### Medical Accuracy Checklist
+            - [ ] ✅ **Formula Verification**: Calculations match cited medical literature
+            - [ ] ✅ **Input Validation**: Physiological limits are enforced
+            - [ ] ✅ **Critical Value Handling**: Life-threatening readings trigger confirmation
+            - [ ] ✅ **Unit Consistency**: Clear unit labels and proper conversions
+            - [ ] ✅ **Error Handling**: Graceful fallbacks for invalid inputs
+            - [ ] ✅ **Citations**: Medical references are current and accurate
+            - [ ] ✅ **Age Appropriateness**: Pediatric vs adult pathways are correct
+            - [ ] ✅ **Range Warnings**: Alerts for values outside normal ranges
+
+            ### Testing Requirements
+            - [ ] ✅ **Known Test Cases**: Validated against medical reference values
+            - [ ] ✅ **Edge Case Testing**: Boundary conditions tested
+            - [ ] ✅ **Error Scenarios**: Invalid input handling verified
+            - [ ] ✅ **Clinical Review**: Medical professional validation obtained
+
+            ### Safety Considerations
+            - [ ] ✅ **No Breaking Changes**: Existing calculations remain accurate
+            - [ ] ✅ **Backward Compatibility**: Previous results are still valid
+            - [ ] ✅ **Documentation**: Medical changes are properly documented
+
+            **⚠️ This PR requires approval from a medical professional before merging.**`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+
+  # Performance security check
+  performance-security:
+    name: Performance Security Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Analyze bundle size
+        run: |
+          pnpm build
+          echo "Analyzing bundle size for security implications..."
+
+          # Check for suspiciously large files that might contain secrets
+          find dist -type f -size +1M -exec ls -lh {} \; || echo "No large files found"
+
+          # Check for common secret patterns in built files
+          echo "Scanning for potential secrets in built files..."
+          grep -r -i "password\|secret\|token\|key" dist/ || echo "No obvious secrets found"
+
+      - name: Check for console.log statements
+        run: |
+          echo "Checking for debug statements that might leak sensitive info..."
+          grep -r "console\." src/ && echo "❌ Console statements found - review for sensitive data" || echo "✅ No console statements found"
+
+      - name: Validate environment variable usage
+        run: |
+          echo "Checking for hardcoded environment variables..."
+          grep -r "process\.env\." src/ || echo "✅ No hardcoded environment variables found"

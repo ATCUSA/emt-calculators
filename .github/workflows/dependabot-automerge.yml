@@ -1,0 +1,200 @@
+name: Dependabot Auto-merge
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+
+jobs:
+  dependabot-automerge:
+    name: Dependabot Auto-merge
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1.6.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check if safe to auto-merge
+        id: auto-merge-check
+        run: |
+          # Only auto-merge patch updates and minor updates for dev dependencies
+          if [[ "${{ steps.metadata.outputs.update-type }}" == "version-update:semver-patch" ]]; then
+            echo "auto_merge=true" >> $GITHUB_OUTPUT
+            echo "Auto-merge approved: patch update"
+          elif [[ "${{ steps.metadata.outputs.dependency-type }}" == "direct:development" && "${{ steps.metadata.outputs.update-type }}" == "version-update:semver-minor" ]]; then
+            echo "auto_merge=true" >> $GITHUB_OUTPUT
+            echo "Auto-merge approved: dev dependency minor update"
+          else
+            echo "auto_merge=false" >> $GITHUB_OUTPUT
+            echo "Auto-merge denied: ${{ steps.metadata.outputs.update-type }} for ${{ steps.metadata.outputs.dependency-type }}"
+          fi
+
+      - name: Wait for CI checks
+        if: steps.auto-merge-check.outputs.auto_merge == 'true'
+        uses: fountainhead/action-wait-for-check@v1.1.0
+        id: wait-for-checks
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          checkName: "Quality Checks"
+          ref: ${{ github.event.pull_request.head.sha }}
+          timeoutSeconds: 1800 # 30 minutes
+
+      - name: Wait for security checks
+        if: steps.auto-merge-check.outputs.auto_merge == 'true' && steps.wait-for-checks.outputs.conclusion == 'success'
+        uses: fountainhead/action-wait-for-check@v1.1.0
+        id: wait-for-security
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          checkName: "Dependency Vulnerability Scan"
+          ref: ${{ github.event.pull_request.head.sha }}
+          timeoutSeconds: 1800 # 30 minutes
+
+      - name: Approve pull request
+        if: |
+          steps.auto-merge-check.outputs.auto_merge == 'true' &&
+          steps.wait-for-checks.outputs.conclusion == 'success' &&
+          steps.wait-for-security.outputs.conclusion == 'success'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.pulls.createReview({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              event: 'APPROVE',
+              body: '🤖 Auto-approved: Safe dependency update passed all security checks'
+            });
+
+      - name: Enable auto-merge
+        if: |
+          steps.auto-merge-check.outputs.auto_merge == 'true' &&
+          steps.wait-for-checks.outputs.conclusion == 'success' &&
+          steps.wait-for-security.outputs.conclusion == 'success'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-number: ${{ github.event.number }}
+          merge-method: squash
+
+      - name: Comment on non-auto-mergeable PRs
+        if: steps.auto-merge-check.outputs.auto_merge == 'false'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const updateType = '${{ steps.metadata.outputs.update-type }}';
+            const dependencyType = '${{ steps.metadata.outputs.dependency-type }}';
+
+            let reason = '';
+            if (updateType === 'version-update:semver-major') {
+              reason = 'Major version updates require manual review for breaking changes';
+            } else if (updateType === 'version-update:semver-minor' && dependencyType === 'direct:production') {
+              reason = 'Production dependency minor updates require manual review';
+            } else {
+              reason = 'This update type requires manual review';
+            }
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `🔒 **Manual Review Required**
+
+              This Dependabot PR cannot be auto-merged: ${reason}
+
+              **Update Details:**
+              - Type: ${updateType}
+              - Dependency Type: ${dependencyType}
+              - Package: ${{ steps.metadata.outputs.dependency-names }}
+
+              **Review Checklist:**
+              - [ ] Check for breaking changes in changelog
+              - [ ] Verify compatibility with medical calculation accuracy
+              - [ ] Test critical calculator functionality
+              - [ ] Review security implications
+              - [ ] Validate TypeScript compatibility
+
+              Please review and merge manually if appropriate.`
+            });
+
+  # Medical safety check for dependency updates
+  medical-dependency-safety:
+    name: Medical Safety Check for Dependencies
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1.6.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check for medical-critical dependencies
+        id: medical-check
+        run: |
+          critical_deps=("svelte" "astro" "typescript" "@astrojs/svelte")
+          updated_package="${{ steps.metadata.outputs.dependency-names }}"
+
+          is_critical=false
+          for dep in "${critical_deps[@]}"; do
+            if [[ "$updated_package" == *"$dep"* ]]; then
+              is_critical=true
+              break
+            fi
+          done
+
+          if [[ "$is_critical" == "true" ]]; then
+            echo "medical_critical=true" >> $GITHUB_OUTPUT
+            echo "Critical medical dependency updated: $updated_package"
+          else
+            echo "medical_critical=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Add medical safety warning
+        if: steps.medical-check.outputs.medical_critical == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `🏥 **Medical Safety Review Required**
+
+              This dependency update affects critical components used in medical calculations.
+
+              **Required Testing Before Merge:**
+              - [ ] Verify all medical calculators still function correctly
+              - [ ] Test O2 tank duration calculations with known values
+              - [ ] Validate APGAR scoring accuracy
+              - [ ] Check vital signs assessment ranges
+              - [ ] Test Glasgow Coma Scale calculations
+              - [ ] Verify i-gel sizing recommendations
+
+              **Validation Checklist:**
+              - [ ] No calculation accuracy regressions
+              - [ ] TypeScript types remain correct
+              - [ ] Component state management unchanged
+              - [ ] Error handling still works properly
+
+              **⚠️ Do not merge without thorough medical calculation testing!**`
+            });
