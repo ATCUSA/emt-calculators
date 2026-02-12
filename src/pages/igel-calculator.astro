@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import IgelCalculator from '../components/IgelCalculator.svelte';
+import IgelCalculatorComponent from '../components/IgelCalculator.svelte';
 ---
 
 <Layout
@@ -8,5 +8,5 @@ import IgelCalculator from '../components/IgelCalculator.svelte';
 	description="Calculate appropriate i-gel size based on patient height and estimated ideal body weight. Includes manufacturer guidelines and medical citations."
 	showBackButton={true}
 >
-	<IgelCalculator client:load />
+	<IgelCalculatorComponent client:load />
 </Layout>

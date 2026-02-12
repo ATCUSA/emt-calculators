@@ -4,10 +4,7 @@
 declare let self: ServiceWorkerGlobalScope;
 
 // Service Worker Types
-interface CacheOptions {
-  cacheName: string;
-  urls: string[];
-}
+// Note: CacheOptions interface reserved for future cache configuration features
 
 interface InstallEvent extends ExtendableEvent {
   waitUntil(f: Promise<any>): void;

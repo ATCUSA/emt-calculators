@@ -17,15 +17,16 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.17.2",
     "@astrojs/svelte": "^7.2.5",
     "@tailwindcss/vite": "^4.1.18",
+    "astro": "^5.17.2",
+    "lucide-svelte": "^0.563.0",
     "svelte": "^5.50.2",
-    "tailwindcss": "^4.1.18",
-    "lucide-svelte": "^0.563.0"
+    "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
-    "typescript": "^5.7.2",
-    "@types/serviceworker": "^0.0.187"
+    "@astrojs/check": "^0.9.6",
+    "@types/serviceworker": "^0.0.187",
+    "typescript": "^5.7.2"
   }
 }
