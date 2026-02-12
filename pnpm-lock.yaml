@@ -552,8 +552,8 @@ packages:
   '@shikijs/vscode-textmate@10.0.2':
     resolution: {integrity: sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg==}
 
-  '@sveltejs/acorn-typescript@1.0.8':
-    resolution: {integrity: sha512-esgN+54+q0NjB0Y/4BomT9samII7jGwNy/2a3wNZbT2A2RpmXsXwUt24LvLhx6jUq2gVk4cWEvcRO6MFQbOfNA==}
+  '@sveltejs/acorn-typescript@1.0.9':
+    resolution: {integrity: sha512-lVJX6qEgs/4DOcRTpo56tmKzVPtoWAaVbL4hfO7t7NVwl9AAXzQR6cihesW1BmNMPl+bK6dreu2sOKBP2Q9CIA==}
     peerDependencies:
       acorn: ^8.9.0
 
@@ -2179,7 +2179,7 @@ snapshots:
 
   '@shikijs/vscode-textmate@10.0.2': {}
 
-  '@sveltejs/acorn-typescript@1.0.8(acorn@8.15.0)':
+  '@sveltejs/acorn-typescript@1.0.9(acorn@8.15.0)':
     dependencies:
       acorn: 8.15.0
 
@@ -3483,7 +3483,7 @@ snapshots:
     dependencies:
       '@jridgewell/remapping': 2.3.5
       '@jridgewell/sourcemap-codec': 1.5.5
-      '@sveltejs/acorn-typescript': 1.0.8(acorn@8.15.0)
+      '@sveltejs/acorn-typescript': 1.0.9(acorn@8.15.0)
       '@types/estree': 1.0.8
       acorn: 8.15.0
       aria-query: 5.3.2
