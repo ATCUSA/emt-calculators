@@ -606,3 +606,193 @@ describe('User Workflow Tests', () => {
 - **Security Issues**: Follow responsible disclosure and patch procedures
 - **Feature Requests**: Route through FUTURE_FEATURES.md planning process
 - **Bug Reports**: Triage based on medical safety impact level
+
+## GitHub Actions Configuration and Troubleshooting
+
+### **Current GitHub Actions Status**
+
+**Working Workflows:**
+- ✅ `.github/workflows/basic-ci.yml` - Essential quality checks
+- ✅ `.github/dependabot.yml` - Conservative dependency updates
+
+**Disabled Until Dependencies Added:**
+- 🔄 `.github/workflows/ci.yml.disabled` - Full CI pipeline (needs ESLint, Prettier, testing)
+- 🔄 `.github/workflows/security.yml.disabled` - Advanced security (needs CodeQL, OWASP ZAP)
+- 🔄 `.github/workflows/dependabot-automerge.yml.disabled` - Smart auto-merge (needs testing framework)
+
+### **Basic CI Workflow Components**
+
+**What basic-ci.yml Tests:**
+1. **TypeScript Validation**: `pnpm astro check` - Catches type errors and import issues
+2. **Build Verification**: `pnpm build` - Ensures all pages compile correctly
+3. **Security Audit**: `pnpm audit --audit-level moderate` - Detects dependency vulnerabilities
+4. **Server Functionality**: `pnpm preview` + curl test - Verifies app serves correctly
+
+**Required Dependencies (Already Added):**
+- `@astrojs/check` - TypeScript validation for Astro projects
+- `typescript` - TypeScript compiler
+
+### **Common GitHub Actions Issues and Solutions**
+
+**Issue: "Command not found" errors**
+```yaml
+# Problem: Workflow tries to use tools not installed
+- name: Lint code
+  run: pnpm exec eslint . --ext .ts,.js,.svelte
+
+# Solution: Add placeholder or install dependencies first
+- name: Lint code (placeholder)
+  run: echo "✅ ESLint not configured yet - see QUALITY_TASKS.md"
+```
+
+**Issue: "Module not found" TypeScript errors**
+```bash
+# Problem: @astrojs/check not installed
+error: Cannot find module '@astrojs/check'
+
+# Solution: Add to devDependencies
+pnpm add --save-dev @astrojs/check
+```
+
+**Issue: Import declaration conflicts**
+```typescript
+// Problem: Import name conflicts with component name
+import IgelCalculator from '../components/IgelCalculator.svelte';
+
+// Solution: Use different import name
+import IgelCalculatorComponent from '../components/IgelCalculator.svelte';
+```
+
+**Issue: HTML entity errors in TypeScript**
+```html
+<!-- Problem: < and > interpreted as TypeScript tokens -->
+<li>• SBP <70 mmHg (shock)</li>
+
+<!-- Solution: Use HTML entities -->
+<li>• SBP &lt;70 mmHg (shock)</li>
+```
+
+### **GitHub Actions Restoration Roadmap**
+
+**Phase 1: Add Basic Development Tools**
+```bash
+# Install ESLint with TypeScript and Svelte support
+pnpm add --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-svelte
+
+# Install Prettier with Svelte support
+pnpm add --save-dev prettier prettier-plugin-svelte
+
+# Add scripts to package.json
+{
+  "scripts": {
+    "lint": "eslint . --ext .ts,.js,.svelte",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write ."
+  }
+}
+```
+
+**Phase 2: Enable Full CI Workflow**
+```bash
+# Move disabled workflow back
+mv .github/workflows/ci.yml.disabled .github/workflows/ci.yml
+
+# Update workflow to use new scripts
+- name: Lint code
+  run: pnpm lint
+
+- name: Format check
+  run: pnpm format
+```
+
+**Phase 3: Add Testing Framework**
+```bash
+# Install testing dependencies
+pnpm add --save-dev vitest @testing-library/svelte jsdom @playwright/test
+
+# Add test scripts
+{
+  "scripts": {
+    "test": "vitest",
+    "test:e2e": "playwright test"
+  }
+}
+```
+
+**Phase 4: Enable Security Workflows**
+```bash
+# Prerequisites:
+# 1. Enable GitHub CodeQL in repository security settings
+# 2. Configure OWASP ZAP rules for medical applications
+# 3. Set up proper secret scanning
+
+# Move disabled workflows back
+mv .github/workflows/security.yml.disabled .github/workflows/security.yml
+```
+
+### **Debugging Failed Workflows**
+
+**Check GitHub Actions Logs:**
+1. Go to GitHub repository → Actions tab
+2. Click on failed workflow run
+3. Expand failed step to see error details
+
+**Common Error Patterns:**
+```bash
+# Missing dependency
+Error: Cannot find module 'eslint'
+→ Solution: Add missing package to devDependencies
+
+# Port already in use
+Error: Port 4321 is in use
+→ Expected: Astro automatically tries port 4322
+
+# TypeScript errors
+Error: Cannot find name 'IgelCalculator'
+→ Solution: Fix import naming conflicts
+
+# Security audit failures
+1 vulnerabilities found (moderate)
+→ Expected: Review and update dependencies
+```
+
+### **Medical Project Specific Considerations**
+
+**Conservative Dependency Management:**
+- Dependabot ignores major version updates for stability
+- Manual review required for medical-critical packages (Astro, Svelte, TypeScript)
+- Security patches automatically flagged for immediate review
+
+**Medical Calculation Validation:**
+- TypeScript strict mode prevents calculation errors
+- Build process validates all medical components compile
+- Security audit prevents vulnerable dependencies in production
+
+**Emergency Response for Failed CI:**
+```bash
+# If CI blocks critical medical fix:
+1. Create hotfix branch: git checkout -b hotfix/critical-medical-fix
+2. Fix the medical issue first
+3. Fix CI issues second (or disable temporarily)
+4. Deploy hotfix immediately for patient safety
+5. Restore full CI after medical issue resolved
+```
+
+### **GitHub Actions Best Practices for Medical Applications**
+
+**Never Block Medical Fixes:**
+- CI failures should not prevent critical medical calculator fixes
+- Medical accuracy takes priority over code quality checks
+- Emergency deployment procedures bypass CI when necessary
+
+**Gradual Implementation:**
+- Start with basic checks (working now)
+- Add complexity incrementally
+- Test each phase thoroughly before enabling
+- Always have rollback plan
+
+**Medical Safety Integration:**
+- TypeScript strict mode catches calculation errors
+- Dependency scanning prevents security vulnerabilities
+- Build verification ensures offline PWA functionality
+- Preview testing confirms medical calculators load correctly
