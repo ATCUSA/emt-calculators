@@ -69,6 +69,8 @@ Keep messages professional. Never mention Claude, AI, or automated tools.
 
 ### Types
 
+Accepted types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `perf`
+
 | Type | When | Example |
 |------|------|---------|
 | `feat` | New feature or calculator | `feat(calculator): add stroke assessment with FAST scale` |
@@ -76,6 +78,7 @@ Keep messages professional. Never mention Claude, AI, or automated tools.
 | `docs` | Documentation only | `docs: update PWA deployment guide` |
 | `style` | Formatting, no logic change | `style: fix button alignment in vital signs` |
 | `refactor` | Code change, same behavior | `refactor(theme): consolidate dark mode patterns` |
+| `test` | Adding or updating tests | `test(o2): add unit tests for tank duration calculation` |
 | `chore` | Build, deps, CI, config | `chore: bump version to 1.2.0` |
 | `perf` | Performance improvement | `perf: lazy-load NIHSS scale data` |
 

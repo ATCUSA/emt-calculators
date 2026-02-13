@@ -1,101 +1,66 @@
 # CodeRabbit AI Code Review Configuration
 # Documentation: https://docs.coderabbit.ai/
 
-# Reviews configuration
+language: "en-US"
+
 reviews:
-  # Enable high-level summary of PR changes
   high_level_summary: true
-
-  # Enable detailed line-by-line review comments
   review_status: true
-
-  # Enable auto-review of new pull requests
-  auto_review:
-    enabled: true
-    drafts: false  # Don't auto-review draft PRs
-
-  # Require changes before approval
-  request_changes: ask
-
-  # Enable poem generation for approved PRs
   poem: true
 
-# Chat configuration
-chat:
-  # Allow users to chat with the CodeRabbit bot
-  auto_reply: true
+  auto_review:
+    enabled: true
+    drafts: false
 
-# Language and framework specific settings
-language:
-  # TypeScript/JavaScript settings
-  javascript:
-    # Focus on medical calculation accuracy and safety
-    review_level: "thorough"
-    # Check for proper error handling in medical contexts
-    error_handling: true
-    # Validate type safety for medical data
-    type_safety: true
-
-  typescript:
-    # Strict type checking for medical applications
-    review_level: "thorough"
-    strict_mode: true
-    # Medical safety: ensure proper null/undefined handling
-    null_safety: true
-
-# File patterns to focus on or ignore
-path_filters:
-  # Include all source files
-  included:
+  path_filters:
     - "src/**/*"
     - "*.json"
     - "*.md"
     - ".github/**/*"
+    - "!node_modules/**/*"
+    - "!dist/**/*"
+    - "!.astro/**/*"
+    - "!pnpm-lock.yaml"
 
-  # Exclude build artifacts and dependencies
-  excluded:
-    - "node_modules/**/*"
-    - "dist/**/*"
-    - ".astro/**/*"
-    - "pnpm-lock.yaml"
+  path_instructions:
+    - path: "src/data/**/*.ts"
+      instructions: |
+        This file contains medical calculation logic. Verify:
+        - All calculations match established medical formulas and guidelines
+        - Input validation with physiological limits (HR 40-220, BP 40-300, SpO2 0-100, etc.)
+        - Division-by-zero guards and null safety for medical data
+        - Error handling that never crashes medical calculations
+        - Proper medical citations in file headers
 
-# Medical application specific instructions
-custom_instructions: |
-  This is an EMT (Emergency Medical Technician) calculator application with life-critical medical tools.
-  Please pay special attention to:
+    - path: "src/components/**/*.svelte"
+      instructions: |
+        This is a Svelte 5 medical calculator component. Verify:
+        - Uses $state/$derived runes (NOT legacy let/reactive)
+        - Touch targets minimum 60px for emergency gloved-hand use (py-5 or min-h-[60px])
+        - ARIA labels on interactive elements + aria-live regions for dynamic results
+        - Theme-aware styling with dark: variant pairs (no hardcoded light-only colors)
+        - Error boundaries wrapping all calculations
+        - Medical safety disclaimer present
 
-  1. MEDICAL SAFETY:
-     - Verify all medical calculations match established formulas and guidelines
-     - Check for proper input validation with physiological limits (e.g., HR 40-220, BP 40-300, etc.)
-     - Ensure critical values trigger appropriate warnings or confirmations
-     - Validate that error handling never crashes medical calculations
+    - path: "src/pages/**/*.astro"
+      instructions: |
+        This is an Astro page for a medical tool. Verify:
+        - Light/dark mode colors use Tailwind variant pairs (bg-red-100 dark:bg-red-900/30)
+        - No dark-only colors without light-mode counterparts
+        - Single h1 per page (component should use h2+)
+        - Medical disclaimer present for clinical tools
+        - Component loaded with client:load
 
-  2. EMERGENCY USE CONTEXT:
-     - Review for large touch targets suitable for gloved hands (min 44px, prefer 60px)
-     - Check accessibility features for screen readers and keyboard navigation
-     - Verify clear visual hierarchy for emergency situations (color coding, urgency indicators)
-     - Ensure offline functionality works for ambulance/remote use
+    - path: "public/sw.ts"
+      instructions: |
+        Service worker for PWA offline support. Verify:
+        - All calculator pages are in ESSENTIAL_FILES and PRECACHE_URLS
+        - APP_VERSION matches package.json, manifest.json, and version.ts
+        - Cache names include version for proper invalidation
 
-  3. CLINICAL ACCURACY:
-     - Verify medical citations and references are current and accurate
-     - Check age-appropriate calculations (pediatric vs adult) are properly separated
-     - Ensure units are clearly labeled and conversions are correct
-     - Validate that normal/abnormal ranges match established clinical guidelines
+chat:
+  auto_reply: true
 
-  4. CODE QUALITY FOR MEDICAL APPS:
-     - TypeScript strict mode compliance for type safety
-     - Proper null/undefined handling (medical data cannot be ambiguous)
-     - Input sanitization and validation
-     - Consistent error boundaries and graceful degradation
-
-  5. PWA/SERVICE WORKER:
-     - Verify offline caching includes all critical medical calculators
-     - Check version synchronization across package.json, sw.ts, manifest.json, version.ts
-     - Ensure update notifications work correctly for medical tool updates
-
-  Please be thorough in your review as these tools are used in emergency medical situations where accuracy and reliability are critical for patient safety.
-
-# Tone and style for reviews
 tone_instructions: |
   Please provide constructive, professional feedback focused on:
   - Medical safety and accuracy (highest priority)
@@ -103,13 +68,5 @@ tone_instructions: |
   - Emergency use context and accessibility
   - Performance for critical situations
 
-  Be thorough but practical in your suggestions, keeping in mind this is a medical emergency application where reliability and speed are essential.
-
-# Enable specific review categories
-review_categories:
-  - security
-  - performance
-  - maintainability
-  - medical_safety  # Custom category for medical applications
-  - accessibility
-  - error_handling
+  Be thorough but practical. This is a medical emergency application where
+  reliability and speed are essential for patient safety.
