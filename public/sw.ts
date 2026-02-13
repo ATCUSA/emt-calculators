@@ -20,7 +20,7 @@ interface ActivateEvent extends ExtendableEvent {
 }
 
 // Version and Cache Configuration
-const APP_VERSION: string = '1.0.0';
+const APP_VERSION: string = '1.2.0';
 const CACHE_NAME: string = `emt-calc-v${APP_VERSION}`;
 const RUNTIME_CACHE_NAME: string = `emt-calc-runtime-v${APP_VERSION}`;
 
@@ -30,6 +30,9 @@ const ESSENTIAL_FILES: readonly string[] = [
   '/o2-calculator',
   '/igel-calculator',
   '/gcs-calculator',
+  '/vital-signs-calculator',
+  '/apgar-calculator',
+  '/stroke-assessment',
   '/manifest.json',
   '/icon-192.png',
   '/icon-512.png',
@@ -50,6 +53,14 @@ const PRECACHE_URLS: readonly string[] = [
   '/igel-calculator/index.html',
   '/gcs-calculator/',
   '/gcs-calculator/index.html',
+  '/vital-signs-calculator/',
+  '/vital-signs-calculator/index.html',
+  '/apgar-calculator/',
+  '/apgar-calculator/index.html',
+  '/stroke-assessment/',
+  '/stroke-assessment/index.html',
+  '/vital-signs-reference/',
+  '/vital-signs-reference/index.html',
   '/calculators/',
   '/calculators/index.html',
   '/references/',
