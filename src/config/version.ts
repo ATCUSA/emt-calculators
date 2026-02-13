@@ -4,14 +4,34 @@ import type { AppVersion, VersionChange } from '../types/medical.js';
 // Version change entries
 const VERSION_CHANGES: VersionChange[] = [
   {
+    version: '1.2.0',
+    date: '2026-02-12',
+    type: 'minor',
+    changes: [
+      'Stroke Assessment Calculator with FAST, BEFAST, Cincinnati, and NIHSS scales',
+      'Dark mode improvements across components',
+      'Touch target sizing for emergency field use',
+      'Accessibility improvements with ARIA labels'
+    ]
+  },
+  {
+    version: '1.1.0',
+    date: '2026-02-11',
+    type: 'minor',
+    changes: [
+      'APGAR Score Calculator for delivery calls',
+      'Vital Signs Assessment with age-based ranges',
+      'Searchable calculator database',
+      'Dark/Light theme support with auto detection'
+    ]
+  },
+  {
     version: '1.0.0',
     date: '2026-02-11',
     type: 'major',
     changes: [
       'Initial release of EMT Calculator Tools',
       'O₂ Tank Duration Calculator with safety reserves',
-      'Vital Signs Assessment with age-based ranges',
-      'APGAR Score Calculator for delivery calls',
       'Glasgow Coma Scale Calculator',
       'i-gel Size Calculator with medical guidelines',
       'Vital Signs Reference tables',
@@ -34,7 +54,8 @@ export const APP_CONFIG: AppVersion = {
     'Medical Disclaimer System',
     'Auto-Update Notifications',
     'Medical Citations System',
-    'Searchable Calculator Database'
+    'Searchable Calculator Database',
+    'Stroke Assessment with multiple validated scales'
   ],
   changelog: VERSION_CHANGES
 } satisfies AppVersion;
