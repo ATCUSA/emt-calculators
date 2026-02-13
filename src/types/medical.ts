@@ -222,6 +222,59 @@ export interface APGARResult {
   timeOfAssessment: string;
 }
 
+// CPAP Reference Types
+export type ContraindicationType = 'absolute' | 'relative';
+
+export interface CPAPIndication {
+  condition: string;
+  description: string;
+  notes?: string;
+}
+
+export interface CPAPContraindication {
+  condition: string;
+  type: ContraindicationType;
+  description: string;
+}
+
+export interface CPAPSettings {
+  condition: string;
+  pressureRange: string;
+  o2Flow: string;
+  fio2?: string;
+  notes?: string;
+}
+
+export interface CPAPMonitoring {
+  parameter: string;
+  target: string;
+  frequency: string;
+  actionIfAbnormal: string;
+}
+
+export interface CPAPTroubleshooting {
+  problem: string;
+  causes: string[];
+  solutions: string[];
+}
+
+export interface CPAPDiscontinuation {
+  criterion: string;
+  action: string;
+  urgency: 'immediate' | 'urgent' | 'routine';
+}
+
+export interface CPAPReference {
+  indications: CPAPIndication[];
+  contraindications: CPAPContraindication[];
+  settings: CPAPSettings[];
+  monitoring: CPAPMonitoring[];
+  troubleshooting: CPAPTroubleshooting[];
+  discontinuation: CPAPDiscontinuation[];
+  pediatricConsiderations: string[];
+  citations: string[];
+}
+
 // Medical Calculation Base Types
 export interface MedicalCalculation {
   input: Record<string, any>;
