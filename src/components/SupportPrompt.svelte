@@ -34,7 +34,7 @@
   <div class="support-prompt {variant === 'prominent' ? 'prominent' : 'subtle'}">
     {#if variant === 'subtle'}
       <!-- Subtle inline version -->
-      <div class="bg-blue-900/10 border border-blue-700/30 rounded-lg p-4 my-6">
+      <div class="panel-blue border rounded-lg p-4 my-6">
         <div class="flex items-start gap-3">
           <Heart class="text-red-400 mt-1 flex-shrink-0" size={18} />
           <div class="flex-1">
@@ -69,7 +69,7 @@
       </div>
     {:else}
       <!-- Prominent version -->
-      <div class="bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-600/50 rounded-lg p-6 my-8">
+      <div class="panel-blue border rounded-lg p-6 my-8">
         <div class="text-center space-y-4">
           <div class="flex justify-center">
             <Heart class="text-red-400" size={24} />

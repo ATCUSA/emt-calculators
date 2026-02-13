@@ -183,8 +183,8 @@
 
       <!-- Warnings -->
       {#if calculations.warnings.length > 0}
-        <div class="bg-yellow-900/20 p-3 rounded border border-yellow-700/50">
-          <div class="text-sm text-yellow-200">
+        <div class="panel-yellow p-3 rounded border">
+          <div class="text-sm panel-yellow-text">
             {#each calculations.warnings as warning, i (i)}
               <div class="mb-1">⚠️ {warning}</div>
             {/each}
@@ -200,10 +200,10 @@
     {/if}
 
     <!-- Formula Information -->
-    <div class="bg-blue-900/20 p-4 rounded border border-blue-700/50">
+    <div class="panel-blue p-4 rounded border">
       <div class="flex items-start gap-2">
-        <Info class="text-blue-400 mt-0.5 flex-shrink-0" size={16} />
-        <div class="text-sm text-blue-100">
+        <Info class="panel-blue-heading mt-0.5 flex-shrink-0" size={16} />
+        <div class="text-sm panel-blue-text-strong">
           <strong>Formula:</strong> Duration = (Pressure × Tank Factor) ÷ Flow Rate
           {#if calculations}
             <br />
@@ -216,16 +216,16 @@
     </div>
 
     <!-- Medical Citation -->
-    <div class="bg-green-900/20 p-3 rounded border border-green-700/50">
+    <div class="panel-green p-3 rounded border">
       <div class="flex items-start gap-2">
-        <ExternalLink class="text-green-400 mt-0.5 flex-shrink-0" size={14} />
-        <div class="text-xs text-green-200">
+        <ExternalLink class="panel-green-heading mt-0.5 flex-shrink-0" size={14} />
+        <div class="text-xs panel-green-text">
           <strong>Reference:</strong>
           <a
             href="https://pulmonary.medicine.ufl.edu/files/2018/07/Calculating-tank-durations-for-HFNC-Systems-and-Bipap-V-60-Systems.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            class="underline hover:text-green-100"
+            class="underline hover:opacity-80"
           >
             UF Pulmonary Medicine - Tank Duration Calculations
           </a>

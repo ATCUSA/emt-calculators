@@ -61,8 +61,8 @@ import APGARCalculator from '../components/APGARCalculator.svelte';
 						<span class="theme-text-primary font-medium">Additional:</span>
 						<p class="theme-text-secondary">Every 5 minutes until score ≥7 or up to 20 minutes</p>
 					</div>
-					<div class="bg-yellow-900/20 p-2 rounded border border-yellow-700/50">
-						<p class="text-yellow-200 text-xs">
+					<div class="panel-yellow p-2 rounded border">
+						<p class="panel-yellow-text text-xs">
 							<strong>Important:</strong> Do not delay resuscitation to calculate APGAR score
 						</p>
 					</div>
@@ -71,9 +71,9 @@ import APGARCalculator from '../components/APGARCalculator.svelte';
 		</div>
 
 		<div class="grid md:grid-cols-3 gap-6 mt-8">
-			<div class="bg-green-900/20 border border-green-700/50 rounded-lg p-4">
-				<h4 class="text-green-400 font-medium mb-2">Normal (7-10)</h4>
-				<ul class="text-green-200 text-xs space-y-1">
+			<div class="panel-green border rounded-lg p-4">
+				<h4 class="panel-green-heading font-medium mb-2">Normal (7-10)</h4>
+				<ul class="panel-green-text text-xs space-y-1">
 					<li>• Good adaptation</li>
 					<li>• Routine care</li>
 					<li>• Continue monitoring</li>
@@ -81,9 +81,9 @@ import APGARCalculator from '../components/APGARCalculator.svelte';
 				</ul>
 			</div>
 
-			<div class="bg-yellow-900/20 border border-yellow-700/50 rounded-lg p-4">
-				<h4 class="text-yellow-400 font-medium mb-2">Moderate Depression (3-6)</h4>
-				<ul class="text-yellow-200 text-xs space-y-1">
+			<div class="panel-yellow border rounded-lg p-4">
+				<h4 class="panel-yellow-heading font-medium mb-2">Moderate Depression (3-6)</h4>
+				<ul class="panel-yellow-text text-xs space-y-1">
 					<li>• Stimulation needed</li>
 					<li>• Clear airway</li>
 					<li>• Consider oxygen</li>
@@ -91,9 +91,9 @@ import APGARCalculator from '../components/APGARCalculator.svelte';
 				</ul>
 			</div>
 
-			<div class="bg-red-900/20 border border-red-700/50 rounded-lg p-4">
-				<h4 class="text-red-400 font-medium mb-2">Severe Depression (0-2)</h4>
-				<ul class="text-red-200 text-xs space-y-1">
+			<div class="panel-red border rounded-lg p-4">
+				<h4 class="panel-red-heading font-medium mb-2">Severe Depression (0-2)</h4>
+				<ul class="panel-red-text text-xs space-y-1">
 					<li>• Immediate resuscitation</li>
 					<li>• Positive pressure ventilation</li>
 					<li>• Consider chest compressions</li>
@@ -103,9 +103,9 @@ import APGARCalculator from '../components/APGARCalculator.svelte';
 		</div>
 
 		<div class="mt-8 space-y-4">
-			<div class="bg-blue-900/20 border border-blue-700/50 rounded-lg p-6">
-				<h3 class="text-lg font-semibold mb-3 text-blue-400">Neonatal Resuscitation Priority</h3>
-				<div class="text-blue-100 text-sm space-y-2">
+			<div class="panel-blue border rounded-lg p-6">
+				<h3 class="text-lg font-semibold mb-3 panel-blue-heading">Neonatal Resuscitation Priority</h3>
+				<div class="panel-blue-text-strong text-sm space-y-2">
 					<p>
 						<strong>Primary Assessment:</strong> Initial steps of neonatal resuscitation should be based on immediate visual and auditory assessment, not APGAR calculation.
 					</p>
@@ -118,9 +118,9 @@ import APGARCalculator from '../components/APGARCalculator.svelte';
 				</div>
 			</div>
 
-			<div class="bg-purple-900/20 border border-purple-700/50 rounded-lg p-6">
-				<h3 class="text-lg font-semibold mb-3 text-purple-400">Documentation & Communication</h3>
-				<div class="text-purple-100 text-sm space-y-2">
+			<div class="panel-purple border rounded-lg p-6">
+				<h3 class="text-lg font-semibold mb-3 panel-purple-heading">Documentation & Communication</h3>
+				<div class="panel-purple-text-strong text-sm space-y-2">
 					<p>
 						<strong>Complete Documentation:</strong> Record each category score individually (e.g., A1-P2-G1-A1-R2 = 7) along with time of assessment.
 					</p>
@@ -134,9 +134,9 @@ import APGARCalculator from '../components/APGARCalculator.svelte';
 			</div>
 		</div>
 
-		<div class="bg-red-900/20 border border-red-700/50 rounded-lg p-6 mt-8">
-			<h3 class="text-lg font-semibold mb-3 text-red-400">Critical Reminder</h3>
-			<p class="text-red-100 text-sm">
+		<div class="panel-red border rounded-lg p-6 mt-8">
+			<h3 class="text-lg font-semibold mb-3 panel-red-heading">Critical Reminder</h3>
+			<p class="panel-red-text-strong text-sm">
 				The APGAR score is a tool for assessment and communication, not for determining the need for resuscitation.
 				Begin resuscitation immediately based on the initial assessment of breathing, heart rate, and tone.
 				Follow your local neonatal resuscitation protocols and contact medical control as needed.

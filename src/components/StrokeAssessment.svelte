@@ -52,11 +52,11 @@
   });
 
   const urgencyColors = {
-    incomplete: 'bg-gray-100 dark:bg-gray-900/20 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600',
-    low: 'bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-200 border-green-300 dark:border-green-600',
-    moderate: 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-200 border-yellow-500',
-    high: 'bg-orange-100 dark:bg-orange-900/20 text-orange-800 dark:text-orange-200 border-orange-500',
-    critical: 'bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-200 border-red-500'
+    incomplete: 'theme-bg-tertiary theme-text-secondary theme-border-secondary',
+    low: 'panel-green panel-green-text',
+    moderate: 'panel-yellow panel-yellow-text',
+    high: 'panel-orange panel-orange-text',
+    critical: 'panel-red panel-red-text'
   };
 
   const urgencyIcons = {
@@ -197,12 +197,12 @@
                 <div class="flex items-center space-x-2">
                   <span class="font-medium theme-text-primary">{option.label}</span>
                   {#if option.abnormal}
-                    <span class="px-2 py-1 text-xs bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 rounded-full">
+                    <span class="px-2 py-1 text-xs panel-red panel-red-text rounded-full">
                       ABNORMAL
                     </span>
                   {/if}
                   {#if option.points !== undefined}
-                    <span class="px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded-full">
+                    <span class="px-2 py-1 text-xs panel-blue panel-blue-text rounded-full">
                       {option.points} pts
                     </span>
                   {/if}
@@ -273,12 +273,12 @@
 
       <!-- Critical Alert -->
       {#if hasAbnormalFindings}
-        <div class="mt-4 p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-lg">
-          <div class="flex items-center space-x-2 text-red-800 dark:text-red-200">
+        <div class="mt-4 p-4 panel-red border rounded-lg">
+          <div class="flex items-center space-x-2 panel-red-text">
             <Phone class="w-5 h-5" />
             <span class="font-bold">CRITICAL ACTION REQUIRED</span>
           </div>
-          <p class="text-sm text-red-700 dark:text-red-300 mt-1">
+          <p class="text-sm panel-red-text mt-1">
             Positive stroke screen - IMMEDIATE transport to comprehensive stroke center.
             Contact receiving facility with ETA and assessment findings.
           </p>
@@ -340,8 +340,8 @@
         </div>
       </div>
 
-      <div class="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
-        <p class="text-sm text-yellow-800 dark:text-yellow-200">
+      <div class="mt-4 p-3 panel-yellow border rounded-lg">
+        <p class="text-sm panel-yellow-text">
           <strong>Remember:</strong> "Time is Brain" - Every minute of delay reduces chances of good outcome.
           When in doubt, transport immediately to comprehensive stroke center.
         </p>

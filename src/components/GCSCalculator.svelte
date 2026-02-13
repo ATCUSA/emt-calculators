@@ -137,13 +137,13 @@
 	function getSeverityStyle(severity) {
 		switch (severity) {
 			case 'mild':
-				return 'border-green-400 bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200';
+				return 'panel-green panel-green-text border-l-4';
 			case 'moderate':
-				return 'border-yellow-400 bg-yellow-50 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-200';
+				return 'panel-yellow panel-yellow-text border-l-4';
 			case 'severe':
-				return 'border-red-400 bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200';
+				return 'panel-red panel-red-text border-l-4';
 			default:
-				return 'border-gray-400 bg-gray-50 dark:bg-gray-900/20 text-gray-800 dark:text-gray-200';
+				return 'theme-bg-tertiary theme-text-secondary border-l-4';
 		}
 	}
 </script>
@@ -309,12 +309,12 @@
 
 				<!-- Severity Alert for Critical Patients -->
 				{#if severity === 'severe'}
-					<div class="p-4 bg-red-50 dark:bg-red-900/20 border-l-4 border-red-400 rounded">
+					<div class="p-4 panel-red border-l-4 rounded">
 						<div class="flex items-start gap-2">
-							<AlertTriangle class="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
+							<AlertTriangle class="w-5 h-5 panel-red-heading flex-shrink-0 mt-0.5" />
 							<div>
-								<div class="font-medium text-red-800 dark:text-red-200">Critical Patient Alert</div>
-								<div class="text-sm text-red-700 dark:text-red-300 mt-1">
+								<div class="font-medium panel-red-text">Critical Patient Alert</div>
+								<div class="text-sm panel-red-text mt-1">
 									GCS ≤8 indicates severe brain injury. Consider immediate ALS intercept, airway management,
 									and rapid transport to trauma center.
 								</div>
@@ -334,17 +334,17 @@
 	<div class="mt-8 p-4 theme-bg-tertiary rounded-lg">
 		<h3 class="text-lg font-semibold theme-text-primary mb-4">GCS Score Interpretation</h3>
 		<div class="grid md:grid-cols-3 gap-4">
-			<div class="p-4 bg-green-50 dark:bg-green-900/20 border-l-4 border-green-400 rounded">
-				<div class="font-semibold text-green-800 dark:text-green-200">Mild (13-15)</div>
-				<div class="text-sm text-green-700 dark:text-green-300">Minor head injury, good prognosis</div>
+			<div class="p-4 panel-green border-l-4 rounded">
+				<div class="font-semibold panel-green-text">Mild (13-15)</div>
+				<div class="text-sm panel-green-text">Minor head injury, good prognosis</div>
 			</div>
-			<div class="p-4 bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 rounded">
-				<div class="font-semibold text-yellow-800 dark:text-yellow-200">Moderate (9-12)</div>
-				<div class="text-sm text-yellow-700 dark:text-yellow-300">Requires close monitoring</div>
+			<div class="p-4 panel-yellow border-l-4 rounded">
+				<div class="font-semibold panel-yellow-text">Moderate (9-12)</div>
+				<div class="text-sm panel-yellow-text">Requires close monitoring</div>
 			</div>
-			<div class="p-4 bg-red-50 dark:bg-red-900/20 border-l-4 border-red-400 rounded">
-				<div class="font-semibold text-red-800 dark:text-red-200">Severe (3-8)</div>
-				<div class="text-sm text-red-700 dark:text-red-300">Critical, needs immediate care</div>
+			<div class="p-4 panel-red border-l-4 rounded">
+				<div class="font-semibold panel-red-text">Severe (3-8)</div>
+				<div class="text-sm panel-red-text">Critical, needs immediate care</div>
 			</div>
 		</div>
 	</div>
@@ -371,9 +371,9 @@
 			</div>
 		</div>
 
-		<div class="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-400 rounded text-xs">
-			<div class="font-medium text-blue-800 dark:text-blue-200">Clinical Note</div>
-			<div class="text-blue-700 dark:text-blue-300 mt-1">
+		<div class="mt-4 p-3 panel-blue border-l-4 rounded text-xs">
+			<div class="font-medium panel-blue-heading">Clinical Note</div>
+			<div class="panel-blue-text mt-1">
 				GCS is a standardized assessment tool but should be used alongside other clinical indicators.
 				Always consider mechanism of injury, vital signs, and patient history. Follow your local protocols
 				for transport and treatment decisions.

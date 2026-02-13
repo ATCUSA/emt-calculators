@@ -15,13 +15,13 @@
   function getStatusBadge(status) {
     switch (status) {
       case 'active':
-        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+        return 'panel-green panel-green-text';
       case 'coming-soon':
-        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
+        return 'panel-yellow panel-yellow-text';
       case 'planned':
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
+        return 'theme-bg-tertiary theme-text-secondary';
       default:
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
+        return 'theme-bg-tertiary theme-text-secondary';
     }
   }
 
@@ -29,17 +29,17 @@
   function getLevelBadge(level) {
     switch (level) {
       case 'EMT-B':
-        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
+        return 'panel-blue panel-blue-text';
       case 'EMT-A':
-        return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
+        return 'panel-purple panel-purple-text';
       case 'AEMT':
-        return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200';
+        return 'panel-orange panel-orange-text';
       case 'Paramedic':
-        return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
+        return 'panel-red panel-red-text';
       case 'All':
-        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+        return 'panel-green panel-green-text';
       default:
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
+        return 'theme-bg-tertiary theme-text-secondary';
     }
   }
 </script>
@@ -104,7 +104,7 @@
           </span>
 
           <!-- Category Badge -->
-          <span class="text-xs px-2 py-1 rounded-full font-medium bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300">
+          <span class="text-xs px-2 py-1 rounded-full font-medium theme-bg-tertiary theme-text-secondary">
             {tool.subcategory}
           </span>
         </div>
@@ -113,12 +113,12 @@
         {#if tool.tags.length > 0}
           <div class="mt-3 flex flex-wrap gap-1">
             {#each tool.tags.slice(0, 3) as tag}
-              <span class="text-xs px-2 py-1 bg-gray-50 text-gray-600 dark:bg-gray-800 dark:text-gray-400 rounded">
+              <span class="text-xs px-2 py-1 theme-bg-tertiary theme-text-muted rounded">
                 {tag}
               </span>
             {/each}
             {#if tool.tags.length > 3}
-              <span class="text-xs px-2 py-1 bg-gray-50 text-gray-600 dark:bg-gray-800 dark:text-gray-400 rounded">
+              <span class="text-xs px-2 py-1 theme-bg-tertiary theme-text-muted rounded">
                 +{tool.tags.length - 3} more
               </span>
             {/if}

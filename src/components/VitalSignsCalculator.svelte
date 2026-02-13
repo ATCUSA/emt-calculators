@@ -161,10 +161,10 @@
   // Get status color class
   function getStatusColor(status: 'normal' | 'low' | 'high'): string {
     switch (status) {
-      case 'normal': return 'text-green-400 bg-green-900/20 border-green-700/50';
-      case 'low': return 'text-blue-400 bg-blue-900/20 border-blue-700/50';
-      case 'high': return 'text-red-400 bg-red-900/20 border-red-700/50';
-      default: return 'text-gray-400 bg-gray-900/20 border-gray-700/50';
+      case 'normal': return 'panel-green panel-green-heading';
+      case 'low': return 'panel-blue panel-blue-heading';
+      case 'high': return 'panel-red panel-red-heading';
+      default: return 'theme-bg-tertiary theme-text-muted';
     }
   }
 
@@ -373,10 +373,10 @@
 
         <!-- Warnings -->
         {#if assessment.warnings.length > 0}
-          <div class="bg-yellow-900/20 p-3 rounded border border-yellow-700/50">
+          <div class="panel-yellow p-3 rounded border">
             <div class="flex items-start gap-2">
-              <AlertTriangle class="text-yellow-400 mt-0.5 flex-shrink-0" size={16} />
-              <div class="text-sm text-yellow-200">
+              <AlertTriangle class="panel-yellow-heading mt-0.5 flex-shrink-0" size={16} />
+              <div class="text-sm panel-yellow-text">
                 <strong>Clinical Alerts:</strong>
                 <ul class="mt-1 space-y-0.5">
                   {#each assessment.warnings as warning, i (i)}
@@ -390,10 +390,10 @@
 
         <!-- Clinical Notes -->
         {#if assessment.clinicalNotes.length > 0}
-          <div class="bg-blue-900/20 p-3 rounded border border-blue-700/50">
+          <div class="panel-blue p-3 rounded border">
             <div class="flex items-start gap-2">
-              <Info class="text-blue-400 mt-0.5 flex-shrink-0" size={16} />
-              <div class="text-sm text-blue-200">
+              <Info class="panel-blue-heading mt-0.5 flex-shrink-0" size={16} />
+              <div class="text-sm panel-blue-text">
                 <strong>Clinical Notes:</strong>
                 <ul class="mt-1 space-y-0.5">
                   {#each assessment.clinicalNotes as note, i (i)}
@@ -422,16 +422,16 @@
     </button>
 
     <!-- Reference Links -->
-    <div class="bg-green-900/20 p-3 rounded border border-green-700/50">
+    <div class="panel-green p-3 rounded border">
       <div class="flex items-start gap-2">
-        <ExternalLink class="text-green-400 mt-0.5 flex-shrink-0" size={14} />
-        <div class="text-xs text-green-200">
+        <ExternalLink class="panel-green-heading mt-0.5 flex-shrink-0" size={14} />
+        <div class="text-xs panel-green-text">
           <strong>References:</strong>
           <a
             href="https://wikem.org/wiki/Vital_signs_(peds)"
             target="_blank"
             rel="noopener noreferrer"
-            class="underline hover:text-green-100 block"
+            class="underline hover:opacity-80 block"
           >
             WikEM - Pediatric Vital Signs
           </a>
@@ -439,7 +439,7 @@
             href="https://kidshealthwa.com/calculators/EmergencyCalculator/EmergencyCalculator.htm"
             target="_blank"
             rel="noopener noreferrer"
-            class="underline hover:text-green-100 block"
+            class="underline hover:opacity-80 block"
           >
             Kids Health WA - Emergency Calculator
           </a>

@@ -352,13 +352,13 @@
 
 			<!-- Show input validation warnings -->
 			{#if warnings.length > 0 && !igelSize}
-				<div class="p-4 bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 rounded">
+				<div class="p-4 panel-yellow border-l-4 rounded">
 					<div class="flex items-start gap-2">
-						<Info class="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+						<Info class="w-5 h-5 panel-yellow-heading flex-shrink-0 mt-0.5" />
 						<div>
-							<div class="text-sm font-medium text-yellow-800 dark:text-yellow-200">Input Required</div>
+							<div class="text-sm font-medium panel-yellow-heading">Input Required</div>
 							{#each warnings as warning}
-								<div class="text-xs text-yellow-700 dark:text-yellow-300 mt-1">• {warning}</div>
+								<div class="text-xs panel-yellow-text mt-1">• {warning}</div>
 							{/each}
 						</div>
 					</div>
@@ -403,13 +403,13 @@
 
 				<!-- Warnings -->
 				{#if warnings.length > 0}
-					<div class="p-4 bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 rounded">
+					<div class="p-4 panel-yellow border-l-4 rounded">
 						<div class="flex items-start gap-2">
-							<Info class="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+							<Info class="w-5 h-5 panel-yellow-heading flex-shrink-0 mt-0.5" />
 							<div>
-								<div class="text-sm font-medium text-yellow-800 dark:text-yellow-200">Clinical Notes</div>
+								<div class="text-sm font-medium panel-yellow-heading">Clinical Notes</div>
 								{#each warnings as warning}
-									<div class="text-xs text-yellow-700 dark:text-yellow-300 mt-1">• {warning}</div>
+									<div class="text-xs panel-yellow-text mt-1">• {warning}</div>
 								{/each}
 							</div>
 						</div>
@@ -483,9 +483,9 @@
 			</div>
 		</div>
 
-		<div class="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-400 rounded text-xs">
-			<div class="font-medium text-blue-800 dark:text-blue-200">Clinical Note</div>
-			<div class="text-blue-700 dark:text-blue-300 mt-1">
+		<div class="mt-4 p-3 panel-blue border-l-4 rounded text-xs">
+			<div class="font-medium panel-blue-heading">Clinical Note</div>
+			<div class="panel-blue-text mt-1">
 				This calculator provides estimated sizing based on manufacturer guidelines and historical weight estimation formulas.
 				The Devine formula (1974) serves as a first-level anthropometric screen but has inherent limitations in assessing body composition.
 				Final size selection should be based on clinical assessment per manufacturer and regional EMS user guides.
