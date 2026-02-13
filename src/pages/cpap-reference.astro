@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CPAPReferenceComponent from '../components/CPAPReference.svelte';
+---
+
+<Layout
+	title="CPAP Quick Reference | EMT Calculator Tools"
+	description="Prehospital CPAP quick reference for EMS providers. Indications, contraindications, setup, monitoring, and troubleshooting guidelines."
+	showBackButton={true}
+>
+	<div class="text-center mb-8">
+		<h1 class="text-3xl font-bold mb-4 theme-accent-primary">CPAP Quick Reference</h1>
+		<p class="theme-text-secondary max-w-2xl mx-auto">
+			Prehospital Continuous Positive Airway Pressure (CPAP) reference for EMS providers. Covers indications, contraindications, setup, monitoring, and troubleshooting for field use.
+		</p>
+	</div>
+
+	<CPAPReferenceComponent client:load />
+
+	<div class="mt-12 max-w-4xl mx-auto">
+		<div class="grid md:grid-cols-2 gap-8">
+			<div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+				<h3 class="text-lg font-semibold mb-4 theme-accent-primary">How CPAP Works</h3>
+				<div class="space-y-3 text-sm">
+					<div>
+						<span class="theme-text-primary font-medium">Mechanism:</span>
+						<p class="theme-text-secondary">Delivers continuous positive pressure to keep alveoli open, improving gas exchange and reducing work of breathing.</p>
+					</div>
+					<div>
+						<span class="theme-text-primary font-medium">Hemodynamic Effects:</span>
+						<p class="theme-text-secondary">Reduces venous return (preload) and left ventricular afterload — particularly beneficial in CHF/pulmonary edema.</p>
+					</div>
+					<div>
+						<span class="theme-text-primary font-medium">Key Principle:</span>
+						<p class="theme-text-secondary">CPAP does NOT ventilate — the patient must be breathing spontaneously. It augments their own respiratory effort.</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+				<h3 class="text-lg font-semibold mb-4 theme-accent-primary">Equipment Essentials</h3>
+				<div class="space-y-3 text-sm">
+					<div>
+						<span class="theme-text-primary font-medium">CPAP Device:</span>
+						<p class="theme-text-secondary">Disposable or reusable flow generator with adjustable pressure (5–10 cmH₂O typical)</p>
+					</div>
+					<div>
+						<span class="theme-text-primary font-medium">O₂ Supply:</span>
+						<p class="theme-text-secondary">Requires 10–15 LPM flow. Verify adequate tank volume for transport time.</p>
+					</div>
+					<div>
+						<span class="theme-text-primary font-medium">Mask Sizes:</span>
+						<p class="theme-text-secondary">S, M, L — proper fit is critical. Mask should seal from bridge of nose to below lower lip.</p>
+					</div>
+					<div>
+						<span class="theme-text-primary font-medium">Always Have Ready:</span>
+						<p class="theme-text-secondary">Suction, BVM, backup O₂ tank, NRB mask as fallback.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="grid md:grid-cols-3 gap-6 mt-8">
+			<div class="panel-green border rounded-lg p-4">
+				<h4 class="panel-green-heading font-medium mb-2">Signs of Improvement</h4>
+				<ul class="panel-green-text text-xs space-y-1">
+					<li>• SpO₂ increasing toward target</li>
+					<li>• Respiratory rate decreasing</li>
+					<li>• Reduced accessory muscle use</li>
+					<li>• Patient reporting easier breathing</li>
+					<li>• Improved mental status</li>
+				</ul>
+			</div>
+
+			<div class="panel-yellow border rounded-lg p-4">
+				<h4 class="panel-yellow-heading font-medium mb-2">Warning Signs</h4>
+				<ul class="panel-yellow-text text-xs space-y-1">
+					<li>• No improvement after 5–10 minutes</li>
+					<li>• Increasing agitation or anxiety</li>
+					<li>• Persistent air leak</li>
+					<li>• Abdominal distention</li>
+					<li>• Decreasing blood pressure</li>
+				</ul>
+			</div>
+
+			<div class="panel-red border rounded-lg p-4">
+				<h4 class="panel-red-heading font-medium mb-2">Escalation Triggers</h4>
+				<ul class="panel-red-text text-xs space-y-1">
+					<li>• SpO₂ &lt; 85% despite CPAP</li>
+					<li>• Respiratory rate &lt; 10 or &gt; 40</li>
+					<li>• Loss of consciousness</li>
+					<li>• SBP &lt; 80 mmHg</li>
+					<li>• Respiratory arrest</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="panel-purple border rounded-lg p-6 mt-8">
+			<h3 class="text-lg font-semibold mb-3 panel-purple-heading">Clinical Pearls</h3>
+			<div class="panel-purple-text text-sm space-y-2">
+				<p><strong class="panel-purple-text-strong">Coach your patient:</strong> "Breathe normally — the machine is doing the work for you." Patient cooperation dramatically improves outcomes.</p>
+				<p><strong class="panel-purple-text-strong">Position matters:</strong> Keep the patient sitting upright at 45° or greater. Never lay a CPAP patient flat.</p>
+				<p><strong class="panel-purple-text-strong">Think ahead:</strong> Calculate your O₂ supply duration before applying CPAP. A D-tank at 15 LPM lasts approximately 15 minutes.</p>
+				<p><strong class="panel-purple-text-strong">Early application:</strong> Research shows early CPAP in acute pulmonary edema reduces intubation rates and ICU stays.</p>
+			</div>
+		</div>
+	</div>
+</Layout>

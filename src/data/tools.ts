@@ -137,6 +137,19 @@ export const REFERENCES: Tool[] = [
     featured: true
   },
   {
+    id: 'cpap-reference',
+    name: 'CPAP Quick Reference',
+    shortName: 'CPAP',
+    description: 'Prehospital CPAP quick reference for EMS providers. Indications, contraindications, setup, and monitoring guidelines.',
+    category: 'reference',
+    subcategory: 'Respiratory',
+    tags: ['cpap', 'respiratory', 'pulmonary edema', 'chf', 'copd', 'positive pressure', 'ventilation', 'airway'],
+    level: 'EMT-A',
+    status: 'active',
+    url: '/cpap-reference',
+    featured: true
+  },
+  {
     id: 'medication-reference',
     name: 'Emergency Medications',
     shortName: 'Meds',
