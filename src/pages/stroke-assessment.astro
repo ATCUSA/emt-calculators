@@ -1,0 +1,128 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StrokeAssessmentComponent from '../components/StrokeAssessment.svelte';
+---
+
+<Layout
+	title="Stroke Assessment | EMT Calculator Tools"
+	description="Comprehensive stroke screening with FAST, BEFAST, Cincinnati, and NIHSS scales. Time-critical neurological emergency assessment for EMTs and paramedics."
+	showBackButton={true}
+>
+	<div class="text-center mb-8">
+		<h1 class="text-3xl font-bold mb-4 theme-accent-primary">Stroke Assessment Calculator</h1>
+		<p class="theme-text-secondary max-w-2xl mx-auto">
+			Multi-scale stroke screening tool featuring FAST, BEFAST, Cincinnati, and NIHSS assessments.
+			Critical for time-sensitive neurological emergencies requiring immediate recognition and transport.
+		</p>
+	</div>
+
+	<StrokeAssessmentComponent client:load />
+
+	<div class="mt-12 max-w-4xl mx-auto">
+		<div class="grid md:grid-cols-2 gap-8">
+			<div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+				<h3 class="text-lg font-semibold mb-4 theme-accent-primary">Assessment Scales</h3>
+				<div class="space-y-3 text-sm">
+					<div>
+						<span class="theme-text-primary font-medium">FAST Scale:</span>
+						<p class="theme-text-secondary">Primary prehospital screening (Face, Arms, Speech, Time)</p>
+					</div>
+					<div>
+						<span class="theme-text-primary font-medium">BEFAST Scale:</span>
+						<p class="theme-text-secondary">Enhanced detection including Balance and Eyes (posterior strokes)</p>
+					</div>
+					<div>
+						<span class="theme-text-primary font-medium">Cincinnati Scale:</span>
+						<p class="theme-text-secondary">Research-validated assessment with specific probability calculations</p>
+					</div>
+					<div>
+						<span class="theme-text-primary font-medium">NIHSS (Advanced):</span>
+						<p class="theme-text-secondary">Comprehensive 15-item scale for hospital and advanced providers</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+				<h3 class="text-lg font-semibold mb-4 theme-accent-primary">Critical Time Windows</h3>
+				<div class="space-y-3 text-sm">
+					<div>
+						<span class="theme-text-primary font-medium">Thrombolytics:</span>
+						<p class="theme-text-secondary">4.5 hours from symptom onset (alteplase/tPA)</p>
+					</div>
+					<div>
+						<span class="theme-text-primary font-medium">Endovascular:</span>
+						<p class="theme-text-secondary">6-24 hours for selected patients (thrombectomy)</p>
+					</div>
+					<div>
+						<span class="theme-text-primary font-medium">Golden Hour:</span>
+						<p class="theme-text-secondary">First hour is most critical - "Time is Brain"</p>
+					</div>
+					<div>
+						<span class="theme-text-primary font-medium">Neuroprotection:</span>
+						<p class="theme-text-secondary">Every minute delay = 1.9 million neurons lost</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="grid md:grid-cols-3 gap-6 mt-8">
+			<div class="bg-red-900/20 border border-red-700/50 rounded-lg p-4">
+				<h4 class="text-red-400 font-medium mb-2">Emergency Actions</h4>
+				<ul class="text-red-200 text-xs space-y-1">
+					<li>• IMMEDIATE transport to stroke center</li>
+					<li>• Notify receiving facility with ETA</li>
+					<li>• Establish IV access (avoid affected side)</li>
+					<li>• Check blood glucose immediately</li>
+					<li>• Document exact symptom onset time</li>
+					<li>• Protect airway if decreased consciousness</li>
+				</ul>
+			</div>
+
+			<div class="bg-yellow-900/20 border border-yellow-700/50 rounded-lg p-4">
+				<h4 class="text-yellow-400 font-medium mb-2">Assessment Tips</h4>
+				<ul class="text-yellow-200 text-xs space-y-1">
+					<li>• Use "last known normal" if onset unclear</li>
+					<li>• Test both arms simultaneously for drift</li>
+					<li>• Have patient repeat complex phrases</li>
+					<li>• Check for facial symmetry at rest and active</li>
+					<li>• Document all findings clearly</li>
+					<li>• Reassess during transport</li>
+				</ul>
+			</div>
+
+			<div class="bg-blue-900/20 border border-blue-700/50 rounded-lg p-4">
+				<h4 class="text-blue-400 font-medium mb-2">Contraindications</h4>
+				<ul class="text-blue-200 text-xs space-y-1">
+					<li>• Recent surgery or major trauma</li>
+					<li>• Active bleeding or blood disorders</li>
+					<li>• Severe hypertension (&gt;185/110)</li>
+					<li>• Recent stroke (&lt;3 months)</li>
+					<li>• Blood glucose &lt;50 or &gt;400 mg/dL</li>
+					<li>• Recent anticoagulation use</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="bg-green-900/20 border border-green-700/50 rounded-lg p-6 mt-8">
+			<h3 class="text-lg font-semibold mb-3 text-green-400">Evidence-Based Practice</h3>
+			<p class="text-green-100 text-sm mb-3">
+				This assessment tool implements validated stroke screening scales based on American Heart Association/American Stroke Association guidelines and peer-reviewed research. The Cincinnati Prehospital Stroke Scale has been validated with 66% sensitivity and 87% specificity for stroke detection in the field.
+			</p>
+			<div class="text-xs text-green-200">
+				<strong>Key Citations:</strong> Kothari RU, et al. Cincinnati Prehospital Stroke Scale. Ann Emerg Med. 1999 •
+				American Heart Association Guidelines for Early Management of Acute Ischemic Stroke •
+				BE-FAST vs FAST for acute stroke detection, Venkatesh N, et al. 2019
+			</div>
+		</div>
+
+		<div class="bg-orange-900/20 border border-orange-700/50 rounded-lg p-6 mt-6">
+			<h3 class="text-lg font-semibold mb-3 text-orange-400">Clinical Note</h3>
+			<p class="text-orange-100 text-sm">
+				<strong>Remember "Time is Brain":</strong> Stroke is a time-critical emergency where every minute counts.
+				When any stroke screening tool is positive, immediate transport to a comprehensive stroke center is indicated.
+				Contact medical control for guidance on concerning findings or when transport decisions are unclear.
+				This tool is designed to assist clinical decision-making but does not replace clinical judgment and protocols.
+			</p>
+		</div>
+	</div>
+</Layout>
