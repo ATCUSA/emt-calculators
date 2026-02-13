@@ -56,4 +56,4 @@ import CalculatorComponent from '../components/Calculator.svelte';
 
 ## Testing (Planned)
 
-Future: `vitest` for unit tests, `@playwright/test` for E2E. See `CLAUDE.md` Phase 3 in GitHub Actions section.
+Future: `vitest` for unit tests, `@playwright/test` for E2E. See [PWA & Deployment Guide](pwa-deployment.md) for CI/CD integration plans.

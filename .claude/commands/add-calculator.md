@@ -21,14 +21,15 @@ Then create these files:
    - Input validation with physiological limits
    - Error boundaries wrapping all calculations
    - Theme-aware styling (use `theme-*` classes + `dark:` variants)
-   - Touch targets minimum 44px (`py-3` on buttons)
-   - ARIA labels on all interactive elements
+   - Emergency mode touch targets: minimum 60px (`py-5 min-h-[60px]` on buttons, `p-4` on radio labels) for gloved-hand/stress use
+   - ARIA labels on all interactive elements + `aria-live="polite"` regions for dynamic calculation results so screen readers announce updates
    - Run `mcp__svelte-docs__svelte-autofixer` to validate
 
 3. **`src/pages/[name].astro`** - Astro page with:
    - Layout wrapper with title and description
    - `showBackButton={true}`
    - Component loaded with `client:load`
+   - Medical safety disclaimer explaining non-diagnostic use and professional responsibility
    - Educational content sections below the calculator
 
 4. **`src/data/tools.ts`** - Add entry to `CALCULATORS` array with all fields

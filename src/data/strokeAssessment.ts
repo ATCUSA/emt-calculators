@@ -424,6 +424,9 @@ export function calculateStrokeProbability(scaleId: string, responses: Record<st
     }
   } else {
     // For FAST/BEFAST scales
+    if (totalFindings === 0) {
+      return { probability: 0, severity: 'low', positiveFindings: 0, totalFindings: 0 };
+    }
     const positiveRatio = positiveFindings / totalFindings;
     if (positiveRatio === 0) {
       probability = 15;
