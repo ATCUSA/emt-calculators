@@ -41,36 +41,30 @@
     light: { icon: Sun, label: 'Light' },
     auto: { icon: Monitor, label: 'Auto' }
   };
+
+  const CurrentIcon = $derived(themeConfig[currentTheme].icon);
 </script>
 
 {#if mounted}
   <button
     onclick={toggleTheme}
-    class="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 border border-gray-600 hover:border-gray-500 transition-colors text-sm"
+    class="theme-toggle flex items-center gap-2 px-3 py-2 rounded-lg border transition-colors text-sm"
     title="Toggle theme: {themeConfig[currentTheme].label}"
   >
-    <svelte:component this={themeConfig[currentTheme].icon} size={16} class="text-gray-300" />
-    <span class="text-gray-300 hidden sm:inline">{themeConfig[currentTheme].label}</span>
+    <CurrentIcon size={16} />
+    <span class="hidden sm:inline">{themeConfig[currentTheme].label}</span>
   </button>
 {/if}
 
 <style>
-  /* Theme-aware styling for the toggle button */
-  [data-theme="light"] button {
-    @apply bg-gray-200 hover:bg-gray-300 border-gray-400 hover:border-gray-500;
+  .theme-toggle {
+    background-color: var(--bg-tertiary);
+    border-color: var(--border-secondary);
+    color: var(--text-secondary);
   }
 
-  [data-theme="light"] button :global(.text-gray-300) {
-    @apply text-gray-700;
-  }
-
-  @media (prefers-color-scheme: light) {
-    [data-theme="auto"] button {
-      @apply bg-gray-200 hover:bg-gray-300 border-gray-400 hover:border-gray-500;
-    }
-
-    [data-theme="auto"] button :global(.text-gray-300) {
-      @apply text-gray-700;
-    }
+  .theme-toggle:hover {
+    background-color: var(--border-secondary);
+    border-color: var(--text-muted);
   }
 </style>

@@ -22,10 +22,10 @@
   // Get status color class for vital sign category
   function getStatusColor(status: 'normal' | 'caution' | 'critical'): string {
     switch (status) {
-      case 'normal': return 'text-green-400 bg-green-900/20 border-green-700/50';
-      case 'caution': return 'text-yellow-400 bg-yellow-900/20 border-yellow-700/50';
-      case 'critical': return 'text-red-400 bg-red-900/20 border-red-700/50';
-      default: return 'text-blue-400 bg-blue-900/20 border-blue-700/50';
+      case 'normal': return 'panel-green panel-green-heading';
+      case 'caution': return 'panel-yellow panel-yellow-heading';
+      case 'critical': return 'panel-red panel-red-heading';
+      default: return 'panel-blue panel-blue-heading';
     }
   }
 </script>
@@ -97,23 +97,23 @@
               {ageGroup.ageRange}
             </td>
             <td class="p-3 text-center theme-text-secondary border theme-border-secondary">
-              <span class="inline-block px-2 py-1 rounded bg-green-900/20 text-green-200">
+              <span class="inline-block px-2 py-1 rounded panel-green panel-green-text">
                 {formatRange(ageGroup.heartRate)}
               </span>
             </td>
             <td class="p-3 text-center theme-text-secondary border theme-border-secondary">
-              <span class="inline-block px-2 py-1 rounded bg-blue-900/20 text-blue-200">
+              <span class="inline-block px-2 py-1 rounded panel-blue panel-blue-text">
                 {formatRange(ageGroup.respiratoryRate)}
               </span>
             </td>
             <td class="p-3 text-center theme-text-secondary border theme-border-secondary">
-              <span class="inline-block px-2 py-1 rounded bg-purple-900/20 text-purple-200">
+              <span class="inline-block px-2 py-1 rounded panel-purple panel-purple-text">
                 {formatRange(ageGroup.systolicBP)}
               </span>
             </td>
             <td class="p-3 text-center theme-text-secondary border theme-border-secondary">
               {#if ageGroup.diastolicBP}
-                <span class="inline-block px-2 py-1 rounded bg-orange-900/20 text-orange-200">
+                <span class="inline-block px-2 py-1 rounded panel-orange panel-orange-text">
                   {formatRange(ageGroup.diastolicBP)}
                 </span>
               {:else}
@@ -128,10 +128,10 @@
 
   <!-- Clinical Notes -->
   <div class="mt-6 space-y-3">
-    <div class="bg-blue-900/20 p-4 rounded border border-blue-700/50">
+    <div class="panel-blue p-4 rounded border">
       <div class="flex items-start gap-2">
-        <Info class="text-blue-400 mt-0.5 flex-shrink-0" size={16} />
-        <div class="text-sm text-blue-100">
+        <Info class="panel-blue-heading mt-0.5 flex-shrink-0" size={16} />
+        <div class="text-sm panel-blue-text-strong">
           <strong>Clinical Notes:</strong>
           <ul class="mt-2 space-y-1 list-disc list-inside">
             <li>{VITAL_SIGNS_NOTES.fever}</li>
@@ -145,9 +145,9 @@
 
     <!-- Quick Assessment Guidelines -->
     <div class="grid md:grid-cols-2 gap-3">
-      <div class="bg-red-900/20 p-3 rounded border border-red-700/50">
-        <div class="text-sm text-red-200">
-          <strong class="text-red-300">Concerning Signs:</strong>
+      <div class="panel-red p-3 rounded border">
+        <div class="text-sm panel-red-text">
+          <strong class="panel-red-heading">Concerning Signs:</strong>
           <ul class="mt-1 space-y-0.5 text-xs">
             <li>• HR &gt;150 bpm (adult) or age-specific high</li>
             <li>• RR &gt;24 bpm (adult) or labored breathing</li>
@@ -157,9 +157,9 @@
         </div>
       </div>
 
-      <div class="bg-green-900/20 p-3 rounded border border-green-700/50">
-        <div class="text-sm text-green-200">
-          <strong class="text-green-300">Assessment Tips:</strong>
+      <div class="panel-green p-3 rounded border">
+        <div class="text-sm panel-green-text">
+          <strong class="panel-green-heading">Assessment Tips:</strong>
           <ul class="mt-1 space-y-0.5 text-xs">
             <li>• Use appropriate cuff size for BP</li>
             <li>• Count respirations when patient unaware</li>

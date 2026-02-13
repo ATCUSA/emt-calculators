@@ -246,10 +246,10 @@
 
       <!-- Clinical Guidance -->
       {#if apgarResult && apgarResult.clinicalGuidance.length > 0}
-        <div class="bg-blue-900/20 p-4 rounded border border-blue-700/50">
+        <div class="panel-blue p-4 rounded border">
           <div class="flex items-start gap-2">
-            <Info class="text-blue-400 mt-0.5 flex-shrink-0" size={16} />
-            <div class="text-sm text-blue-200">
+            <Info class="panel-blue-heading mt-0.5 flex-shrink-0" size={16} />
+            <div class="text-sm panel-blue-text">
               <strong>Clinical Guidance:</strong>
               <ul class="mt-2 space-y-1">
                 {#each apgarResult.clinicalGuidance as guidance, i (i)}
@@ -263,10 +263,10 @@
 
       <!-- Immediate Actions -->
       {#if apgarResult && apgarResult.immediateActions.length > 0}
-        <div class="bg-yellow-900/20 p-4 rounded border border-yellow-700/50">
+        <div class="panel-yellow p-4 rounded border">
           <div class="flex items-start gap-2">
-            <AlertTriangle class="text-yellow-400 mt-0.5 flex-shrink-0" size={16} />
-            <div class="text-sm text-yellow-200">
+            <AlertTriangle class="panel-yellow-heading mt-0.5 flex-shrink-0" size={16} />
+            <div class="text-sm panel-yellow-text">
               <strong>Immediate Actions:</strong>
               <ul class="mt-2 space-y-1">
                 {#each apgarResult.immediateActions as action, i (i)}
@@ -292,10 +292,10 @@
 
   <!-- Clinical Notes -->
   <div class="mt-8 space-y-4">
-    <div class="bg-purple-900/20 p-4 rounded border border-purple-700/50">
+    <div class="panel-purple p-4 rounded border">
       <div class="flex items-start gap-2">
-        <Info class="text-purple-400 mt-0.5 flex-shrink-0" size={16} />
-        <div class="text-sm text-purple-200">
+        <Info class="panel-purple-heading mt-0.5 flex-shrink-0" size={16} />
+        <div class="text-sm panel-purple-text">
           <strong>Important Notes:</strong>
           <ul class="mt-2 space-y-1 list-disc list-inside">
             <li>{APGAR_CLINICAL_NOTES.timing}</li>
@@ -307,10 +307,10 @@
     </div>
 
     <!-- References -->
-    <div class="bg-green-900/20 p-3 rounded border border-green-700/50">
+    <div class="panel-green p-3 rounded border">
       <div class="flex items-start gap-2">
-        <ExternalLink class="text-green-400 mt-0.5 flex-shrink-0" size={14} />
-        <div class="text-xs text-green-200">
+        <ExternalLink class="panel-green-heading mt-0.5 flex-shrink-0" size={14} />
+        <div class="text-xs panel-green-text">
           <strong>References:</strong>
           <div class="mt-1 space-y-1">
             <div>Apgar V. A proposal for a new method of evaluation of the newborn infant. Curr Res Anesth Analg. 1953;32:260.</div>
