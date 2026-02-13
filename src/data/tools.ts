@@ -83,6 +83,19 @@ export const CALCULATORS: Tool[] = [
     featured: false
   },
   {
+    id: 'stroke-assessment',
+    name: 'Stroke Assessment Calculator',
+    shortName: 'Stroke',
+    description: 'Multi-scale stroke screening tool with FAST, BEFAST, Cincinnati, and NIHSS scales. Time-critical emergency assessment.',
+    category: 'calculator',
+    subcategory: 'Assessment',
+    tags: ['stroke', 'fast', 'befast', 'cincinnati', 'nihss', 'neurological', 'emergency', 'assessment', 'time critical'],
+    level: 'All',
+    status: 'active',
+    url: '/stroke-assessment',
+    featured: true
+  },
+  {
     id: 'bmi-calculator',
     name: 'BMI Calculator',
     shortName: 'BMI',
