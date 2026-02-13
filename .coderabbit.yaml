@@ -1,0 +1,115 @@
+# CodeRabbit AI Code Review Configuration
+# Documentation: https://docs.coderabbit.ai/
+
+# Reviews configuration
+reviews:
+  # Enable high-level summary of PR changes
+  high_level_summary: true
+
+  # Enable detailed line-by-line review comments
+  review_status: true
+
+  # Enable auto-review of new pull requests
+  auto_review:
+    enabled: true
+    drafts: false  # Don't auto-review draft PRs
+
+  # Require changes before approval
+  request_changes: ask
+
+  # Enable poem generation for approved PRs
+  poem: true
+
+# Chat configuration
+chat:
+  # Allow users to chat with the CodeRabbit bot
+  auto_reply: true
+
+# Language and framework specific settings
+language:
+  # TypeScript/JavaScript settings
+  javascript:
+    # Focus on medical calculation accuracy and safety
+    review_level: "thorough"
+    # Check for proper error handling in medical contexts
+    error_handling: true
+    # Validate type safety for medical data
+    type_safety: true
+
+  typescript:
+    # Strict type checking for medical applications
+    review_level: "thorough"
+    strict_mode: true
+    # Medical safety: ensure proper null/undefined handling
+    null_safety: true
+
+# File patterns to focus on or ignore
+path_filters:
+  # Include all source files
+  included:
+    - "src/**/*"
+    - "*.json"
+    - "*.md"
+    - ".github/**/*"
+
+  # Exclude build artifacts and dependencies
+  excluded:
+    - "node_modules/**/*"
+    - "dist/**/*"
+    - ".astro/**/*"
+    - "pnpm-lock.yaml"
+
+# Medical application specific instructions
+custom_instructions: |
+  This is an EMT (Emergency Medical Technician) calculator application with life-critical medical tools.
+  Please pay special attention to:
+
+  1. MEDICAL SAFETY:
+     - Verify all medical calculations match established formulas and guidelines
+     - Check for proper input validation with physiological limits (e.g., HR 40-220, BP 40-300, etc.)
+     - Ensure critical values trigger appropriate warnings or confirmations
+     - Validate that error handling never crashes medical calculations
+
+  2. EMERGENCY USE CONTEXT:
+     - Review for large touch targets suitable for gloved hands (min 44px, prefer 60px)
+     - Check accessibility features for screen readers and keyboard navigation
+     - Verify clear visual hierarchy for emergency situations (color coding, urgency indicators)
+     - Ensure offline functionality works for ambulance/remote use
+
+  3. CLINICAL ACCURACY:
+     - Verify medical citations and references are current and accurate
+     - Check age-appropriate calculations (pediatric vs adult) are properly separated
+     - Ensure units are clearly labeled and conversions are correct
+     - Validate that normal/abnormal ranges match established clinical guidelines
+
+  4. CODE QUALITY FOR MEDICAL APPS:
+     - TypeScript strict mode compliance for type safety
+     - Proper null/undefined handling (medical data cannot be ambiguous)
+     - Input sanitization and validation
+     - Consistent error boundaries and graceful degradation
+
+  5. PWA/SERVICE WORKER:
+     - Verify offline caching includes all critical medical calculators
+     - Check version synchronization across package.json, sw.ts, manifest.json, version.ts
+     - Ensure update notifications work correctly for medical tool updates
+
+  Please be thorough in your review as these tools are used in emergency medical situations where accuracy and reliability are critical for patient safety.
+
+# Tone and style for reviews
+tone_instructions: |
+  Please provide constructive, professional feedback focused on:
+  - Medical safety and accuracy (highest priority)
+  - Code quality and maintainability
+  - Emergency use context and accessibility
+  - Performance for critical situations
+
+  Be thorough but practical in your suggestions, keeping in mind this is a medical emergency application where reliability and speed are essential.
+
+# Enable specific review categories
+review_categories:
+  - security
+  - performance
+  - maintainability
+  - medical_safety  # Custom category for medical applications
+  - accessibility
+  - error_handling
