@@ -1,0 +1,21 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/prevent-master-commit.sh\"",
+            "description": "Prevent direct commits to master branch"
+          },
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/no-ai-in-commits.sh\"",
+            "description": "Block AI/Claude mentions in commit messages"
+          }
+        ]
+      }
+    ]
+  }
+}
