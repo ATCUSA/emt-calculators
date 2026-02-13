@@ -11,7 +11,6 @@
     calculateStrokeProbability,
     type StrokeAssessmentScale
   } from '../data/strokeAssessment.js';
-  import { SvelteDate } from 'svelte/reactivity';
   import { Clock, AlertTriangle, CheckCircle, XCircle, Info, Phone } from 'lucide-svelte';
 
   // Reactive state management
@@ -19,6 +18,13 @@
   let responses = $state<Record<string, string>>({});
   let onsetTime = $state<string>('');
   let showQuickReference = $state<boolean>(false);
+  let now = $state<number>(Date.now());
+
+  // Update clock every minute for reactive time display
+  $effect(() => {
+    const interval = setInterval(() => { now = Date.now(); }, 60_000);
+    return () => clearInterval(interval);
+  });
 
   // Derived calculations
   const selectedScale = $derived.by(() =>
@@ -78,17 +84,14 @@
     onsetTime = '';
   }
 
-  function getCurrentTime(): string {
-    const now = Date.now();
-    return new Date(now).toTimeString().slice(0, 5);
-  }
+  // Reactive derived time values that update with the `now` tick
+  const currentTime = $derived(new Date(now).toTimeString().slice(0, 5));
 
-  function getTimeFromOnset(): string {
+  const timeFromOnset = $derived.by(() => {
     if (!onsetTime) return 'Unknown';
 
-    const now = Date.now();
     const [hours, minutes] = onsetTime.split(':').map(Number);
-    const onsetDate = new SvelteDate();
+    const onsetDate = new Date(now);
     onsetDate.setHours(hours ?? 0, minutes ?? 0, 0, 0);
 
     // If onset time is in the future, assume it was yesterday
@@ -101,13 +104,13 @@
     const diffMinutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
 
     return `${diffHours}h ${diffMinutes}m ago`;
-  }
+  });
 </script>
 
 <div class="max-w-4xl mx-auto p-6 space-y-6">
   <!-- Header -->
   <div class="text-center">
-    <h1 class="text-3xl font-bold mb-2 theme-accent-primary">Stroke Assessment</h1>
+    <h2 class="text-3xl font-bold mb-2 theme-accent-primary">Stroke Assessment</h2>
     <p class="theme-text-secondary">
       Time-critical neurological emergency screening - Multiple validated scales
     </p>
@@ -155,11 +158,11 @@
     <div class="theme-bg-secondary p-4 rounded-lg border theme-border-primary">
       <div class="text-sm font-medium theme-text-primary mb-2">
         <Clock class="inline w-4 h-4 mr-1" />
-        Current Time: {getCurrentTime()}
+        Current Time: {currentTime}
       </div>
       {#if onsetTime}
         <div class="text-sm theme-text-secondary">
-          Time from onset: <strong>{getTimeFromOnset()}</strong>
+          Time from onset: <strong>{timeFromOnset}</strong>
         </div>
         <div class="text-xs text-orange-600 mt-1">
           Thrombolytic window: 4.5 hours | Endovascular: up to 24 hours
@@ -181,7 +184,7 @@
 
         <div class="space-y-2">
           {#each component.options as option (option.id)}
-            <label class="flex items-start space-x-3 p-3 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer">
+            <label class="flex items-start space-x-3 p-4 min-h-[60px] rounded-md hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer">
               <input
                 type="radio"
                 name={component.id}
@@ -215,7 +218,7 @@
 
   <!-- Results -->
   {#if isComplete}
-    <div class={`p-6 rounded-lg border-2 ${urgencyColors[urgencyLevel]}`}>
+    <div class={`p-6 rounded-lg border-2 ${urgencyColors[urgencyLevel]}`} role="status" aria-live="polite">
       <div class="flex items-center space-x-3 mb-4">
         {#if urgencyLevel === 'incomplete'}
           <Info class="w-8 h-8" />
@@ -289,7 +292,7 @@
     <button
       onclick={resetAssessment}
       aria-label="Reset stroke assessment"
-      class="flex-1 px-4 py-3 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
+      class="flex-1 px-4 py-5 min-h-[60px] bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
     >
       Reset Assessment
     </button>
@@ -297,7 +300,7 @@
     <button
       onclick={() => showQuickReference = !showQuickReference}
       aria-label={showQuickReference ? 'Hide quick reference' : 'Show quick reference'}
-      class="flex-1 px-4 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      class="flex-1 px-4 py-5 min-h-[60px] bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
     >
       {showQuickReference ? 'Hide' : 'Show'} Quick Reference
     </button>
@@ -321,7 +324,7 @@
         <div>
           <h4 class="font-medium mb-2 text-orange-600">Contraindications</h4>
           <ul class="text-sm space-y-1 theme-text-secondary">
-            {#each STROKE_QUICK_REFERENCE.contraindications.slice(0, 4) as contraindication, i (i)}
+            {#each STROKE_QUICK_REFERENCE.contraindications as contraindication, i (i)}
               <li>• {contraindication}</li>
             {/each}
           </ul>
@@ -330,7 +333,7 @@
         <div>
           <h4 class="font-medium mb-2 text-red-600">Critical Actions</h4>
           <ul class="text-sm space-y-1 theme-text-secondary">
-            {#each STROKE_QUICK_REFERENCE.criticalActions.slice(0, 4) as action, i (i)}
+            {#each STROKE_QUICK_REFERENCE.criticalActions as action, i (i)}
               <li>• {action}</li>
             {/each}
           </ul>
