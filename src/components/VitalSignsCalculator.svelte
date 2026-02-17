@@ -39,6 +39,11 @@
   }
 
   function cancelCritical(): void {
+    // Clear the input that triggered the critical value dialog
+    const field = criticalDialog.field.split(':')[0];
+    if (field === 'heartRate') heartRate = undefined;
+    else if (field === 'systolicBP') systolicBP = undefined;
+    else if (field === 'respiratoryRate') respiratoryRate = undefined;
     criticalDialog = { ...criticalDialog, open: false };
   }
 

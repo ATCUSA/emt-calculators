@@ -29,6 +29,13 @@ export function calculateParkland(input: ParklandInput): ParklandResult {
   const { weightKg, tbsaPercent } = input;
   const warnings: string[] = [];
 
+  if (weightKg < VALIDATION.weight.min || weightKg > VALIDATION.weight.max) {
+    warnings.push(`Weight ${weightKg} kg is outside expected range (${VALIDATION.weight.min}-${VALIDATION.weight.max} kg)`);
+  }
+  if (tbsaPercent < VALIDATION.tbsa.min || tbsaPercent > VALIDATION.tbsa.max) {
+    warnings.push(`TBSA ${tbsaPercent}% is outside expected range (${VALIDATION.tbsa.min}-${VALIDATION.tbsa.max}%)`);
+  }
+
   const totalFluid24hr = Math.round(4 * weightKg * tbsaPercent);
   const first8hrTotal = Math.round(totalFluid24hr / 2);
   const remaining16hrTotal = totalFluid24hr - first8hrTotal;
@@ -75,6 +82,6 @@ export const RULE_OF_NINES: RuleOfNinesRegion[] = [
   { region: 'Anterior Trunk', adult: 18, pediatric: 18 },
   { region: 'Posterior Trunk', adult: 18, pediatric: 18 },
   { region: 'Each Arm', adult: 9, pediatric: 9 },
-  { region: 'Each Leg', adult: 18, pediatric: 14 },
+  { region: 'Each Leg', adult: 18, pediatric: 13.5 },
   { region: 'Perineum', adult: 1, pediatric: 1 },
 ];

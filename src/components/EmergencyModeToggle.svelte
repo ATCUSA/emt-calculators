@@ -12,7 +12,7 @@
   aria-label={isActive ? 'Disable emergency mode' : 'Enable emergency mode'}
   aria-pressed={isActive}
   title={isActive ? 'Emergency mode ON — larger touch targets' : 'Emergency mode OFF'}
-  class="flex items-center gap-1.5 px-2 py-1.5 rounded-md text-sm font-medium transition-colors min-h-[44px]
+  class="flex items-center gap-1.5 px-3 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px]
     {isActive
       ? 'bg-red-600 text-white hover:bg-red-700'
       : 'theme-bg-tertiary theme-text-secondary hover:theme-bg-primary border theme-border-secondary'}"

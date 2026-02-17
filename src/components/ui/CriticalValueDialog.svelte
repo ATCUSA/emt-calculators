@@ -31,7 +31,6 @@
   aria-label={title}
   class="rounded-lg border-2 border-red-600 p-0 backdrop:bg-black/60 max-w-md w-full"
   onclose={onCancel}
-  onkeydown={(e) => { if (e.key === 'Escape') onCancel(); }}
 >
   <div class="p-6 theme-bg-secondary theme-text-primary">
     <div class="flex items-center gap-3 mb-4">

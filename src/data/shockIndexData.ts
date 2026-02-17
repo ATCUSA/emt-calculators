@@ -104,6 +104,17 @@ export const PEDIATRIC_NORMALS = [
  */
 export function calculateShockIndex(heartRate: number, systolicBP: number): ShockIndexResult {
   const warnings: string[] = [];
+
+  if (systolicBP === 0 || !Number.isFinite(heartRate) || !Number.isFinite(systolicBP)) {
+    return {
+      shockIndex: 0,
+      severity: 'normal',
+      interpretation: 'Invalid input — systolic BP cannot be zero',
+      clinicalNotes: ['Verify blood pressure measurement'],
+      warnings: ['Cannot calculate: division by zero or invalid values'],
+    };
+  }
+
   const shockIndex = Math.round((heartRate / systolicBP) * 100) / 100;
 
   if (heartRate < VALIDATION.heartRate.min || heartRate > VALIDATION.heartRate.max) {
