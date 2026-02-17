@@ -14,9 +14,8 @@ export interface APLSWeightResult {
  * - Child 6-12 years: weight = (age_years × 3) + 7
  */
 export function estimateWeightByAge(ageYears: number, ageMonths: number): APLSWeightResult {
-  if (ageMonths < 0 || ageMonths > 11) {
-    ageMonths = Math.max(0, Math.min(11, Math.round(ageMonths)));
-  }
+  ageYears = Math.max(VALIDATION.ageYears.min, Math.min(VALIDATION.ageYears.max, Math.floor(ageYears)));
+  ageMonths = Math.max(0, Math.min(11, Math.round(ageMonths)));
   const totalMonths = ageYears * 12 + ageMonths;
   let estimatedWeightKg: number;
   let formula: string;
@@ -67,13 +66,13 @@ export const BROSELOW_ZONES: BroselowZone[] = [
   { color: 'White',        colorHex: '#e5e7eb', lengthMin: 95,  lengthMax: 107, estimatedWeightKg: 15 },
   { color: 'Blue',         colorHex: '#3b82f6', lengthMin: 107, lengthMax: 115, estimatedWeightKg: 18 },
   { color: 'Orange',       colorHex: '#f97316', lengthMin: 115, lengthMax: 124, estimatedWeightKg: 22 },
-  { color: 'Green',        colorHex: '#22c55e', lengthMin: 124, lengthMax: 137, estimatedWeightKg: 30 },
+  { color: 'Green',        colorHex: '#22c55e', lengthMin: 124, lengthMax: 138, estimatedWeightKg: 30 },
 ];
 
 export const VALIDATION = {
   ageYears: { min: 0, max: 12 },
   ageMonths: { min: 0, max: 11 },
-  lengthCm: { min: 46, max: 137 },
+  lengthCm: { min: 46, max: 138 },
 } as const;
 
 /**

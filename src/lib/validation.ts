@@ -83,23 +83,23 @@ export function positiveNumber(field: string): ValidationRule {
 // --- Medical-Specific Validators ---
 
 export function heartRate(): ValidationRule {
-  return range('Heart Rate', 20, 300, 'bpm');
+  return range('heartRate', 20, 300, 'bpm');
 }
 
 export function systolicBP(): ValidationRule {
-  return range('Systolic BP', 30, 300, 'mmHg');
+  return range('systolicBP', 30, 300, 'mmHg');
 }
 
 export function respiratoryRate(): ValidationRule {
-  return range('Respiratory Rate', 0, 80, 'breaths/min');
+  return range('respiratoryRate', 0, 80, 'breaths/min');
 }
 
 export function spo2(): ValidationRule {
-  return range('SpO2', 0, 100, '%');
+  return range('spo2', 0, 100, '%');
 }
 
 export function temperature(): ValidationRule {
-  return range('Temperature', 80, 115, 'F');
+  return range('temperature', 80, 115, 'F');
 }
 
 // --- Critical Value Detection ---
