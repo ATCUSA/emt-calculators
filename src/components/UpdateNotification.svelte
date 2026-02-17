@@ -100,7 +100,7 @@
 							<p>A new version of EMT Calculator Tools is ready.</p>
 						{:else}
 							<ul class="list-disc list-inside space-y-1 mt-2">
-								{#each APP_CONFIG.changelog[APP_CONFIG.version] || [] as feature}
+								{#each APP_CONFIG.changelog.find(c => c.version === APP_CONFIG.version)?.changes || [] as feature}
 									<li class="text-xs">{feature}</li>
 								{/each}
 							</ul>

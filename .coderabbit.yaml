@@ -61,12 +61,4 @@ reviews:
 chat:
   auto_reply: true
 
-tone_instructions: |
-  Please provide constructive, professional feedback focused on:
-  - Medical safety and accuracy (highest priority)
-  - Code quality and maintainability
-  - Emergency use context and accessibility
-  - Performance for critical situations
-
-  Be thorough but practical. This is a medical emergency application where
-  reliability and speed are essential for patient safety.
+tone_instructions: "Professional, safety-focused feedback. Prioritize medical accuracy, code reliability, accessibility, and emergency-use performance."
