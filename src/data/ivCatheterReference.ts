@@ -182,6 +182,15 @@ export const IV_CATHETER_DATA: IVCatheterReference = {
     'Avoid: Lower extremity veins (risk of DVT), veins near joints (except AC), injured extremities, side of mastectomy or fistula.'
   ],
 
+  prehospitalTips: [
+    'Apply tourniquet 4-6 inches above intended site',
+    'Allow vein to fill for 30-60 seconds before attempt',
+    'Anchor vein by pulling skin taut distal to insertion point',
+    'Insert at 15-30 degree angle, bevel up',
+    'Advance catheter after flash, then remove needle',
+    'Secure catheter well — prehospital movement increases dislodgement risk'
+  ],
+
   citations: [
     'Pedagogy Education. "Peripheral IV Catheter Gauge Chart and Uses." 2023.',
     'NYSORA (New York School of Regional Anesthesia). "Peripheral Venous Catheter Selection Guide." 2022.',

@@ -303,6 +303,7 @@ export interface IVCatheterReference {
   selectionGuidelines: IVSelectionGuideline[];
   complications: IVComplication[];
   siteSelection: string[];
+  prehospitalTips: string[];
   citations: string[];
 }
 

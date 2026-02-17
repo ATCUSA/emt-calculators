@@ -45,6 +45,7 @@
     {#each tabs as tab (tab.id)}
       <button
         role="tab"
+        id="tab-{tab.id}"
         aria-selected={activeTab === tab.id}
         aria-controls="panel-{tab.id}"
         onclick={() => activeTab = tab.id}
@@ -60,7 +61,7 @@
 
   <!-- Gauge Chart Tab -->
   {#if activeTab === 'gauges'}
-    <div id="panel-gauges" role="tabpanel" class="space-y-4">
+    <div id="panel-gauges" role="tabpanel" aria-labelledby="tab-gauges" class="space-y-4">
       <h3 class="text-lg font-semibold panel-blue-heading flex items-center gap-2">
         <Syringe size={18} />
         Peripheral IV Catheter Gauge Chart
@@ -115,7 +116,7 @@
 
   <!-- Selection Guide Tab -->
   {:else if activeTab === 'selection'}
-    <div id="panel-selection" role="tabpanel" class="space-y-4">
+    <div id="panel-selection" role="tabpanel" aria-labelledby="tab-selection" class="space-y-4">
       <h3 class="text-lg font-semibold panel-green-heading flex items-center gap-2">
         <BookOpen size={18} />
         Catheter Selection Guidelines
@@ -136,7 +137,7 @@
 
   <!-- Complications Tab -->
   {:else if activeTab === 'complications'}
-    <div id="panel-complications" role="tabpanel" class="space-y-4">
+    <div id="panel-complications" role="tabpanel" aria-labelledby="tab-complications" class="space-y-4">
       <h3 class="text-lg font-semibold panel-red-heading flex items-center gap-2">
         <AlertTriangle size={18} />
         IV Complications
@@ -173,7 +174,7 @@
 
   <!-- Site Selection Tab -->
   {:else if activeTab === 'sites'}
-    <div id="panel-sites" role="tabpanel" class="space-y-4">
+    <div id="panel-sites" role="tabpanel" aria-labelledby="tab-sites" class="space-y-4">
       <h3 class="text-lg font-semibold panel-purple-heading flex items-center gap-2">
         <MapPin size={18} />
         IV Site Selection — Prehospital
@@ -196,12 +197,9 @@
       <div class="panel-yellow border rounded-lg p-4 mt-4">
         <h4 class="panel-yellow-heading font-medium mb-2">Prehospital IV Tips</h4>
         <ul class="panel-yellow-text text-sm space-y-1">
-          <li>* Apply tourniquet 4-6 inches above intended site</li>
-          <li>* Allow vein to fill for 30-60 seconds before attempt</li>
-          <li>* Anchor vein by pulling skin taut distal to insertion point</li>
-          <li>* Insert at 15-30 degree angle, bevel up</li>
-          <li>* Advance catheter after flash, then remove needle</li>
-          <li>* Secure catheter well — prehospital movement increases dislodgement risk</li>
+          {#each IV_CATHETER_DATA.prehospitalTips as tip (tip)}
+            <li>* {tip}</li>
+          {/each}
         </ul>
       </div>
     </div>

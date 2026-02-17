@@ -125,7 +125,7 @@
       {#if result}
         <div class="theme-bg-primary p-4 rounded border theme-border-secondary">
           <div class="text-center">
-            <div class="text-3xl font-bold mb-1 {rateStatus === 'critical' ? 'text-red-500' : rateStatus === 'caution' ? 'text-yellow-500' : 'theme-accent-primary'}">
+            <div class="text-3xl font-bold mb-1 {rateStatus === 'critical' ? 'text-red-600 dark:text-red-400' : rateStatus === 'caution' ? 'text-yellow-600 dark:text-yellow-400' : 'theme-accent-primary'}">
               {result.gttsPerMin} gtt/min
             </div>
             <div class="text-lg theme-text-secondary mb-1">
@@ -186,7 +186,7 @@
     <!-- Reset Button -->
     <button
       onclick={resetCalculator}
-      class="w-full py-3 min-h-[44px] bg-gray-700 hover:bg-gray-600 rounded theme-text-primary transition-colors"
+      class="w-full py-3 min-h-[44px] theme-bg-tertiary hover:theme-bg-primary rounded theme-text-primary transition-colors border theme-border-secondary"
     >
       Reset Calculator
     </button>
