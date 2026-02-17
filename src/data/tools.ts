@@ -97,6 +97,19 @@ export const CALCULATORS: Tool[] = [
     featured: true
   },
   {
+    id: 'shock-index-calculator',
+    name: 'Shock Index Calculator',
+    shortName: 'Shock Index',
+    description: 'Calculate Shock Index (HR/SBP) for early detection of hemodynamic instability with severity classification.',
+    category: 'calculator',
+    subcategory: 'Assessment',
+    tags: ['shock', 'index', 'heart rate', 'blood pressure', 'hemodynamic', 'trauma', 'hemorrhage'],
+    level: 'All',
+    status: 'active',
+    url: '/shock-index-calculator',
+    featured: true
+  },
+  {
     id: 'pediatric-weight-calculator',
     name: 'Pediatric Weight Estimation',
     shortName: 'Ped Weight',
