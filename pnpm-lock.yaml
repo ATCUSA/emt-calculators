@@ -31,8 +31,8 @@ importers:
         specifier: ^0.9.6
         version: 0.9.6(prettier@3.8.1)(typescript@5.9.3)
       '@types/serviceworker':
-        specifier: ^0.0.187
-        version: 0.0.187
+        specifier: ^0.0.191
+        version: 0.0.191
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -881,8 +881,8 @@ packages:
   '@types/nlcst@2.0.3':
     resolution: {integrity: sha512-vSYNSDe6Ix3q+6Z7ri9lyWqgGhJTmzRjZRqyq15N0Z/1/UnVsno9G/N40NBijoYx2seFDIl0+B2mgAb9mezUCA==}
 
-  '@types/serviceworker@0.0.187':
-    resolution: {integrity: sha512-0ey50FU3Beaxf2P93F7zkRaLHM2fPW6xk6nsU8zl6Co8Q9yw1ywnZNYFr9Upg5I5cuhbkkYfE35RpcJRN1aZjQ==}
+  '@types/serviceworker@0.0.191':
+    resolution: {integrity: sha512-DFQspa5cuobxgUuoeGGYBW45oOvPvgYp68Yk24mLdMGGGcgoH0nj5TawBZdRpIqPV8kkZodcQrqradnwGhRVNQ==}
 
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
@@ -2873,7 +2873,7 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.3
 
-  '@types/serviceworker@0.0.187': {}
+  '@types/serviceworker@0.0.191': {}
 
   '@types/unist@3.0.3': {}
 
