@@ -97,6 +97,19 @@ export const CALCULATORS: Tool[] = [
     featured: true
   },
   {
+    id: 'pediatric-weight-calculator',
+    name: 'Pediatric Weight Estimation',
+    shortName: 'Ped Weight',
+    description: 'Estimate pediatric weight using APLS age-based formulas or Broselow length-based color zones.',
+    category: 'calculator',
+    subcategory: 'Assessment',
+    tags: ['pediatric', 'weight', 'broselow', 'apls', 'estimation', 'dosing', 'child'],
+    level: 'All',
+    status: 'active',
+    url: '/pediatric-weight-calculator',
+    featured: true
+  },
+  {
     id: 'parkland-calculator',
     name: 'Parkland Burn Formula Calculator',
     shortName: 'Parkland',
