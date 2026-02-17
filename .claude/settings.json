@@ -25,6 +25,11 @@
             "type": "command",
             "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/check-svelte-file.sh\"",
             "description": "Remind to run Svelte autofixer after modifying .svelte files"
+          },
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/check-ts-file.sh\"",
+            "description": "Remind to run astro check after modifying .ts files"
           }
         ]
       }
