@@ -35,13 +35,14 @@ export const CALCULATORS: Tool[] = [
     id: 'iv-drip-calculator',
     name: 'IV Drip Rate Calculator',
     shortName: 'IV Drip',
-    description: 'Calculate IV drip rates and medication dosages.',
+    description: 'Calculate IV drip rates in gtt/min and mL/hr from volume, time, and drop factor. Supports macro and micro drip tubing.',
     category: 'calculator',
     subcategory: 'Medications',
-    tags: ['iv', 'drip', 'rate', 'medication', 'dosage'],
+    tags: ['iv', 'drip', 'rate', 'gtt', 'flow rate', 'infusion', 'tubing'],
     level: 'AEMT',
-    status: 'coming-soon',
-    featured: false
+    status: 'active',
+    url: '/iv-drip-calculator',
+    featured: true
   },
   {
     id: 'vital-signs-calculator',
@@ -147,6 +148,19 @@ export const REFERENCES: Tool[] = [
     level: 'EMT-A',
     status: 'active',
     url: '/cpap-reference',
+    featured: true
+  },
+  {
+    id: 'iv-catheter-reference',
+    name: 'IV Catheter Quick Reference',
+    shortName: 'IV Catheter',
+    description: 'Peripheral IV catheter gauge chart with color codes, flow rates, selection guidelines, complications, and prehospital site selection.',
+    category: 'reference',
+    subcategory: 'Vascular Access',
+    tags: ['iv', 'catheter', 'gauge', 'peripheral', 'vascular access', 'complications', 'site selection'],
+    level: 'AEMT',
+    status: 'active',
+    url: '/iv-catheter-reference',
     featured: true
   },
   {
