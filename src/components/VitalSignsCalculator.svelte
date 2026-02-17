@@ -1,7 +1,51 @@
 <script lang="ts">
   import { Heart, Activity, TrendingUp, AlertTriangle, Info, ExternalLink } from 'lucide-svelte';
   import { getVitalSignsForAge, convertAgeToYears, VITAL_SIGNS_NOTES } from '../data/vitalSigns.js';
+  import { isCriticalValue, type CriticalThreshold } from '../lib/validation.js';
+  import CriticalValueDialog from './ui/CriticalValueDialog.svelte';
   import type { VitalSignsInput, VitalSignsAssessment, VitalSignsByAge } from '../types/medical.js';
+
+  // Critical value dialog state
+  let criticalDialog = $state<{
+    open: boolean;
+    title: string;
+    message: string;
+    value: string;
+    field: string;
+  }>({ open: false, title: '', message: '', value: '', field: '' });
+
+  // Track which critical values have been confirmed by the user
+  let confirmedCriticals = $state<Set<string>>(new Set());
+
+  // Check inputs for critical values and show dialog if unconfirmed
+  function checkCriticalValue(field: string, value: number | undefined): void {
+    if (value === undefined) return;
+    const threshold = isCriticalValue(field, value);
+    const key = `${field}:${value}`;
+    if (threshold && !confirmedCriticals.has(key)) {
+      criticalDialog = {
+        open: true,
+        title: 'Critical Value Detected',
+        message: threshold.message,
+        value: String(value),
+        field: key
+      };
+    }
+  }
+
+  function confirmCritical(): void {
+    confirmedCriticals = new Set([...confirmedCriticals, criticalDialog.field]);
+    criticalDialog = { ...criticalDialog, open: false };
+  }
+
+  function cancelCritical(): void {
+    // Clear the input that triggered the critical value dialog
+    const field = criticalDialog.field.split(':')[0];
+    if (field === 'heartRate') heartRate = undefined;
+    else if (field === 'systolicBP') systolicBP = undefined;
+    else if (field === 'respiratoryRate') respiratoryRate = undefined;
+    criticalDialog = { ...criticalDialog, open: false };
+  }
 
   // State variables
   let age = $state<number>(25);
@@ -21,6 +65,7 @@
 
   // Perform assessment
   const assessment = $derived.by((): VitalSignsAssessment | null => {
+    try {
     if (!vitalSignsReference) return null;
 
     const assessments: VitalSignsAssessment['assessments'] = {};
@@ -156,6 +201,9 @@
       clinicalNotes,
       warnings
     };
+    } catch {
+      return null;
+    }
   });
 
   // Get status color class
@@ -178,6 +226,24 @@
     }
   }
 
+  // Detect any active critical values for banner display
+  const activeCriticals = $derived.by((): CriticalThreshold[] => {
+    const criticals: CriticalThreshold[] = [];
+    if (heartRate !== undefined) {
+      const t = isCriticalValue('heartRate', heartRate);
+      if (t) criticals.push(t);
+    }
+    if (systolicBP !== undefined) {
+      const t = isCriticalValue('systolicBP', systolicBP);
+      if (t) criticals.push(t);
+    }
+    if (respiratoryRate !== undefined) {
+      const t = isCriticalValue('respiratoryRate', respiratoryRate);
+      if (t) criticals.push(t);
+    }
+    return criticals;
+  });
+
   // Reset all inputs
   function resetCalculator(): void {
     age = 25;
@@ -188,6 +254,7 @@
     diastolicBP = undefined;
     temperature = undefined;
     temperatureUnit = 'F';
+    confirmedCriticals = new Set();
   }
 </script>
 
@@ -243,6 +310,7 @@
           id="heartRate"
           type="number"
           bind:value={heartRate}
+          onchange={() => checkCriticalValue('heartRate', heartRate)}
           min="0"
           max="300"
           class="w-full p-3 theme-bg-tertiary border theme-border-secondary rounded focus:border-blue-500 focus:outline-none theme-text-primary"
@@ -261,6 +329,7 @@
           id="respiratoryRate"
           type="number"
           bind:value={respiratoryRate}
+          onchange={() => checkCriticalValue('respiratoryRate', respiratoryRate)}
           min="0"
           max="100"
           class="w-full p-3 theme-bg-tertiary border theme-border-secondary rounded focus:border-blue-500 focus:outline-none theme-text-primary"
@@ -278,6 +347,7 @@
           id="systolicBP"
           type="number"
           bind:value={systolicBP}
+          onchange={() => checkCriticalValue('systolicBP', systolicBP)}
           min="0"
           max="300"
           class="w-full p-3 theme-bg-tertiary border theme-border-secondary rounded focus:border-blue-500 focus:outline-none theme-text-primary"
@@ -331,7 +401,25 @@
       </div>
     </div>
 
+    <!-- Critical Value Banner -->
+    {#if activeCriticals.length > 0}
+      <div class="panel-red p-4 rounded border border-l-4">
+        <div class="flex items-start gap-2">
+          <AlertTriangle class="panel-red-heading mt-0.5 flex-shrink-0" size={20} />
+          <div>
+            <div class="font-bold panel-red-heading text-base">Critical Values Detected</div>
+            <ul class="mt-1 space-y-1 text-sm panel-red-text">
+              {#each activeCriticals as critical (critical.message)}
+                <li>• {critical.message}</li>
+              {/each}
+            </ul>
+          </div>
+        </div>
+      </div>
+    {/if}
+
     <!-- Assessment Results -->
+    <div aria-live="polite" aria-atomic="true">
     {#if assessment && vitalSignsReference}
       <div class="mt-6 space-y-4">
         <!-- Age Group Reference -->
@@ -412,11 +500,12 @@
         </div>
       </div>
     {/if}
+    </div>
 
     <!-- Reset Button -->
     <button
       onclick={resetCalculator}
-      class="w-full p-3 bg-gray-700 hover:bg-gray-600 rounded theme-text-primary transition-colors"
+      class="w-full py-3 min-h-[44px] theme-bg-tertiary hover:theme-bg-primary rounded theme-text-primary transition-colors border theme-border-secondary"
     >
       Reset Assessment
     </button>
@@ -448,3 +537,12 @@
     </div>
   </div>
 </div>
+
+<CriticalValueDialog
+  open={criticalDialog.open}
+  title={criticalDialog.title}
+  message={criticalDialog.message}
+  value={criticalDialog.value}
+  onConfirm={confirmCritical}
+  onCancel={cancelCritical}
+/>

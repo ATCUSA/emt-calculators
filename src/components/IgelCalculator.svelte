@@ -134,6 +134,7 @@
 
 	// Calculate function - only runs when explicitly called
 	function calculateSize() {
+		try {
 		// Check required fields based on height unit
 		if (!gender) {
 			warnings = ['Please select gender'];
@@ -208,6 +209,9 @@
 		// Add additional clinical warnings
 		if (ageGroup === 'pediatric' && idealWeight > 35) {
 			warnings = [...warnings, 'Large pediatric patient - consider adult sizing'];
+		}
+		} catch {
+			warnings = ['Calculation error - please verify inputs and try again'];
 		}
 	}
 
@@ -334,20 +338,20 @@
 
 			<button
 				onclick={calculateSize}
-				class="w-full p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors mb-3"
+				class="w-full py-3 min-h-[44px] bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors mb-3"
 			>
 				Calculate i-gel Size
 			</button>
 
 			<button
 				onclick={reset}
-				class="w-full p-3 border theme-border-primary rounded-lg theme-text-secondary hover:theme-bg-tertiary transition-colors"
+				class="w-full py-3 min-h-[44px] theme-bg-tertiary hover:theme-bg-primary rounded-lg theme-text-primary transition-colors border theme-border-secondary"
 			>
 				Clear All
 			</button>
 		</div>
 
-		<div class="space-y-4">
+		<div class="space-y-4" aria-live="polite" aria-atomic="true">
 			<h2 class="text-lg font-semibold theme-text-primary mb-3">Results</h2>
 
 			<!-- Show input validation warnings -->

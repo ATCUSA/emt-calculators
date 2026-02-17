@@ -27,13 +27,21 @@
   });
 
   // Derived calculations
-  const selectedScale = $derived.by(() =>
-    STROKE_SCALES.find(scale => scale.id === selectedScaleId) || STROKE_SCALES[0]
-  );
+  const selectedScale = $derived.by(() => {
+    try {
+      return STROKE_SCALES.find(scale => scale.id === selectedScaleId) || STROKE_SCALES[0];
+    } catch {
+      return STROKE_SCALES[0];
+    }
+  });
 
-  const strokeAssessment = $derived.by(() =>
-    calculateStrokeProbability(selectedScaleId, responses)
-  );
+  const strokeAssessment = $derived.by(() => {
+    try {
+      return calculateStrokeProbability(selectedScaleId, responses);
+    } catch {
+      return { positiveFindings: 0, totalFindings: 0, probability: 0, severity: 'low' as const };
+    }
+  });
 
   const isComplete = $derived.by(() =>
     selectedScale.components.every(component => responses[component.id])
@@ -292,7 +300,7 @@
     <button
       onclick={resetAssessment}
       aria-label="Reset stroke assessment"
-      class="flex-1 px-4 py-5 min-h-[60px] bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
+      class="flex-1 px-4 py-5 min-h-[60px] theme-bg-tertiary theme-text-primary rounded-md hover:theme-bg-primary focus:outline-none focus:ring-2 focus:ring-gray-500 border theme-border-secondary"
     >
       Reset Assessment
     </button>

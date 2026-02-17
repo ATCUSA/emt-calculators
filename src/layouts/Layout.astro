@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import ThemeToggle from '../components/ThemeToggle.svelte';
+import EmergencyModeToggle from '../components/EmergencyModeToggle.svelte';
 import Disclaimer from '../components/Disclaimer.svelte';
 import UpdateNotification from '../components/UpdateNotification.svelte';
 import BuyMeACoffee from '../components/BuyMeACoffee.svelte';
@@ -76,6 +77,7 @@ const {
 							About
 						</a>
 					</nav>
+					<EmergencyModeToggle client:load />
 					<ThemeToggle client:load />
 					<MobileNav client:load />
 				</div>
@@ -100,6 +102,13 @@ const {
 			(function() {
 				const savedTheme = localStorage.getItem('theme') || 'auto';
 				document.documentElement.setAttribute('data-theme', savedTheme);
+			})();
+
+			// Initialize emergency mode on page load (avoid flash)
+			(function() {
+				if (localStorage.getItem('emergency-mode') === 'true') {
+					document.body.classList.add('emergency-mode');
+				}
 			})();
 
 			// Enhanced service worker registration for PWA

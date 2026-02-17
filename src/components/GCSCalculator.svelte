@@ -65,6 +65,7 @@
 
 	// Calculate total score and interpretation
 	function calculateGCS() {
+		try {
 		const eye = parseInt(eyeResponse) || 0;
 		const verbal = parseInt(verbalResponse) || 0;
 		const motor = parseInt(motorResponse) || 0;
@@ -116,6 +117,12 @@
 				});
 			}
 		}, 100);
+		} catch {
+			totalScore = 0;
+			interpretation = 'Calculation error - please try again';
+			severity = '';
+			clinicalNotes = [];
+		}
 	}
 
 	// Reset function
@@ -238,21 +245,21 @@
 
 			<button
 				onclick={() => calculateGCS()}
-				class="w-full p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors mb-3"
+				class="w-full py-3 min-h-[44px] bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors mb-3"
 			>
 				Calculate GCS Score
 			</button>
 
 			<button
 				onclick={() => reset()}
-				class="w-full p-3 border theme-border-primary rounded-lg theme-text-secondary hover:theme-bg-tertiary transition-colors"
+				class="w-full py-3 min-h-[44px] theme-bg-tertiary hover:theme-bg-primary rounded-lg theme-text-primary transition-colors border theme-border-secondary"
 			>
 				Clear Assessment
 			</button>
 		</div>
 
 		<!-- Results Section -->
-		<div class="space-y-4" id="gcs-results">
+		<div class="space-y-4" id="gcs-results" aria-live="polite" aria-atomic="true">
 			<h2 class="text-xl font-semibold theme-text-primary mb-4">Results</h2>
 
 			{#if totalScore > 0}

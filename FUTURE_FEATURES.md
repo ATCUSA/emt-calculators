@@ -71,7 +71,7 @@ This application is a **work-in-progress** educational tool. It is **NOT** inten
 
 ### **Pediatric Specialized**
 - **Pediatric Assessment Triangle** - Appearance, breathing, circulation scoring
-- **Broselow Tape Digital** - Length-based weight estimation with equipment sizes
+- **Full Broselow Tape Digital** - Extends the existing Pediatric Weight Estimation tool with equipment sizes, medication doses, and ET tube sizes per Broselow color zone
 - **Pediatric Vital Signs** - Age-specific normal ranges with percentiles
 
 ---

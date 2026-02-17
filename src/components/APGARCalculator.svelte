@@ -14,17 +14,21 @@
 
   // Calculate APGAR result
   const apgarResult = $derived.by((): APGARResult | null => {
-    // Only calculate if all scores are selected
-    if (appearance === null || pulse === null || grimace === null ||
-        activity === null || respiration === null) {
+    try {
+      // Only calculate if all scores are selected
+      if (appearance === null || pulse === null || grimace === null ||
+          activity === null || respiration === null) {
+        return null;
+      }
+
+      const timeDisplay = timeOfAssessment === 'other' && customTime
+        ? customTime
+        : timeOfAssessment.replace('_', ' ');
+
+      return calculateAPGAR(appearance, pulse, grimace, activity, respiration, timeDisplay);
+    } catch {
       return null;
     }
-
-    const timeDisplay = timeOfAssessment === 'other' && customTime
-      ? customTime
-      : timeOfAssessment.replace('_', ' ');
-
-    return calculateAPGAR(appearance, pulse, grimace, activity, respiration, timeDisplay);
   });
 
   // Get score color based on individual score
@@ -171,7 +175,7 @@
     </div>
 
     <!-- Results Section -->
-    <div class="space-y-6">
+    <div class="space-y-6" aria-live="polite" aria-atomic="true">
       {#if apgarResult}
         <!-- Total Score Display -->
         <div class="p-6 rounded border {getAPGARColor(apgarResult.interpretation)}">
@@ -283,7 +287,7 @@
       <!-- Reset Button -->
       <button
         onclick={resetCalculator}
-        class="w-full p-3 bg-gray-700 hover:bg-gray-600 rounded theme-text-primary transition-colors"
+        class="w-full py-3 min-h-[44px] theme-bg-tertiary hover:theme-bg-primary rounded theme-text-primary transition-colors border theme-border-secondary"
       >
         Reset APGAR Assessment
       </button>

@@ -20,7 +20,7 @@ interface ActivateEvent extends ExtendableEvent {
 }
 
 // Version and Cache Configuration
-const APP_VERSION: string = '1.2.0';
+const APP_VERSION: string = '1.3.0';
 const CACHE_NAME: string = `emt-calc-v${APP_VERSION}`;
 const RUNTIME_CACHE_NAME: string = `emt-calc-runtime-v${APP_VERSION}`;
 
@@ -36,6 +36,9 @@ const ESSENTIAL_FILES: readonly string[] = [
   '/cpap-reference',
   '/iv-catheter-reference',
   '/iv-drip-calculator',
+  '/parkland-calculator',
+  '/pediatric-weight-calculator',
+  '/shock-index-calculator',
   '/manifest.json',
   '/icon-192.png',
   '/icon-512.png',
@@ -70,6 +73,12 @@ const PRECACHE_URLS: readonly string[] = [
   '/iv-catheter-reference/index.html',
   '/iv-drip-calculator/',
   '/iv-drip-calculator/index.html',
+  '/parkland-calculator/',
+  '/parkland-calculator/index.html',
+  '/pediatric-weight-calculator/',
+  '/pediatric-weight-calculator/index.html',
+  '/shock-index-calculator/',
+  '/shock-index-calculator/index.html',
   '/calculators/',
   '/calculators/index.html',
   '/references/',

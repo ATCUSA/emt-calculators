@@ -97,6 +97,45 @@ export const CALCULATORS: Tool[] = [
     featured: true
   },
   {
+    id: 'shock-index-calculator',
+    name: 'Shock Index Calculator',
+    shortName: 'Shock Index',
+    description: 'Calculate Shock Index (HR/SBP) for early detection of hemodynamic instability with severity classification.',
+    category: 'calculator',
+    subcategory: 'Assessment',
+    tags: ['shock', 'index', 'heart rate', 'blood pressure', 'hemodynamic', 'trauma', 'hemorrhage'],
+    level: 'All',
+    status: 'active',
+    url: '/shock-index-calculator',
+    featured: true
+  },
+  {
+    id: 'pediatric-weight-calculator',
+    name: 'Pediatric Weight Estimation',
+    shortName: 'Ped Weight',
+    description: 'Estimate pediatric weight using APLS age-based formulas or Broselow length-based color zones.',
+    category: 'calculator',
+    subcategory: 'Assessment',
+    tags: ['pediatric', 'weight', 'broselow', 'apls', 'estimation', 'dosing', 'child'],
+    level: 'All',
+    status: 'active',
+    url: '/pediatric-weight-calculator',
+    featured: true
+  },
+  {
+    id: 'parkland-calculator',
+    name: 'Parkland Burn Formula Calculator',
+    shortName: 'Parkland',
+    description: 'Calculate IV fluid resuscitation for burn patients using the Parkland formula. Includes Rule of Nines reference.',
+    category: 'calculator',
+    subcategory: 'Trauma',
+    tags: ['parkland', 'burn', 'fluid', 'resuscitation', 'trauma', 'tbsa', 'rule of nines'],
+    level: 'AEMT',
+    status: 'active',
+    url: '/parkland-calculator',
+    featured: true
+  },
+  {
     id: 'bmi-calculator',
     name: 'BMI Calculator',
     shortName: 'BMI',

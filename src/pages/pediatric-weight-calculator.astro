@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PediatricWeightCalc from '../components/PediatricWeightCalculator.svelte';
+---
+
+<Layout
+	title="Pediatric Weight Estimation | EMT Calculator Tools"
+	description="Estimate pediatric patient weight using APLS age-based formulas or Broselow length-based zones. Critical for medication dosing and equipment sizing."
+	showBackButton={true}
+>
+	<div class="text-center mb-8">
+		<h1 class="text-3xl font-bold mb-4 theme-accent-primary">Pediatric Weight Estimation</h1>
+		<p class="theme-text-secondary max-w-2xl mx-auto">
+			Estimate pediatric weight using validated APLS age-based formulas or Broselow length-based
+			color zones. Essential for accurate medication dosing and equipment selection.
+		</p>
+	</div>
+
+	<PediatricWeightCalc client:load />
+
+	<div class="mt-12 max-w-4xl mx-auto">
+		<div class="grid md:grid-cols-2 gap-8">
+			<div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+				<h3 class="text-lg font-semibold mb-4 theme-accent-primary">When to Use</h3>
+				<ul class="space-y-2 text-sm theme-text-secondary">
+					<li>• Actual weight is <strong>always preferred</strong> when obtainable</li>
+					<li>• Use estimates for emergent medication dosing when weight is unknown</li>
+					<li>• Length-based (Broselow) is generally more accurate than age-based</li>
+					<li>• Age-based useful when patient cannot be measured (entrapment, etc.)</li>
+					<li>• Caregiver-stated weight is more reliable than any estimation method</li>
+				</ul>
+			</div>
+
+			<div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+				<h3 class="text-lg font-semibold mb-4 theme-accent-primary">Limitations</h3>
+				<ul class="space-y-2 text-sm theme-text-secondary">
+					<li>• Formulas may underestimate weight in obese children</li>
+					<li>• APLS formulas less accurate outside 1-10 year range</li>
+					<li>• Broselow tape not validated for children &gt;36 kg</li>
+					<li>• Neonatal weights vary significantly; use actual scale when available</li>
+					<li>• Consider habitus when selecting equipment sizes</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="panel-yellow border rounded-lg p-6 mt-8">
+			<h3 class="text-lg font-semibold mb-3 panel-yellow-heading">Safety Note</h3>
+			<p class="panel-yellow-text-strong text-sm">
+				Weight estimation formulas provide <strong>approximations only</strong> and should never
+				replace actual measured weight when it can be obtained. All medication doses calculated from
+				estimated weights should be independently verified. Follow local protocols for pediatric
+				weight estimation and medication dosing.
+			</p>
+		</div>
+	</div>
+</Layout>

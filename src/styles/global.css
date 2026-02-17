@@ -214,3 +214,24 @@
 .panel-orange-heading { color: var(--panel-orange-heading); }
 .panel-orange-text { color: var(--panel-orange-text); }
 .panel-orange-text-strong { color: var(--panel-orange-text-strong); }
+
+/* Emergency mode — larger touch targets for gloved/stressed field use */
+.emergency-mode button,
+.emergency-mode select,
+.emergency-mode input,
+.emergency-mode [role="button"] {
+  min-height: 60px !important;
+  font-size: 1.125rem;
+}
+
+.emergency-mode label {
+  font-size: 1rem;
+}
+
+.emergency-mode .text-sm {
+  font-size: 0.9375rem;
+}
+
+.emergency-mode .text-xs {
+  font-size: 0.875rem;
+}
