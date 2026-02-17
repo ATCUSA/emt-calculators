@@ -97,6 +97,19 @@ export const CALCULATORS: Tool[] = [
     featured: true
   },
   {
+    id: 'parkland-calculator',
+    name: 'Parkland Burn Formula Calculator',
+    shortName: 'Parkland',
+    description: 'Calculate IV fluid resuscitation for burn patients using the Parkland formula. Includes Rule of Nines reference.',
+    category: 'calculator',
+    subcategory: 'Trauma',
+    tags: ['parkland', 'burn', 'fluid', 'resuscitation', 'trauma', 'tbsa', 'rule of nines'],
+    level: 'AEMT',
+    status: 'active',
+    url: '/parkland-calculator',
+    featured: true
+  },
+  {
     id: 'bmi-calculator',
     name: 'BMI Calculator',
     shortName: 'BMI',

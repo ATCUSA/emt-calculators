@@ -1,0 +1,55 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ParklandCalculatorComponent from '../components/ParklandCalculator.svelte';
+---
+
+<Layout
+	title="Parkland Burn Formula Calculator | EMT Calculator Tools"
+	description="Calculate fluid resuscitation requirements for burn patients using the Parkland formula. Includes Rule of Nines reference and hourly rate calculations."
+	showBackButton={true}
+>
+	<div class="text-center mb-8">
+		<h1 class="text-3xl font-bold mb-4 theme-accent-primary">Parkland Burn Formula</h1>
+		<p class="theme-text-secondary max-w-2xl mx-auto">
+			Calculate IV fluid resuscitation volumes for burn patients. Enter patient weight and estimated
+			burn surface area to determine Lactated Ringer's requirements over 24 hours.
+		</p>
+	</div>
+
+	<ParklandCalculatorComponent client:load />
+
+	<div class="mt-12 max-w-4xl mx-auto">
+		<div class="grid md:grid-cols-2 gap-8">
+			<div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+				<h3 class="text-lg font-semibold mb-4 theme-accent-primary">Clinical Pearls</h3>
+				<ul class="space-y-2 text-sm theme-text-secondary">
+					<li>• The 8-hour clock starts from <strong>time of burn</strong>, not time of IV access</li>
+					<li>• Use only 2nd and 3rd degree burns for TBSA calculation</li>
+					<li>• Target urine output: 0.5-1 mL/kg/hr (adult), 1-2 mL/kg/hr (pediatric)</li>
+					<li>• Parkland is a starting point — titrate to clinical response</li>
+					<li>• Consider oral fluids for alert patients with smaller burns</li>
+				</ul>
+			</div>
+
+			<div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+				<h3 class="text-lg font-semibold mb-4 theme-accent-primary">When to Use</h3>
+				<ul class="space-y-2 text-sm theme-text-secondary">
+					<li>• Adults: Burns &ge;15% TBSA</li>
+					<li>• Pediatrics: Burns &ge;10% TBSA</li>
+					<li>• Electrical and inhalation injuries (even with smaller TBSA)</li>
+					<li>• Delayed resuscitation (&gt;2 hours post-burn)</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="panel-yellow border rounded-lg p-6 mt-8">
+			<h3 class="text-lg font-semibold mb-3 panel-yellow-heading">Safety Note</h3>
+			<p class="panel-yellow-text-strong text-sm">
+				The Parkland formula provides an <strong>estimate</strong> for initial fluid resuscitation.
+				Actual fluid requirements vary based on patient response. Monitor urine output, vital signs,
+				and clinical status closely. Over-resuscitation carries significant risks including pulmonary
+				edema and abdominal compartment syndrome. Always follow local protocols and medical direction.
+			</p>
+		</div>
+	</div>
+</Layout>
