@@ -275,6 +275,53 @@ export interface CPAPReference {
   citations: string[];
 }
 
+// IV Catheter Reference Types
+export interface IVCatheterSpec {
+  gauge: number;
+  color: string;
+  outerDiameter: string;
+  length: string;
+  flowRate: string;
+  flowRateValue: number;
+  uses: string[];
+}
+
+export interface IVSelectionGuideline {
+  scenario: string;
+  recommendedGauge: string;
+  rationale: string;
+}
+
+export interface IVComplication {
+  complication: string;
+  signs: string[];
+  intervention: string;
+}
+
+export interface IVCatheterReference {
+  catheters: IVCatheterSpec[];
+  selectionGuidelines: IVSelectionGuideline[];
+  complications: IVComplication[];
+  siteSelection: string[];
+  citations: string[];
+}
+
+// IV Drip Rate Calculator Types
+export type DropFactor = 10 | 15 | 20 | 60;
+
+export interface IVDripInput {
+  volume: number;
+  time: number;
+  dropFactor: DropFactor;
+}
+
+export interface IVDripResult {
+  gttsPerMin: number;
+  mlPerHour: number;
+  totalTime: number;
+  warnings: string[];
+}
+
 // Medical Calculation Base Types
 export interface MedicalCalculation {
   input: Record<string, any>;
