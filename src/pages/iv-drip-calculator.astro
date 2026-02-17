@@ -1,0 +1,73 @@
+---
+import Layout from '../layouts/Layout.astro';
+import IVDripCalculatorComponent from '../components/IVDripCalculator.svelte';
+---
+
+<Layout
+	title="IV Drip Rate Calculator | EMT Calculator Tools"
+	description="Calculate IV drip rates in gtt/min and mL/hr. Enter volume, time, and drop factor for accurate IV flow rate calculations."
+	showBackButton={true}
+>
+	<div class="text-center mb-8">
+		<h1 class="text-3xl font-bold mb-4 theme-accent-primary">IV Drip Rate Calculator</h1>
+		<p class="theme-text-secondary max-w-2xl mx-auto">
+			Calculate IV drip rates from volume, time, and drop factor. Get results in gtt/min for manual counting and mL/hr for pump settings.
+		</p>
+	</div>
+
+	<IVDripCalculatorComponent client:load />
+
+	<div class="mt-12 max-w-4xl mx-auto">
+		<div class="grid md:grid-cols-2 gap-8">
+			<div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+				<h3 class="text-lg font-semibold mb-4 theme-accent-primary">Drop Factor Guide</h3>
+				<div class="space-y-2 text-sm">
+					<div class="flex justify-between">
+						<span class="theme-text-secondary">10 gtt/mL:</span>
+						<span class="theme-text-primary">Macro drip (blood sets)</span>
+					</div>
+					<div class="flex justify-between">
+						<span class="theme-text-secondary">15 gtt/mL:</span>
+						<span class="theme-text-primary">Macro drip (standard)</span>
+					</div>
+					<div class="flex justify-between">
+						<span class="theme-text-secondary">20 gtt/mL:</span>
+						<span class="theme-text-primary">Macro drip (some brands)</span>
+					</div>
+					<div class="flex justify-between">
+						<span class="theme-text-secondary">60 gtt/mL:</span>
+						<span class="theme-text-primary">Micro drip (pediatric/precise)</span>
+					</div>
+				</div>
+				<p class="text-xs theme-text-muted mt-3">
+					Always check tubing packaging for exact drop factor. Common prehospital sets are typically 10 or 15 gtt/mL.
+				</p>
+			</div>
+
+			<div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+				<h3 class="text-lg font-semibold mb-4 theme-accent-primary">Formula Reference</h3>
+				<div class="space-y-3 text-sm">
+					<div>
+						<span class="theme-text-primary font-medium">Drip Rate (gtt/min):</span>
+						<p class="theme-text-secondary font-mono">(Volume x Drop Factor) / Time (min)</p>
+					</div>
+					<div>
+						<span class="theme-text-primary font-medium">Flow Rate (mL/hr):</span>
+						<p class="theme-text-secondary font-mono">(Volume / Time in min) x 60</p>
+					</div>
+					<div>
+						<span class="theme-text-primary font-medium">Counting Drops:</span>
+						<p class="theme-text-secondary">Count drops in drip chamber for 15 seconds, multiply by 4. Adjust roller clamp to match target rate.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="panel-yellow border rounded-lg p-6 mt-8">
+			<h3 class="text-lg font-semibold mb-3 panel-yellow-heading">Safety Note</h3>
+			<p class="panel-yellow-text-strong text-sm">
+				This calculator provides estimated drip rates for manual IV administration. Actual flow rates may vary based on catheter size, IV height, tubing length, and patient factors. Always verify rates against physician orders and monitor patients for signs of fluid overload or infiltration. Use an IV pump when available for precise rate control.
+			</p>
+		</div>
+	</div>
+</Layout>

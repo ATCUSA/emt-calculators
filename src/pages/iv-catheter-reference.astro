@@ -1,0 +1,81 @@
+---
+import Layout from '../layouts/Layout.astro';
+import IVCatheterReferenceComponent from '../components/IVCatheterReference.svelte';
+---
+
+<Layout
+	title="IV Catheter Reference | EMT Calculator Tools"
+	description="Peripheral IV catheter quick reference for EMS providers. Gauge sizes, color codes, flow rates, selection guidelines, complications, and site selection."
+	showBackButton={true}
+>
+	<div class="text-center mb-8">
+		<h1 class="text-3xl font-bold mb-4 theme-accent-primary">IV Catheter Quick Reference</h1>
+		<p class="theme-text-secondary max-w-2xl mx-auto">
+			Peripheral IV catheter reference for EMS providers. Gauge sizes, color codes, flow rates, catheter selection guidelines, complications, and prehospital site selection.
+		</p>
+	</div>
+
+	<IVCatheterReferenceComponent client:load />
+
+	<div class="mt-12 max-w-4xl mx-auto">
+		<div class="grid md:grid-cols-2 gap-8">
+			<div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+				<h3 class="text-lg font-semibold mb-4 theme-accent-primary">Quick Tips</h3>
+				<div class="space-y-3 text-sm">
+					<div>
+						<span class="theme-text-primary font-medium">Gauge vs. Size:</span>
+						<p class="theme-text-secondary">Higher gauge number = smaller catheter. A 14G is the largest common peripheral catheter; 26G is the smallest.</p>
+					</div>
+					<div>
+						<span class="theme-text-primary font-medium">Two IV Rule:</span>
+						<p class="theme-text-secondary">Trauma patients should have two large-bore (16G or larger) IVs established. Use antecubital veins for fastest access.</p>
+					</div>
+					<div>
+						<span class="theme-text-primary font-medium">Blood Products:</span>
+						<p class="theme-text-secondary">Minimum 18G for blood transfusions. Smaller gauges cause hemolysis of red blood cells.</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="theme-bg-secondary p-6 rounded-lg border theme-border-primary">
+				<h3 class="text-lg font-semibold mb-4 theme-accent-primary">Gauge Color Memory Aid</h3>
+				<div class="space-y-2 text-sm">
+					<div class="flex items-center gap-2">
+						<span class="bg-orange-500 w-4 h-4 rounded-full flex-shrink-0 border border-gray-300 dark:border-gray-600"></span>
+						<span class="theme-text-primary"><strong>14G Orange</strong> — "Orange for Oh-no trauma"</span>
+					</div>
+					<div class="flex items-center gap-2">
+						<span class="bg-gray-400 w-4 h-4 rounded-full flex-shrink-0 border border-gray-300 dark:border-gray-600"></span>
+						<span class="theme-text-primary"><strong>16G Gray</strong> — "Gray for Grave situations"</span>
+					</div>
+					<div class="flex items-center gap-2">
+						<span class="bg-green-500 w-4 h-4 rounded-full flex-shrink-0 border border-gray-300 dark:border-gray-600"></span>
+						<span class="theme-text-primary"><strong>18G Green</strong> — "Green for Go-to catheter"</span>
+					</div>
+					<div class="flex items-center gap-2">
+						<span class="bg-pink-400 w-4 h-4 rounded-full flex-shrink-0 border border-gray-300 dark:border-gray-600"></span>
+						<span class="theme-text-primary"><strong>20G Pink</strong> — "Pink for Pretty standard"</span>
+					</div>
+					<div class="flex items-center gap-2">
+						<span class="bg-blue-500 w-4 h-4 rounded-full flex-shrink-0 border border-gray-300 dark:border-gray-600"></span>
+						<span class="theme-text-primary"><strong>22G Blue</strong> — "Blue for Baby-friendly"</span>
+					</div>
+					<div class="flex items-center gap-2">
+						<span class="bg-yellow-400 w-4 h-4 rounded-full flex-shrink-0 border border-gray-300 dark:border-gray-600"></span>
+						<span class="theme-text-primary"><strong>24G Yellow</strong> — "Yellow for Young/tiny"</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="panel-purple border rounded-lg p-6 mt-8">
+			<h3 class="text-lg font-semibold mb-3 panel-purple-heading">Clinical Pearls</h3>
+			<div class="panel-purple-text text-sm space-y-2">
+				<p><strong class="panel-purple-text-strong">Select the smallest gauge that meets your clinical need.</strong> Smaller catheters are less painful, cause less vein trauma, and allow better blood flow around the catheter.</p>
+				<p><strong class="panel-purple-text-strong">Consider IO access early.</strong> If IV access fails after two attempts or 90 seconds in critical patients, switch to intraosseous (IO) access per protocol.</p>
+				<p><strong class="panel-purple-text-strong">Flow rate depends on more than gauge.</strong> Catheter length, fluid viscosity, IV height, and tubing size all affect actual flow rates. Published rates are gravity-fed approximations.</p>
+				<p><strong class="panel-purple-text-strong">Secure your IV well.</strong> Prehospital movement increases catheter dislodgement risk. Use commercial securement devices and loop tubing to create a stress relief.</p>
+			</div>
+		</div>
+	</div>
+</Layout>
