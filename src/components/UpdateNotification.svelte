@@ -1,4 +1,5 @@
 <script>
+	import { onMount, onDestroy } from 'svelte';
 	import { Download, X, RefreshCw } from 'lucide-svelte';
 	import { APP_CONFIG } from '../config/version';
 
@@ -6,33 +7,43 @@
 	let updateAvailable = $state(false);
 	let newWorker = $state(null);
 	let isUpdating = $state(false);
+	let versionInfoTimer = $state(null);
+	let messageHandler = null;
 
-	// Listen for service worker update events
-	if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
-		navigator.serviceWorker.addEventListener('message', (event) => {
-			if (event.data && event.data.type === 'UPDATE_AVAILABLE') {
+	onMount(() => {
+		if (!('serviceWorker' in navigator)) return;
+
+		messageHandler = (event) => {
+			if (event.data?.type === 'UPDATE_AVAILABLE') {
 				showUpdate = true;
 				updateAvailable = true;
 				newWorker = event.data.worker;
 			}
-		});
+		};
+		navigator.serviceWorker.addEventListener('message', messageHandler);
 
 		// Check current version against stored version
 		const storedVersion = localStorage.getItem('app-version');
 		const currentVersion = APP_CONFIG.version;
 
 		if (storedVersion && storedVersion !== currentVersion) {
-			// Version has changed, show what's new
 			showVersionInfo();
 		}
 
 		// Store current version
 		localStorage.setItem('app-version', currentVersion);
-	}
+	});
+
+	onDestroy(() => {
+		if (messageHandler && typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
+			navigator.serviceWorker.removeEventListener('message', messageHandler);
+		}
+		if (versionInfoTimer !== null) clearTimeout(versionInfoTimer);
+	});
 
 	function showVersionInfo() {
 		// Show changelog for new version
-		setTimeout(() => {
+		versionInfoTimer = setTimeout(() => {
 			if (!localStorage.getItem('changelog-seen-' + APP_CONFIG.version)) {
 				showUpdate = true;
 				updateAvailable = false; // This is a version info, not an update
@@ -51,9 +62,8 @@
 
 			// Wait for the new service worker to take control
 			navigator.serviceWorker.addEventListener('controllerchange', () => {
-				// Reload the page to get the new version
 				window.location.reload();
-			});
+			}, { once: true });
 		} catch (error) {
 			console.error('Failed to apply update:', error);
 			isUpdating = false;
@@ -121,7 +131,7 @@
 					<button
 						onclick={applyUpdate}
 						disabled={isUpdating}
-						class="flex-1 bg-white text-blue-600 hover:bg-blue-50 disabled:bg-gray-200 disabled:text-gray-500 px-4 py-2 rounded text-sm font-medium transition-colors flex items-center justify-center gap-2"
+						class="flex-1 bg-white text-blue-600 hover:bg-blue-50 disabled:bg-gray-200 disabled:text-gray-500 px-4 py-3 rounded text-sm font-medium transition-colors flex items-center justify-center gap-2"
 					>
 						{#if isUpdating}
 							<RefreshCw class="w-4 h-4 animate-spin" />
@@ -133,7 +143,7 @@
 					</button>
 					<button
 						onclick={dismissUpdate}
-						class="px-4 py-2 rounded text-sm font-medium text-blue-200 hover:text-white transition-colors"
+						class="px-4 py-3 rounded text-sm font-medium text-blue-200 hover:text-white transition-colors"
 					>
 						Later
 					</button>
@@ -142,7 +152,7 @@
 				<div class="mt-3 flex justify-end">
 					<button
 						onclick={dismissUpdate}
-						class="px-4 py-2 rounded text-sm font-medium bg-blue-700 hover:bg-blue-800 transition-colors"
+						class="px-4 py-3 rounded text-sm font-medium bg-blue-700 hover:bg-blue-800 transition-colors"
 					>
 						Got it!
 					</button>
