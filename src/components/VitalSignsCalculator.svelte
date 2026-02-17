@@ -21,6 +21,7 @@
 
   // Perform assessment
   const assessment = $derived.by((): VitalSignsAssessment | null => {
+    try {
     if (!vitalSignsReference) return null;
 
     const assessments: VitalSignsAssessment['assessments'] = {};
@@ -156,6 +157,9 @@
       clinicalNotes,
       warnings
     };
+    } catch {
+      return null;
+    }
   });
 
   // Get status color class
@@ -332,6 +336,7 @@
     </div>
 
     <!-- Assessment Results -->
+    <div aria-live="polite" aria-atomic="true">
     {#if assessment && vitalSignsReference}
       <div class="mt-6 space-y-4">
         <!-- Age Group Reference -->
@@ -412,11 +417,12 @@
         </div>
       </div>
     {/if}
+    </div>
 
     <!-- Reset Button -->
     <button
       onclick={resetCalculator}
-      class="w-full p-3 bg-gray-700 hover:bg-gray-600 rounded theme-text-primary transition-colors"
+      class="w-full py-3 min-h-[44px] theme-bg-tertiary hover:theme-bg-primary rounded theme-text-primary transition-colors border theme-border-secondary"
     >
       Reset Assessment
     </button>

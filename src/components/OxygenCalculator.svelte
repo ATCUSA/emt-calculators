@@ -19,52 +19,56 @@
 
   // Calculate durations based on inputs
   const calculations = $derived.by((): O2CalculationResult | null => {
-    if (!tankSize || currentPressure <= 0 || flowRate <= 0) return null;
+    try {
+      if (!tankSize || currentPressure <= 0 || flowRate <= 0) return null;
 
-    const tankInfo = TANK_SPECS[tankSize];
-    if (!tankInfo) return null;
+      const tankInfo = TANK_SPECS[tankSize];
+      if (!tankInfo) return null;
 
-    const totalPressure = currentPressure;
-    const usablePressure = Math.max(0, currentPressure - safetyReserve);
+      const totalPressure = currentPressure;
+      const usablePressure = Math.max(0, currentPressure - safetyReserve);
 
-    // Calculate total duration (using all pressure)
-    const totalDuration = Math.round((totalPressure * tankInfo.tankFactor) / flowRate);
+      // Calculate total duration (using all pressure)
+      const totalDuration = Math.round((totalPressure * tankInfo.tankFactor) / flowRate);
 
-    // Calculate usable duration (accounting for safety reserve)
-    const usableDuration = Math.round((usablePressure * tankInfo.tankFactor) / flowRate);
+      // Calculate usable duration (accounting for safety reserve)
+      const usableDuration = Math.round((usablePressure * tankInfo.tankFactor) / flowRate);
 
-    // Calculate warnings
-    const warnings: string[] = [];
+      // Calculate warnings
+      const warnings: string[] = [];
 
-    if (currentPressure < tankInfo.servicePressure * 0.5) {
-      warnings.push('Tank pressure is below 50% of service pressure');
-    }
-
-    if (safetyReserve > currentPressure * 0.5) {
-      warnings.push('Safety reserve is more than 50% of current pressure');
-    }
-
-    if (usableDuration < 30) {
-      warnings.push('Less than 30 minutes of usable oxygen remaining');
-    }
-
-    if (flowRate > 15) {
-      warnings.push('High flow rate - consider checking equipment and patient needs');
-    }
-
-    return {
-      usableDuration,
-      totalDuration,
-      reservePressure: safetyReserve,
-      warnings,
-      tankInfo,
-      calculationDetails: {
-        usablePressure,
-        totalPressure,
-        flowRate,
-        safetyReserve
+      if (currentPressure < tankInfo.servicePressure * 0.5) {
+        warnings.push('Tank pressure is below 50% of service pressure');
       }
-    };
+
+      if (safetyReserve > currentPressure * 0.5) {
+        warnings.push('Safety reserve is more than 50% of current pressure');
+      }
+
+      if (usableDuration < 30) {
+        warnings.push('Less than 30 minutes of usable oxygen remaining');
+      }
+
+      if (flowRate > 15) {
+        warnings.push('High flow rate - consider checking equipment and patient needs');
+      }
+
+      return {
+        usableDuration,
+        totalDuration,
+        reservePressure: safetyReserve,
+        warnings,
+        tankInfo,
+        calculationDetails: {
+          usablePressure,
+          totalPressure,
+          flowRate,
+          safetyReserve
+        }
+      };
+    } catch {
+      return null;
+    }
   });
 
   // Format time display
@@ -165,6 +169,7 @@
     </div>
 
     <!-- Result Display -->
+    <div aria-live="polite" aria-atomic="true">
     {#if calculations}
       <!-- Primary Result - Usable Duration with Safety Reserve -->
       <div class="theme-bg-primary p-4 rounded border theme-border-secondary">
@@ -198,6 +203,7 @@
         </div>
       </div>
     {/if}
+    </div>
 
     <!-- Formula Information -->
     <div class="panel-blue p-4 rounded border">
@@ -236,7 +242,7 @@
     <!-- Reset Button -->
     <button
       onclick={resetCalculator}
-      class="w-full p-3 bg-gray-700 hover:bg-gray-600 rounded theme-text-primary transition-colors"
+      class="w-full py-3 min-h-[44px] theme-bg-tertiary hover:theme-bg-primary rounded theme-text-primary transition-colors border theme-border-secondary"
     >
       Reset Calculator
     </button>
