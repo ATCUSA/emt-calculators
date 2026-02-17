@@ -43,7 +43,11 @@ export function calculateDripRate(
   const warnings: string[] = [];
 
   if (gttsPerMin > 150) {
-    warnings.push('Rate exceeds 150 gtt/min — difficult to count manually. Consider a pump or macro drip tubing.');
+    warnings.push(
+      dropFactor === 60
+        ? 'Rate exceeds 150 gtt/min — difficult to count manually. Consider switching to macro drip tubing or using a pump.'
+        : 'Rate exceeds 150 gtt/min — difficult to count manually. Consider using an IV pump for accuracy.'
+    );
   }
 
   if (mlPerHour > 999) {
